@@ -4,7 +4,7 @@ import { tournamentAPI } from '../services/api';
 import { useAuth } from '../context/AuthContext';
 import toast from 'react-hot-toast';
 
-const GAME_ICONS = { BGMI: '🎯', Valorant: '⚡', 'Free Fire': '🔥', CS2: '🎮', Chess: '♟️', MLBB: '⚔️', 'Tekken 8': '👊' };
+const GAME_ICONS = { BGMI: '🎯', Valorant: '⚡', 'Free Fire Max': '🔥', CS2: '🎮', MLBB: '⚔️', 'Tekken 8': '👊', 'Pokemon Unite': '🔮', 'Call of Duty Mobile': '🪖', 'Clash Royale': '👑' };
 
 export default function TournamentDetail() {
   const { id } = useParams();

@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
 import { leaderboardAPI } from '../services/api';
 
-const GAMES = ['all', 'BGMI', 'Valorant', 'Free Fire', 'CS2', 'Chess', 'MLBB', 'Tekken 8'];
-const GAME_ICONS = { BGMI: '🎯', Valorant: '⚡', 'Free Fire': '🔥', CS2: '🎮', Chess: '♟️', MLBB: '⚔️', 'Tekken 8': '👊' };
+const GAMES = ['all', 'BGMI', 'Valorant', 'Free Fire Max', 'CS2', 'MLBB', 'Tekken 8', 'Pokemon Unite', 'Call of Duty Mobile', 'Clash Royale'];
+const GAME_ICONS = { BGMI: '🎯', Valorant: '⚡', 'Free Fire Max': '🔥', CS2: '🎮', MLBB: '⚔️', 'Tekken 8': '👊', 'Pokemon Unite': '🔮', 'Call of Duty Mobile': '🪖', 'Clash Royale': '👑' };
 
 export default function Leaderboard() {
   const [players, setPlayers] = useState([]);

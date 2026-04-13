@@ -28,7 +28,7 @@ export default function Navbar() {
       <nav className={`navbar ${scrolled ? 'scrolled' : ''}`}>
         <div className="navbar-inner">
           <Link to="/" className="navbar-logo">
-            <img src={logo} alt="India Esports Hub" />
+            <img src={logo} alt="India Esports Hub" style={{ height: '72px', width: 'auto', objectFit: 'contain' }} />
           </Link>
 
           <div className="navbar-links">

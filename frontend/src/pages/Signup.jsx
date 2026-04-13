@@ -5,14 +5,15 @@ import toast from 'react-hot-toast';
 import logo from '../assets/logo.png';
 
 const INDIAN_STATES = [
-  'Andhra Pradesh','Arunachal Pradesh','Assam','Bihar','Chhattisgarh','Goa','Gujarat',
-  'Haryana','Himachal Pradesh','Jharkhand','Karnataka','Kerala','Madhya Pradesh',
-  'Maharashtra','Manipur','Meghalaya','Mizoram','Nagaland','Odisha','Punjab',
-  'Rajasthan','Sikkim','Tamil Nadu','Telangana','Tripura','Uttar Pradesh',
-  'Uttarakhand','West Bengal','Delhi','Jammu & Kashmir','Ladakh',
+  '',
+  'Andhra Pradesh', 'Arunachal Pradesh', 'Assam', 'Bihar', 'Chhattisgarh', 'Goa', 'Gujarat',
+  'Haryana', 'Himachal Pradesh', 'Jharkhand', 'Karnataka', 'Kerala', 'Madhya Pradesh',
+  'Maharashtra', 'Manipur', 'Meghalaya', 'Mizoram', 'Nagaland', 'Odisha', 'Punjab',
+  'Rajasthan', 'Sikkim', 'Tamil Nadu', 'Telangana', 'Tripura', 'Uttar Pradesh',
+  'Uttarakhand', 'West Bengal', 'Delhi', 'Jammu & Kashmir', 'Ladakh',
 ];
 
-const GAMES_LIST = ['BGMI','Valorant','Free Fire','CS2','Chess','MLBB','Tekken 8','Pokemon Unite','Clash Royale'];
+const GAMES_LIST = ['BGMI', 'Valorant', 'Free Fire Max', 'CS2', 'MLBB', 'Tekken 8', 'Pokemon Unite', 'Call of Duty Mobile', 'Clash Royale'];
 
 const STEPS = ['Account Info', 'Gaming Profile', 'Ready!'];
 
@@ -22,7 +23,7 @@ export default function Signup() {
   const [step, setStep] = useState(0);
   const [form, setForm] = useState({
     name: '', email: '', password: '', confirmPassword: '',
-    state: 'Maharashtra', games: [],
+    state: '', games: [],
   });
   const [loading, setLoading] = useState(false);
   const [show, setShow] = useState(false);
@@ -37,8 +38,10 @@ export default function Signup() {
   const nextStep = () => {
     if (step === 0) {
       if (!form.name || !form.email || !form.password) return toast.error('Fill all fields!');
-      if (form.password.length < 6) return toast.error('Password must be 6+ characters!');
+      if (form.password.length < 8) return toast.error('Password must be at least 8 characters!');
       if (form.password !== form.confirmPassword) return toast.error('Passwords do not match!');
+    } else if (step === 1) {
+      if (!form.state) return toast.error('Please select your state!');
     }
     setStep(s => s + 1);
   };
@@ -62,7 +65,7 @@ export default function Signup() {
     <div className="auth-page">
       <div className="auth-bg" />
 
-      {['🎯','⚡','🔥','🏆','🎮','⚔️','👊','♟️'].map((emoji, i) => (
+      {['🎯', '⚡', '🔥', '🏆', '🎮', '⚔️', '👊', '♟️'].map((emoji, i) => (
         <div key={i} style={{
           position: 'fixed', fontSize: `${1.3 + (i % 3) * 0.4}rem`,
           top: `${8 + i * 11}%`,
@@ -127,7 +130,7 @@ export default function Signup() {
               <div className="form-group">
                 <label className="form-label">🔒 Password</label>
                 <div style={{ position: 'relative' }}>
-                  <input className="form-input" type={show ? 'text' : 'password'} placeholder="Min 6 characters"
+                  <input className="form-input" type={show ? 'text' : 'password'} placeholder="Min 8 characters"
                     value={form.password} onChange={e => setForm(p => ({ ...p, password: e.target.value }))} style={{ paddingRight: 48 }} />
                   <button type="button" onClick={() => setShow(s => !s)} style={{
                     position: 'absolute', right: 14, top: '50%', transform: 'translateY(-50%)',
@@ -146,9 +149,10 @@ export default function Signup() {
           {step === 1 && (
             <>
               <div className="form-group">
-                <label className="form-label">📍 Your State</label>
-                <select className="form-select" value={form.state} onChange={e => setForm(p => ({ ...p, state: e.target.value }))}>
-                  {INDIAN_STATES.map(s => <option key={s} value={s}>{s}</option>)}
+                <label className="form-label">📍 Select Your State *</label>
+                <select className="form-select" value={form.state} onChange={e => setForm(p => ({ ...p, state: e.target.value }))} required>
+                  <option value="" disabled>-- Select your state --</option>
+                  {INDIAN_STATES.filter(s => s !== '').map(s => <option key={s} value={s}>{s}</option>)}
                 </select>
               </div>
               <div className="form-group">
@@ -202,7 +206,7 @@ export default function Signup() {
             <button type="submit" className="btn btn-primary btn-lg" style={{ flex: 2, justifyContent: 'center' }} disabled={loading}>
               {loading ? <><div className="loader" style={{ width: 20, height: 20, borderWidth: 2 }} /> Creating...</>
                 : step < 2 ? 'Next →'
-                : '🚀 Create Account!'}
+                  : '🚀 Create Account!'}
             </button>
           </div>
         </form>

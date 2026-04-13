@@ -6,11 +6,13 @@ import logo from '../assets/logo.png';
 const GAMES = [
   { name: 'BGMI', icon: '🎯', color: '#FF6B35' },
   { name: 'Valorant', icon: '⚡', color: '#FF4655' },
-  { name: 'Free Fire', icon: '🔥', color: '#FF9500' },
+  { name: 'Free Fire Max', icon: '🔥', color: '#FF9500' },
   { name: 'CS2', icon: '🎮', color: '#F59E0B' },
-  { name: 'Chess', icon: '♟️', color: '#8B5CF6' },
   { name: 'MLBB', icon: '⚔️', color: '#06B6D4' },
   { name: 'Tekken 8', icon: '👊', color: '#EC4899' },
+  { name: 'Pokemon Unite', icon: '🔮', color: '#8B5CF6' },
+  { name: 'Call of Duty Mobile', icon: '🪖', color: '#10B981' },
+  { name: 'Clash Royale', icon: '👑', color: '#3B82F6' },
 ];
 
 const STATS = [
@@ -22,10 +24,10 @@ const STATS = [
 
 const TICKER_ITEMS = [
   '🏆 BGMI India Masters LIVE NOW — ₹5 Lakh Prize Pool',
-  '🔥 Free Fire Grand Prix — Registration Open',
+  '🔥 Free Fire Max Grand Prix — Registration Open',
   '⚡ Valorant Champions India — 8 Slots Left!',
   '🎮 CS2 India Open — May 10-12',
-  '♟️ Chess National — Results Out!',
+  '🔮 Pokemon Unite Championship — Results Out!',
   '👊 Tekken 8 India Clash — Register Now',
 ];
 
@@ -77,8 +79,8 @@ export default function Home() {
   const [counter, setCounter] = useState({ players: 0, prize: 0, tournaments: 0 });
 
   useEffect(() => {
-    tournamentAPI.getAll({ status: 'live' }).then(r => setLiveT(r.data.tournaments)).catch(() => {});
-    tournamentAPI.getAll({ status: 'upcoming' }).then(r => setUpcomingT(r.data.tournaments.slice(0, 3))).catch(() => {});
+    tournamentAPI.getAll({ status: 'live' }).then(r => setLiveT(r.data.tournaments)).catch(() => { });
+    tournamentAPI.getAll({ status: 'upcoming' }).then(r => setUpcomingT(r.data.tournaments.slice(0, 3))).catch(() => { });
 
     // Count-up animation
     const targets = { players: 50000, prize: 200, tournaments: 200 };
@@ -132,7 +134,7 @@ export default function Home() {
                 THE ARENA
               </h1>
               <p className="hero-description anim-fade-up delay-300">
-                India's premier esports hub for BGMI, Valorant, Free Fire & more. 
+                India's premier esports hub for BGMI, Valorant, Free Fire & more.
                 Join live tournaments, track leaderboards, and rise to the top! 🏆
               </p>
               <div style={{ display: 'flex', gap: 16, marginBottom: 48, flexWrap: 'wrap' }} className="anim-fade-up delay-400">
@@ -149,8 +151,8 @@ export default function Home() {
                     <span className="hero-stat-value" style={{ color: s.color }}>
                       {s.label === 'Players' ? `${(counter.players / 1000).toFixed(0)}K+`
                         : s.label === 'Prize Pool' ? `₹${counter.prize}L+`
-                        : s.label === 'Tournaments' ? `${counter.tournaments}+`
-                        : s.value}
+                          : s.label === 'Tournaments' ? `${counter.tournaments}+`
+                            : s.value}
                     </span>
                     <span className="hero-stat-label">{s.label}</span>
                   </div>
@@ -280,7 +282,7 @@ export default function Home() {
             <div className="footer-brand">
               <img src={logo} alt="India Esports Hub" />
               <p className="footer-desc">
-                India's premier esports platform connecting players, tournaments, and communities across all 28 states. 🇮🇳
+                India's premier esports platform connecting players, tournaments, and communities across all 28 states.
               </p>
             </div>
             <div>
@@ -297,8 +299,8 @@ export default function Home() {
             </div>
           </div>
           <div className="footer-bottom">
-            <div className="footer-copy">© 2025 India Esports Hub. Made with ❤️ in India <span className="india-flag">🇮🇳</span></div>
-            <div style={{ color: 'var(--text-muted)', fontSize: '0.85rem' }}>Powered by GameGuru AI 🤖</div>
+            <div className="footer-copy">© 2025 India Esports Hub. Made in India <span className="india-flag"></span></div>
+            <div style={{ color: 'var(--text-muted)', fontSize: '0.85rem' }}></div>
           </div>
         </div>
       </footer>

@@ -7,16 +7,16 @@ import logo from '../assets/logo.png';
 export default function Login() {
   const { login } = useAuth();
   const navigate = useNavigate();
-  const [form, setForm] = useState({ email: '', password: '' });
+  const [form, setForm] = useState({ identifier: '', password: '' });
   const [loading, setLoading] = useState(false);
   const [show, setShow] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!form.email || !form.password) return toast.error('All fields required!');
+    if (!form.identifier || !form.password) return toast.error('All fields required!');
     setLoading(true);
     try {
-      await login(form.email, form.password);
+      await login(form.identifier, form.password);
       toast.success('Welcome back, Gamer! 🎮');
       navigate('/');
     } catch (err) {
@@ -64,14 +64,14 @@ export default function Login() {
 
         <form onSubmit={handleSubmit}>
           <div className="form-group">
-            <label className="form-label">📧 Email Address</label>
+            <label className="form-label">👤 Email or Full Name</label>
             <input
               className="form-input"
-              type="email"
-              placeholder="your@email.com"
-              value={form.email}
-              onChange={e => setForm(p => ({ ...p, email: e.target.value }))}
-              autoComplete="email"
+              type="text"
+              placeholder="your@email.com or player name"
+              value={form.identifier}
+              onChange={e => setForm(p => ({ ...p, identifier: e.target.value }))}
+              autoComplete="username"
             />
           </div>
 

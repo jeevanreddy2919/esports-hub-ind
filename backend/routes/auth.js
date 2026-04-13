@@ -33,11 +33,11 @@ router.post('/signup', async (req, res) => {
 // POST /api/auth/login
 router.post('/login', async (req, res) => {
   try {
-    const { email, password } = req.body;
-    if (!email || !password) return res.status(400).json({ error: 'Email and password required' });
+    const { identifier, password } = req.body;
+    if (!identifier || !password) return res.status(400).json({ error: 'Email or Full Name and password required' });
 
     const db = getDB();
-    const user = db.prepare('SELECT * FROM users WHERE email = ?').get(email);
+    const user = db.prepare('SELECT * FROM users WHERE email = ? OR name = ?').get(identifier, identifier);
     if (!user) return res.status(401).json({ error: 'Invalid credentials' });
 
     const valid = await bcrypt.compare(password, user.password);

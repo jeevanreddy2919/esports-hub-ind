@@ -102,7 +102,7 @@ esports hub ind/
 ## 🎯 Features
 
 - ✅ Login / Signup with JWT auth
-- ✅ 8 pre-seeded Indian esports tournaments (BGMI, Valorant, Free Fire, CS2, Chess, MLBB, Tekken 8)
+- ✅ 8 pre-seeded Indian esports tournaments (BGMI, Valorant, Free Fire Max, CS2, Pokemon Unite, Call of Duty Mobile, MLBB, Tekken 8)
 - ✅ Live / Upcoming / Past tournament filters
 - ✅ Tournament registration system
 - ✅ Leaderboard with gold/silver/bronze podium

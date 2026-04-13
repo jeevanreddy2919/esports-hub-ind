@@ -3,9 +3,9 @@ const router = express.Router();
 
 const GEMINI_API_KEY = process.env.GEMINI_API_KEY || '';
 
-const SYSTEM_PROMPT = `You are GameGuru, the AI assistant for India Esports Hub - India's premier esports platform.
+const SYSTEM_PROMPT = `You are NeuroGamer, the AI assistant for India Esports Hub - India's premier esports platform.
 You help Indian gamers with:
-- Tournament information (BGMI, Valorant, Free Fire, CS2, Chess, MLBB, Tekken 8)
+- Tournament information (BGMI, Valorant, Free Fire Max, CS2, Pokemon Unite, Call of Duty Mobile, MLBB, Tekken 8)
 - Registration guidance and tips
 - Game strategies and tips for Indian players
 - Esports career advice
@@ -23,7 +23,7 @@ router.post('/', async (req, res) => {
     if (!GEMINI_API_KEY) {
       // Fallback smart responses without API
       const lower = message.toLowerCase();
-      let reply = "Hey Gamer! 🎮 I'm GameGuru. ";
+      let reply = "Hey Gamer! 🎮 I'm NeuroGamer. ";
       if (lower.includes('register') || lower.includes('registration')) {
         reply += "To register for a tournament: 1️⃣ Create an account, 2️⃣ Go to Tournaments page, 3️⃣ Click on any tournament, 4️⃣ Hit the Register button! GG EZ! 🏆";
       } else if (lower.includes('bgmi') || lower.includes('battleground')) {
@@ -33,13 +33,13 @@ router.post('/', async (req, res) => {
       } else if (lower.includes('valorant')) {
         reply += "Valorant Champions India is coming up! ₹3 Lakh prize pool. Head to the Tournaments page to register. Only 8 slots left! ⚡";
       } else if (lower.includes('free fire') || lower.includes('freefire')) {
-        reply += "Free Fire Grand Prix has ₹2 Lakh prize pool! Registration closes soon. Check Tournaments page now! 🔥";
+        reply += "Free Fire Max Grand Prix has ₹2 Lakh prize pool! Registration closes soon. Check Tournaments page now! 🔥";
       } else if (lower.includes('hello') || lower.includes('hi') || lower.includes('hey')) {
         reply += "Welcome to India Esports Hub! I'm here to help you dominate the esports scene! Ask me about tournaments, registration, or gaming tips! 🎯";
       } else if (lower.includes('help')) {
         reply += "I can help you with: 🏆 Tournament info, 📝 Registration steps, 🎮 Game tips, 💰 Prize pool details, and more! What do you need?";
       } else {
-        reply += "Great question! Visit our Tournaments page for the latest events, or ask me about specific games like BGMI, Valorant, Free Fire, or CS2! Let's get you into a tournament! 🚀";
+        reply += "Great question! Visit our Tournaments page for the latest events, or ask me about specific games like BGMI, Valorant, Free Fire Max, or CS2! Let's get you into a tournament! 🚀";
       }
       return res.json({ reply });
     }

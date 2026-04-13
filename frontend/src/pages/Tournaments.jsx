@@ -2,9 +2,9 @@ import { useState, useEffect } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
 import { tournamentAPI } from '../services/api';
 
-const GAMES = ['all', 'BGMI', 'Valorant', 'Free Fire', 'CS2', 'Chess', 'MLBB', 'Tekken 8'];
+const GAMES = ['all', 'BGMI', 'Valorant', 'Free Fire Max', 'CS2', 'MLBB', 'Tekken 8', 'Pokemon Unite', 'Call of Duty Mobile', 'Clash Royale'];
 const STATUSES = ['all', 'live', 'upcoming', 'past'];
-const GAME_ICONS = { BGMI: '🎯', Valorant: '⚡', 'Free Fire': '🔥', CS2: '🎮', Chess: '♟️', MLBB: '⚔️', 'Tekken 8': '👊' };
+const GAME_ICONS = { BGMI: '🎯', Valorant: '⚡', 'Free Fire Max': '🔥', CS2: '🎮', MLBB: '⚔️', 'Tekken 8': '👊', 'Pokemon Unite': '🔮', 'Call of Duty Mobile': '🪖', 'Clash Royale': '👑' };
 
 function TournamentCard({ t, delay = 0 }) {
   const pct = Math.round((t.slots_filled / t.slots) * 100);

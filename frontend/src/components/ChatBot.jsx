@@ -1,6 +1,9 @@
 import { useState, useRef, useEffect } from 'react';
 import { chatAPI } from '../services/api';
 
+const BOT_ICON = '🧠';
+const BOT_NAME = 'NeuroGamer';
+
 const QUICK_PROMPTS = [
   '🏆 How to register?',
   '🎮 Active tournaments?',
@@ -12,7 +15,7 @@ export default function ChatBot() {
   const [open, setOpen] = useState(false);
   const [input, setInput] = useState('');
   const [messages, setMessages] = useState([
-    { role: 'bot', text: "Hey Gamer! 🎮 I'm **GameGuru**, your esports assistant! Ask me about tournaments, registration, prize pools, or game tips! Let's GWLP! 🚀" }
+    { role: 'bot', text: "Hey Gamer! 🧠 I'm **NeuroGamer**, your AI esports assistant! Ask me about tournaments, registration, prize pools, or game tips! Let's GWLP! 🚀" }
   ]);
   const [loading, setLoading] = useState(false);
   const messagesRef = useRef(null);
@@ -34,7 +37,7 @@ export default function ChatBot() {
       const res = await chatAPI.send({ message: msg, history });
       setMessages(prev => [...prev, { role: 'bot', text: res.data.reply }]);
     } catch {
-      setMessages(prev => [...prev, { role: 'bot', text: "Sorry, I'm offline right now! 😅 Check back soon. For help, visit our Tournaments page!" }]);
+      setMessages(prev => [...prev, { role: 'bot', text: "Sorry, I'm offline right now! 😅 Check back soon, Gamer! Visit our Tournaments page for help." }]);
     } finally {
       setLoading(false);
     }
@@ -50,10 +53,15 @@ export default function ChatBot() {
     <>
       {open && (
         <div className="chatbot-window">
-          <div className="chatbot-header">
-            <div className="chatbot-avatar">🤖</div>
+          <div className="chatbot-header" style={{ background: 'linear-gradient(135deg, rgba(123,47,255,0.4), rgba(0,243,255,0.2))' }}>
+            <div className="chatbot-avatar" style={{
+              background: 'linear-gradient(135deg, #7b2fff, #00f3ff)',
+              boxShadow: '0 0 20px rgba(0,243,255,0.4)',
+              fontSize: '1.3rem',
+              border: '1px solid rgba(0,243,255,0.3)',
+            }}>🧠</div>
             <div>
-              <div className="chatbot-title">GameGuru AI</div>
+              <div className="chatbot-title" style={{ fontFamily: 'Orbitron', fontSize: '0.85rem', letterSpacing: '0.05em' }}>NeuroGamer <span style={{ color: 'var(--cyan)', fontSize: '0.7rem' }}>AI</span></div>
               <div className="chatbot-status">Online & Ready</div>
             </div>
             <button onClick={() => setOpen(false)} style={{
@@ -66,11 +74,13 @@ export default function ChatBot() {
               <div key={i} className={`chat-message ${msg.role}`}>
                 {msg.role === 'bot' && (
                   <div style={{
-                    width: 28, height: 28, borderRadius: 8,
-                    background: 'linear-gradient(135deg, var(--purple), var(--cyan))',
+                    width: 30, height: 30, borderRadius: 10,
+                    background: 'linear-gradient(135deg, #7b2fff, #00f3ff)',
                     display: 'flex', alignItems: 'center', justifyContent: 'center',
-                    fontSize: '0.8rem', flexShrink: 0
-                  }}>🤖</div>
+                    fontSize: '0.9rem', flexShrink: 0,
+                    boxShadow: '0 0 12px rgba(0,243,255,0.3)',
+                    border: '1px solid rgba(0,243,255,0.2)',
+                  }}>🧠</div>
                 )}
                 <div
                   className={`chat-bubble ${msg.role}`}
@@ -81,11 +91,13 @@ export default function ChatBot() {
             {loading && (
               <div className="chat-message">
                 <div style={{
-                  width: 28, height: 28, borderRadius: 8,
-                  background: 'linear-gradient(135deg, var(--purple), var(--cyan))',
+                  width: 30, height: 30, borderRadius: 10,
+                  background: 'linear-gradient(135deg, #7b2fff, #00f3ff)',
                   display: 'flex', alignItems: 'center', justifyContent: 'center',
-                  fontSize: '0.8rem', flexShrink: 0
-                }}>🤖</div>
+                  fontSize: '0.9rem', flexShrink: 0,
+                  boxShadow: '0 0 12px rgba(0,243,255,0.3)',
+                  border: '1px solid rgba(0,243,255,0.2)',
+                }}>🧠</div>
                 <div className="chat-bubble bot" style={{ display: 'flex', gap: 4, alignItems: 'center' }}>
                   {[0,1,2].map(i => (
                     <div key={i} style={{
@@ -129,8 +141,13 @@ export default function ChatBot() {
         </div>
       )}
 
-      <button className="chatbot-toggle" onClick={() => setOpen(o => !o)} title="GameGuru AI Chat">
-        {open ? '✕' : '🤖'}
+      <button className="chatbot-toggle" onClick={() => setOpen(o => !o)} title="NeuroGamer AI Chat"
+        style={{
+          background: open ? 'linear-gradient(135deg, #ff2d78, #7b2fff)' : 'linear-gradient(135deg, #7b2fff, #00f3ff)',
+          fontSize: open ? '1.4rem' : '1.8rem',
+          transition: 'all 0.4s cubic-bezier(0.4,0,0.2,1)',
+        }}>
+        {open ? '✕' : '🧠'}
       </button>
     </>
   );
