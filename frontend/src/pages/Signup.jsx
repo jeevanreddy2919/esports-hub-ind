@@ -79,7 +79,7 @@ export default function Signup() {
       <div className="auth-card" style={{ maxWidth: 520, position: 'relative', zIndex: 2 }}>
         <div style={{
           position: 'absolute', top: -1, left: '15%', right: '15%', height: 2,
-          background: 'linear-gradient(90deg, transparent, var(--emerald), var(--silver), transparent)',
+          background: 'linear-gradient(90deg, transparent, var(--cyan), var(--purple), transparent)',
         }} />
 
         <div className="auth-logo">
@@ -92,13 +92,13 @@ export default function Signup() {
             <div key={s} style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
               <div style={{
                 width: 32, height: 32, borderRadius: 10,
-                background: i <= step ? 'linear-gradient(135deg, var(--emerald), #059669)' : 'rgba(255,255,255,0.06)',
+                background: i <= step ? 'linear-gradient(135deg, var(--purple), var(--cyan))' : 'rgba(255,255,255,0.06)',
                 border: `1px solid ${i <= step ? 'transparent' : 'var(--border)'}`,
                 display: 'flex', alignItems: 'center', justifyContent: 'center',
                 fontFamily: 'Orbitron', fontWeight: 800, fontSize: '0.8rem',
                 color: i <= step ? '#fff' : 'var(--text-muted)',
                 transition: 'all 0.4s ease',
-                boxShadow: i <= step ? '0 0 15px rgba(16,185,129,0.3)' : 'none',
+                boxShadow: i <= step ? '0 0 15px rgba(0,243,255,0.3)' : 'none',
               }}>{i < step ? '✓' : i + 1}</div>
               {i < STEPS.length - 1 && (
                 <div style={{ width: 40, height: 2, background: i < step ? 'var(--cyan)' : 'var(--border)', borderRadius: 1, transition: 'all 0.4s ease' }} />
@@ -161,13 +161,13 @@ export default function Signup() {
                   {GAMES_LIST.map(game => (
                     <button key={game} type="button" onClick={() => toggleGame(game)} style={{
                       padding: '8px 16px', borderRadius: 100,
-                      background: form.games.includes(game) ? 'linear-gradient(135deg, var(--emerald), #059669)' : 'rgba(255,255,255,0.06)',
+                      background: form.games.includes(game) ? 'linear-gradient(135deg, var(--purple), var(--cyan))' : 'rgba(255,255,255,0.06)',
                       border: `1px solid ${form.games.includes(game) ? 'transparent' : 'var(--border)'}`,
                       color: form.games.includes(game) ? '#fff' : 'var(--text-secondary)',
                       fontFamily: 'Rajdhani', fontWeight: 700, fontSize: '0.85rem',
                       cursor: 'pointer', transition: 'all 0.3s ease',
                       transform: form.games.includes(game) ? 'scale(1.05)' : 'scale(1)',
-                      boxShadow: form.games.includes(game) ? '0 0 15px rgba(16,185,129,0.3)' : 'none',
+                      boxShadow: form.games.includes(game) ? '0 0 15px rgba(0,243,255,0.3)' : 'none',
                     }}>{game}</button>
                   ))}
                 </div>

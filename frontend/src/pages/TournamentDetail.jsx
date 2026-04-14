@@ -124,7 +124,7 @@ export default function TournamentDetail() {
           <div style={{ display: 'flex', flexDirection: 'column', gap: 24 }}>
             {/* Description */}
             <div className="glass-card" style={{ padding: 28 }}>
-              <h2 style={{ fontFamily: 'Orbitron', fontSize: '1rem', fontWeight: 700, marginBottom: 14, color: 'var(--emerald)' }}>
+              <h2 style={{ fontFamily: 'Orbitron', fontSize: '1rem', fontWeight: 700, marginBottom: 14, color: 'var(--cyan)' }}>
                 📋 About This Tournament
               </h2>
               <p style={{ color: 'var(--text-secondary)', lineHeight: 1.9, fontSize: '0.95rem' }}>
@@ -134,7 +134,7 @@ export default function TournamentDetail() {
 
             {/* Tournament Details Grid */}
             <div className="glass-card" style={{ padding: 28 }}>
-              <h2 style={{ fontFamily: 'Orbitron', fontSize: '1rem', fontWeight: 700, marginBottom: 20, color: 'var(--emerald)' }}>
+              <h2 style={{ fontFamily: 'Orbitron', fontSize: '1rem', fontWeight: 700, marginBottom: 20, color: 'var(--cyan)' }}>
                 📊 Tournament Details
               </h2>
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 20 }}>
@@ -161,7 +161,7 @@ export default function TournamentDetail() {
             {/* Rules */}
             {rules.length > 0 && (
               <div className="glass-card" style={{ padding: 28 }}>
-                <h2 style={{ fontFamily: 'Orbitron', fontSize: '1rem', fontWeight: 700, marginBottom: 16, color: 'var(--emerald)' }}>
+                <h2 style={{ fontFamily: 'Orbitron', fontSize: '1rem', fontWeight: 700, marginBottom: 16, color: 'var(--cyan)' }}>
                   📜 Tournament Rules
                 </h2>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
@@ -173,7 +173,7 @@ export default function TournamentDetail() {
                     }}>
                       <div style={{
                         width: 26, height: 26, borderRadius: 8, flexShrink: 0,
-                        background: 'linear-gradient(135deg, var(--emerald), #059669)',
+                        background: 'linear-gradient(135deg, var(--purple), var(--cyan))',
                         display: 'flex', alignItems: 'center', justifyContent: 'center',
                         fontFamily: 'Orbitron', fontWeight: 800, fontSize: '0.7rem',
                       }}>{i + 1}</div>
@@ -207,7 +207,7 @@ export default function TournamentDetail() {
                   </span>
                 </div>
                 <div className="slots-bar" style={{ height: 8 }}>
-                  <div className="slots-fill" style={{ width: `${pct}%`, background: pct >= 90 ? 'var(--pink)' : `linear-gradient(90deg, var(--emerald), #34d399)` }} />
+                  <div className="slots-fill" style={{ width: `${pct}%`, background: pct >= 90 ? 'var(--pink)' : `linear-gradient(90deg, var(--purple), var(--cyan))` }} />
                 </div>
                 {isFull && <p style={{ color: 'var(--pink)', fontFamily: 'Rajdhani', fontWeight: 600, fontSize: '0.82rem', marginTop: 8, textAlign: 'center' }}>⚠️ Tournament is FULL</p>}
               </div>

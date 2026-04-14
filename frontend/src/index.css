@@ -2,28 +2,26 @@
 
 /* ===== CSS VARIABLES ===== */
 :root {
-  --bg-primary: #020617;
-  --bg-secondary: #0f172a;
+  --bg-primary: #02020a;
+  --bg-secondary: #050512;
   --bg-card: rgba(255,255,255,0.03);
   --bg-card-hover: rgba(255,255,255,0.06);
-  --emerald: #10b981;
-  --emerald-glow: #34d399;
-  --slate: #1e293b;
-  --silver: #94a3b8;
-  --cyan: #10b981; /* Re-mapping cyan for compatibility */
-  --purple: #1e293b; /* Re-mapping purple to slate */
-  --pink: #ef4444;
-  --orange: #f59e0b;
-  --yellow: #fbbf24;
-  --green: #10b981;
-  --text-primary: #f8fafc;
-  --text-secondary: #94a3b8;
-  --text-muted: #475569;
-  --border: rgba(255,255,255,0.05);
-  --border-glow: rgba(16,185,129,0.2);
-  --glow-cyan: 0 0 20px rgba(16,185,129,0.3), 0 0 40px rgba(16,185,129,0.1);
-  --glow-purple: 0 0 20px rgba(30,41,59,0.3);
-  --glow-pink: 0 0 20px rgba(239,68,68,0.3);
+  --cyan: #00f3ff;
+  --cyan-glow: rgba(0,243,255,0.4);
+  --purple: #7b2fff;
+  --purple-glow: rgba(123,47,255,0.4);
+  --pink: #ff2d78;
+  --orange: #ff6b35;
+  --yellow: #ffd60a;
+  --green: #00ff88;
+  --text-primary: #ffffff;
+  --text-secondary: rgba(255,255,255,0.7);
+  --text-muted: rgba(255,255,255,0.4);
+  --border: rgba(255,255,255,0.08);
+  --border-glow: rgba(0,243,255,0.2);
+  --glow-cyan: 0 0 20px rgba(0,243,255,0.5), 0 0 40px rgba(0,243,255,0.2);
+  --glow-purple: 0 0 20px rgba(123,47,255,0.5), 0 0 40px rgba(123,47,255,0.2);
+  --glow-pink: 0 0 20px rgba(255,45,120,0.5);
   --radius: 20px;
   --radius-sm: 10px;
   --radius-lg: 32px;

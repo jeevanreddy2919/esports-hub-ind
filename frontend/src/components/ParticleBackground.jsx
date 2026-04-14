@@ -26,7 +26,7 @@ export default function ParticleBackground() {
         this.y = Math.random() * canvas.height;
         this.vx = (Math.random() - 0.5) * 0.4;
         this.vy = (Math.random() - 0.5) * 0.4;
-        const colors = ['rgba(16, 185, 129, 0.08)', 'rgba(123, 47, 255, 0.06)', 'rgba(0, 243, 255, 0.05)'];
+        const colors = ['rgba(0, 243, 255, 0.08)', 'rgba(123, 47, 255, 0.06)', 'rgba(255, 45, 120, 0.05)'];
         this.color = colors[Math.floor(Math.random() * colors.length)];
       }
       update() {
