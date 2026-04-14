@@ -44,8 +44,9 @@ export default function ChatBot() {
       const history = messages.slice(-6);
       const res = await chatAPI.send({ message: msg, history });
       setMessages(prev => [...prev, { role: 'bot', text: res.data.reply }]);
-    } catch {
-      setMessages(prev => [...prev, { role: 'bot', text: "Sorry, I'm offline right now! 😅 Check back soon, Gamer! Visit our Tournaments page for help." }]);
+    } catch (err) {
+      console.error('ChatBot Frontend Error:', err);
+      setMessages(prev => [...prev, { role: 'bot', text: "I'm having a slight connection glitch! 🧠 But don't worry—you can always find live schedules and details on our **Tournaments** page. Try again in a moment! 🚀" }]);
     } finally {
       setLoading(false);
     }
