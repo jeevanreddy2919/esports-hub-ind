@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { tournamentAPI } from '../services/api';
-import logo from '../assets/logo.png';
+import logo from '../assets/logo_final.png';
 
 const GAMES = [
   { name: 'BGMI', icon: '🎯', color: '#FF6B35' },
