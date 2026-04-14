@@ -126,7 +126,7 @@ export default function Home() {
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 60, alignItems: 'center' }}>
             <div className="hero-content">
               <div className="hero-tag anim-fade-up delay-100">
-                🇮🇳 India's #1 Esports Platform
+                India's #1 Esports Platform
               </div>
               <h1 className="hero-title anim-fade-up delay-200">
                 <span className="gradient-text">DOMINATE</span>
