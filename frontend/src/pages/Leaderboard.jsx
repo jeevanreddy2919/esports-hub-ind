@@ -25,7 +25,7 @@ export default function Leaderboard() {
       {/* Header */}
       <div style={{
         padding: '48px 0 32px',
-        background: 'radial-gradient(ellipse 80% 60% at 50% 0%, rgba(255,214,10,0.07) 0%, transparent 70%)',
+        background: 'radial-gradient(ellipse 80% 60% at 50% 0%, rgba(16,185,129,0.05) 0%, transparent 70%)',
         borderBottom: '1px solid var(--border)',
         textAlign: 'center',
       }}>

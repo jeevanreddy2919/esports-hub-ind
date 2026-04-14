@@ -16,10 +16,10 @@ const GAMES = [
 ];
 
 const STATS = [
-  { value: '50K+', label: 'Players', color: 'var(--cyan)' },
+  { value: '50K+', label: 'Players', color: 'var(--emerald)' },
   { value: '₹2Cr+', label: 'Prize Pool', color: 'var(--yellow)' },
-  { value: '200+', label: 'Tournaments', color: 'var(--purple)' },
-  { value: '28', label: 'States', color: 'var(--green)' },
+  { value: '200+', label: 'Tournaments', color: 'var(--emerald)' },
+  { value: '28', label: 'States', color: 'var(--silver)' },
 ];
 
 const TICKER_ITEMS = [
@@ -57,7 +57,7 @@ function TournamentCard({ t }) {
             <span className="info-label">🎯 Slots</span>
             <span className="info-value">{t.slots_filled}/{t.slots}</span>
             <div className="slots-bar">
-              <div className="slots-fill" style={{ width: `${pct}%`, background: t.banner_color || 'var(--cyan)' }} />
+              <div className="slots-fill" style={{ width: `${pct}%`, background: t.banner_color || 'var(--emerald)' }} />
             </div>
           </div>
           <div className="info-item">
@@ -125,23 +125,22 @@ export default function Home() {
         <div className="container">
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 60, alignItems: 'center' }}>
             <div className="hero-content">
-              <div className="hero-tag anim-fade-up delay-100">
-                India's #1 Esports Platform
+              <div className="hero-tag anim-fade-up delay-100" style={{ background: 'rgba(16, 185, 129, 0.1)', borderColor: 'rgba(16, 185, 129, 0.3)', color: 'var(--emerald)' }}>
+                India's Elite Esports Arena
               </div>
               <h1 className="hero-title anim-fade-up delay-200">
-                <span className="gradient-text">DOMINATE</span>
+                <span className="gradient-text" style={{ background: 'linear-gradient(135deg, var(--emerald), #34d399, var(--silver))', WebkitBackgroundClip: 'text' }}>UNLEASH</span>
                 <br />
-                THE ARENA
+                YOUR POTENTIAL
               </h1>
               <p className="hero-description anim-fade-up delay-300">
-                India's premier esports hub for BGMI, Valorant, Free Fire & more.
-                Join live tournaments, track leaderboards, and rise to the top! 🏆
+                Join India's most prestigious esports platform. Track tournaments, compete with masters, and chat with **NeuroGamer** to rise to the top. 🧠
               </p>
               <div style={{ display: 'flex', gap: 16, marginBottom: 48, flexWrap: 'wrap' }} className="anim-fade-up delay-400">
-                <Link to="/tournaments" className="btn btn-primary btn-lg">
+                <Link to="/tournaments" className="btn btn-primary btn-lg" style={{ background: 'linear-gradient(135deg, var(--emerald), #059669)' }}>
                   🏆 Join Tournament
                 </Link>
-                <Link to="/leaderboard" className="btn btn-secondary btn-lg">
+                <Link to="/leaderboard" className="btn btn-secondary btn-lg" style={{ borderColor: 'var(--emerald)', color: 'var(--emerald)' }}>
                   📊 Leaderboard
                 </Link>
               </div>
@@ -250,8 +249,8 @@ export default function Home() {
           <div className="glass-card" style={{
             padding: '60px 48px',
             textAlign: 'center',
-            background: 'linear-gradient(135deg, rgba(123,47,255,0.15), rgba(0,243,255,0.08))',
-            borderColor: 'rgba(0,243,255,0.2)',
+            background: 'linear-gradient(135deg, rgba(16, 185, 129, 0.1), rgba(15, 23, 42, 0.4))',
+            borderColor: 'rgba(16, 185, 129, 0.2)',
             position: 'relative',
             overflow: 'hidden',
           }}>

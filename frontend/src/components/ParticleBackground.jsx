@@ -7,7 +7,7 @@ export default function ParticleBackground() {
     const canvas = canvasRef.current;
     const ctx = canvas.getContext('2d');
     let animId;
-    let particles = [];
+    let blobs = [];
 
     const resize = () => {
       canvas.width = window.innerWidth;
@@ -16,60 +16,49 @@ export default function ParticleBackground() {
     resize();
     window.addEventListener('resize', resize);
 
-    class Particle {
-      constructor() { this.reset(); }
+    class Blob {
+      constructor() {
+        this.reset();
+      }
       reset() {
+        this.size = Math.random() * (canvas.width * 0.4) + (canvas.width * 0.2);
         this.x = Math.random() * canvas.width;
-        this.y = canvas.height + 10;
-        this.size = Math.random() * 2.5 + 0.5;
-        this.speedY = -(Math.random() * 0.6 + 0.2);
-        this.speedX = (Math.random() - 0.5) * 0.4;
-        this.opacity = 0;
-        this.maxOpacity = Math.random() * 0.5 + 0.2;
-        this.fadeIn = true;
-        const colors = ['#00f3ff', '#7b2fff', '#ff2d78', '#00ff88', '#ffd60a'];
+        this.y = Math.random() * canvas.height;
+        this.vx = (Math.random() - 0.5) * 0.4;
+        this.vy = (Math.random() - 0.5) * 0.4;
+        const colors = ['rgba(16, 185, 129, 0.08)', 'rgba(123, 47, 255, 0.06)', 'rgba(0, 243, 255, 0.05)'];
         this.color = colors[Math.floor(Math.random() * colors.length)];
-        this.life = 0;
-        this.maxLife = Math.random() * 300 + 200;
       }
       update() {
-        this.x += this.speedX;
-        this.y += this.speedY;
-        this.life++;
-        if (this.fadeIn && this.opacity < this.maxOpacity) {
-          this.opacity += 0.008;
-        } else {
-          this.fadeIn = false;
-        }
-        if (this.life > this.maxLife * 0.7) {
-          this.opacity -= 0.006;
-        }
-        if (this.opacity <= 0 || this.y < -20) this.reset();
+        this.x += this.vx;
+        this.y += this.vy;
+        if (this.x < -this.size) this.x = canvas.width + this.size;
+        if (this.x > canvas.width + this.size) this.x = -this.size;
+        if (this.y < -this.size) this.y = canvas.height + this.size;
+        if (this.y > canvas.height + this.size) this.y = -this.size;
       }
       draw() {
-        ctx.save();
-        ctx.globalAlpha = Math.max(0, this.opacity);
-        ctx.fillStyle = this.color;
-        ctx.shadowBlur = 8;
-        ctx.shadowColor = this.color;
+        const gradient = ctx.createRadialGradient(this.x, this.y, 0, this.x, this.y, this.size);
+        gradient.addColorStop(0, this.color);
+        gradient.addColorStop(1, 'transparent');
+        ctx.fillStyle = gradient;
         ctx.beginPath();
         ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
         ctx.fill();
-        ctx.restore();
       }
     }
 
-    for (let i = 0; i < 80; i++) {
-      const p = new Particle();
-      p.y = Math.random() * canvas.height;
-      p.life = Math.random() * p.maxLife * 0.7;
-      p.opacity = Math.random() * p.maxOpacity;
-      particles.push(p);
+    for (let i = 0; i < 6; i++) {
+      blobs.push(new Blob());
     }
 
     const animate = () => {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
-      particles.forEach(p => { p.update(); p.draw(); });
+      ctx.globalCompositeOperation = 'screen';
+      blobs.forEach(b => {
+        b.update();
+        b.draw();
+      });
       animId = requestAnimationFrame(animate);
     };
     animate();
@@ -80,5 +69,6 @@ export default function ParticleBackground() {
     };
   }, []);
 
-  return <canvas ref={canvasRef} id="particles-canvas" />;
+  return <canvas ref={canvasRef} id="particles-canvas" style={{ filter: 'blur(30px)' }} />;
 }
+

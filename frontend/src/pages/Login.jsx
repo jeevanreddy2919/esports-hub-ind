@@ -49,7 +49,7 @@ export default function Login() {
         {/* Glow accent */}
         <div style={{
           position: 'absolute', top: -1, left: '20%', right: '20%', height: 2,
-          background: 'linear-gradient(90deg, transparent, var(--cyan), var(--purple), transparent)',
+          background: 'linear-gradient(90deg, transparent, var(--emerald), var(--silver), transparent)',
           borderRadius: 2,
         }} />
 
