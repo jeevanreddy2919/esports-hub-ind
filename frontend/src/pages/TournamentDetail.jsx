@@ -73,7 +73,7 @@ export default function TournamentDetail() {
           overflow: 'hidden',
           marginBottom: 32,
           position: 'relative',
-          height: 280,
+          minHeight: 'clamp(200px, 40vh, 280px)',
           background: `linear-gradient(135deg, ${tournament.banner_color}33, ${tournament.banner_color}11)`,
           border: '1px solid var(--border)',
         }}>
@@ -90,7 +90,7 @@ export default function TournamentDetail() {
           <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top, rgba(4,4,15,0.95) 0%, transparent 60%)' }} />
 
           <div style={{
-            position: 'absolute', bottom: 32, left: 32, right: 32, zIndex: 1,
+            position: 'absolute', bottom: 'clamp(16px, 5vw, 32px)', left: 'clamp(16px, 5vw, 32px)', right: 'clamp(16px, 5vw, 32px)', zIndex: 1,
             display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', gap: 16, flexWrap: 'wrap'
           }}>
             <div>
@@ -107,7 +107,7 @@ export default function TournamentDetail() {
                 Organized by {tournament.organizer}
               </div>
             </div>
-            <div style={{ textAlign: 'right' }}>
+            <div className="detail-hero-right" style={{ textAlign: 'right', flexShrink: 0 }}>
               <div style={{ fontFamily: 'Orbitron', fontSize: '0.7rem', color: 'var(--text-muted)', marginBottom: 4, letterSpacing: '0.1em' }}>PRIZE POOL</div>
               <div style={{
                 fontFamily: 'Orbitron', fontSize: 'clamp(1.5rem, 3vw, 2.5rem)', fontWeight: 900,
@@ -119,7 +119,7 @@ export default function TournamentDetail() {
           </div>
         </div>
 
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 340px', gap: 28, alignItems: 'start' }}>
+        <div className="grid-2-1" style={{ gap: 28, alignItems: 'start' }}>
           {/* Main Info */}
           <div style={{ display: 'flex', flexDirection: 'column', gap: 24 }}>
             {/* Description */}
@@ -137,7 +137,7 @@ export default function TournamentDetail() {
               <h2 style={{ fontFamily: 'Orbitron', fontSize: '1rem', fontWeight: 700, marginBottom: 20, color: 'var(--cyan)' }}>
                 📊 Tournament Details
               </h2>
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 20 }}>
+              <div className="grid-2" style={{ gap: 20 }}>
                 {[
                   { icon: '🎮', label: 'Game', value: tournament.game },
                   { icon: '📍', label: 'Location', value: tournament.location },
@@ -186,7 +186,7 @@ export default function TournamentDetail() {
           </div>
 
           {/* Sidebar */}
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 20, position: 'sticky', top: 100 }}>
+          <div className="detail-sidebar" style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
             {/* Register Card */}
             <div className="glass-card" style={{ padding: 28, borderColor: registered ? 'rgba(0,255,136,0.3)' : 'rgba(0,243,255,0.2)' }}>
               <div style={{ textAlign: 'center', marginBottom: 24 }}>

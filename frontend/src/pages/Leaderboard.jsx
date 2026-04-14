@@ -70,9 +70,9 @@ export default function Leaderboard() {
             {/* Top 3 Podium */}
             {top3.length === 3 && (
               <div style={{
-                display: 'grid', gridTemplateColumns: '1fr 1.15fr 1fr',
+                display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
                 gap: 16, marginBottom: 48, alignItems: 'flex-end',
-              }} className="anim-fade-up">
+              }} className="anim-fade-up leaderboard-podium">
                 {/* 2nd Place */}
                 <div className="glass-card" style={{
                   padding: '28px 20px', textAlign: 'center',
@@ -156,28 +156,28 @@ export default function Leaderboard() {
                 </h2>
                 {rest.map((player, i) => (
                   <div key={player.id} className="leaderboard-row anim-fade-up" style={{ animationDelay: `${i * 0.05}s` }}>
-                    <div className={`rank-badge rank-other`}>#{i + 4}</div>
-                    <div className="player-avatar" style={{ background: player.avatar_color, boxShadow: `0 0 15px ${player.avatar_color}50` }}>
-                      {player.player_name[0]}
-                    </div>
-                    <div className="player-info">
-                      <div className="player-name">{player.player_name}</div>
-                      <div className="player-meta">
-                        {player.state}
-                        {game === 'all' && <span> · {GAME_ICONS[player.game]} {player.game}</span>}
+                    <div className="leaderboard-row-left">
+                      <div className={`rank-badge rank-other`}>#{i + 4}</div>
+                      <div className="player-avatar" style={{ background: player.avatar_color, boxShadow: `0 0 15px ${player.avatar_color}50` }}>
+                        {player.player_name[0]}
+                      </div>
+                      <div className="player-info">
+                        <div className="player-name">{player.player_name}</div>
+                        <div className="player-meta">
+                          {player.state}
+                          {game === 'all' && <span className="hide-mobile"> · {GAME_ICONS[player.game]} {player.game}</span>}
+                        </div>
                       </div>
                     </div>
-                    <div style={{ fontSize: '0.8rem', color: 'var(--text-muted)', fontFamily: 'Rajdhani', textAlign: 'center' }}>
-                      <div style={{ fontWeight: 700, color: 'var(--text-secondary)' }}>{player.wins}</div>
-                      <div>wins</div>
-                    </div>
-                    <div style={{ fontSize: '0.8rem', color: 'var(--text-muted)', fontFamily: 'Rajdhani', textAlign: 'center' }}>
-                      <div style={{ fontWeight: 700, color: 'var(--text-secondary)' }}>{player.tournaments_played}</div>
-                      <div>played</div>
-                    </div>
-                    <div className="player-stats">
-                      <div className="player-points">{player.points.toLocaleString()}</div>
-                      <div className="player-wins">PTS</div>
+                    <div className="leaderboard-row-stats">
+                      <div className="row-stat hide-small">
+                        <div className="stat-val">{player.wins}</div>
+                        <div className="stat-label">wins</div>
+                      </div>
+                      <div className="player-points-box">
+                        <div className="player-points">{player.points.toLocaleString()}</div>
+                        <div className="player-wins">PTS</div>
+                      </div>
                     </div>
                   </div>
                 ))}

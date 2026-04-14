@@ -123,7 +123,7 @@ export default function Home() {
         <div className="hero-bg" />
         <div className="hero-grid" />
         <div className="container">
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 60, alignItems: 'center' }}>
+          <div className="grid-2" style={{ gap: 60, alignItems: 'center' }}>
             <div className="hero-content">
               <div className="hero-tag anim-fade-up delay-100" style={{ background: 'rgba(0, 243, 255, 0.1)', borderColor: 'rgba(0, 243, 255, 0.3)', color: 'var(--cyan)' }}>
                 India's #1 Esports Elite
@@ -136,7 +136,7 @@ export default function Home() {
               <p className="hero-description anim-fade-up delay-300">
                 Join India's fastest growing esports community. Track tournaments, compete with pros, and chat with **NeuroGamer** to dominate. 🧠
               </p>
-              <div style={{ display: 'flex', gap: 16, marginBottom: 48, flexWrap: 'wrap' }} className="anim-fade-up delay-400">
+              <div style={{ display: 'flex', gap: 16, marginBottom: 48, flexWrap: 'wrap' }} className="anim-fade-up delay-400 hero-btns">
                 <Link to="/tournaments" className="btn btn-primary btn-lg" style={{ background: 'linear-gradient(135deg, var(--cyan), var(--purple))' }}>
                   🏆 Join Tournament
                 </Link>
@@ -159,9 +159,9 @@ export default function Home() {
               </div>
             </div>
             {/* Hero Visual */}
-            <div style={{ textAlign: 'center', position: 'relative' }} className="anim-slide-right delay-300">
+            <div style={{ textAlign: 'center', position: 'relative', marginTop: 'clamp(40px, 8vw, 0px)' }} className="anim-slide-right delay-300 hero-visual-container">
               <div style={{
-                width: 360, height: 360,
+                width: 'min(360px, 80vw)', height: 'min(360px, 80vw)',
                 borderRadius: '50%',
                 background: 'radial-gradient(circle, rgba(123,47,255,0.2) 0%, rgba(0,243,255,0.1) 50%, transparent 70%)',
                 display: 'flex',
@@ -170,7 +170,7 @@ export default function Home() {
                 margin: '0 auto',
                 position: 'relative',
               }} className="anim-float">
-                <img src={logo} alt="Esports Hub" style={{ width: 280, filter: 'drop-shadow(0 0 40px rgba(0,243,255,0.5))' }} />
+                <img src={logo} alt="Esports Hub" style={{ width: '75%', filter: 'drop-shadow(0 0 40px rgba(0,243,255,0.5))' }} />
                 {/* Orbiting badges */}
                 {['🎯', '⚡', '🔥', '🏆'].map((emoji, i) => (
                   <div key={i} style={{

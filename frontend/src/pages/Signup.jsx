@@ -76,7 +76,7 @@ export default function Signup() {
         }}>{emoji}</div>
       ))}
 
-      <div className="auth-card" style={{ maxWidth: 520, position: 'relative', zIndex: 2 }}>
+      <div className="auth-card" style={{ position: 'relative', zIndex: 2 }}>
         <div style={{
           position: 'absolute', top: -1, left: '15%', right: '15%', height: 2,
           background: 'linear-gradient(90deg, transparent, var(--cyan), var(--purple), transparent)',
@@ -87,21 +87,21 @@ export default function Signup() {
         </div>
 
         {/* Step indicator */}
-        <div style={{ display: 'flex', gap: 8, marginBottom: 28, justifyContent: 'center' }}>
+        <div style={{ display: 'flex', gap: 'clamp(4px, 2vw, 8px)', marginBottom: 28, justifyContent: 'center', flexWrap: 'wrap' }}>
           {STEPS.map((s, i) => (
-            <div key={s} style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+            <div key={s} style={{ display: 'flex', alignItems: 'center', gap: 'clamp(4px, 2vw, 8px)' }}>
               <div style={{
-                width: 32, height: 32, borderRadius: 10,
+                width: 'clamp(28px, 6vw, 32px)', height: 'clamp(28px, 6vw, 32px)', borderRadius: 10,
                 background: i <= step ? 'linear-gradient(135deg, var(--purple), var(--cyan))' : 'rgba(255,255,255,0.06)',
                 border: `1px solid ${i <= step ? 'transparent' : 'var(--border)'}`,
                 display: 'flex', alignItems: 'center', justifyContent: 'center',
-                fontFamily: 'Orbitron', fontWeight: 800, fontSize: '0.8rem',
+                fontFamily: 'Orbitron', fontWeight: 800, fontSize: '0.75rem',
                 color: i <= step ? '#fff' : 'var(--text-muted)',
                 transition: 'all 0.4s ease',
                 boxShadow: i <= step ? '0 0 15px rgba(0,243,255,0.3)' : 'none',
               }}>{i < step ? '✓' : i + 1}</div>
               {i < STEPS.length - 1 && (
-                <div style={{ width: 40, height: 2, background: i < step ? 'var(--cyan)' : 'var(--border)', borderRadius: 1, transition: 'all 0.4s ease' }} />
+                <div style={{ width: 'clamp(20px, 8vw, 40px)', height: 2, background: i < step ? 'var(--cyan)' : 'var(--border)', borderRadius: 1, transition: 'all 0.4s ease' }} />
               )}
             </div>
           ))}
