@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const fetch = require('node-fetch'); // Required for Gemini API on Node.js
-const Tournament = require('../models/Tournament');
+const { supabase } = require('../db/database');
 
 const GEMINI_API_KEY = process.env.GEMINI_API_KEY || '';
 
@@ -30,7 +30,10 @@ router.post('/', async (req, res) => {
     // Safely Fetch Live Tournament Data
     let liveDataStr = '';
     try {
-      const liveTournaments = await Tournament.find({ status: { $ne: 'past' } }).lean();
+      const { data: liveTournaments, error } = await supabase.from('tournaments')
+        .select('title, game, status, slots, slots_filled')
+        .neq('status', 'past');
+      if (error) throw error;
       liveDataStr = liveTournaments.map(t => 
         `- ${t.title} (${t.game}): ${t.status.toUpperCase()}, Slots: ${t.slots_filled}/${t.slots}`
       ).join('\n');

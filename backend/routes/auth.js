@@ -1,7 +1,7 @@
 const express = require('express');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const User = require('../models/User');
+const { supabase } = require('../db/database');
 const router = express.Router();
 
 const JWT_SECRET = process.env.JWT_SECRET || 'esportshubindia_secret_2025';
@@ -12,22 +12,36 @@ router.post('/signup', async (req, res) => {
     const { name, email, password, state, games } = req.body;
     if (!name || !email || !password) return res.status(400).json({ error: 'Name, email and password required' });
     
-    const existing = await User.findOne({ email });
+    // Check if user exists
+    const { data: existing, error: findErr } = await supabase
+      .from('users')
+      .select('*')
+      .eq('email', email)
+      .single();
+
     if (existing) return res.status(409).json({ error: 'Email already registered' });
 
     const hashed = await bcrypt.hash(password, 10);
-    const user = new User({
-      name,
-      email,
-      password: hashed,
-      state: state || 'Maharashtra',
-      games: games || []
-    });
+    
+    // Insert new user
+    const { data: user, error: insertErr } = await supabase
+      .from('users')
+      .insert([
+        {
+          name,
+          email,
+          password: hashed,
+          state: state || 'Maharashtra',
+          games: games || []
+        }
+      ])
+      .select()
+      .single();
+      
+    if (insertErr) throw insertErr;
 
-    await user.save();
-
-    const token = jwt.sign({ id: user._id, email: user.email }, JWT_SECRET, { expiresIn: '7d' });
-    const { password: _, ...safeUser } = user._doc;
+    const token = jwt.sign({ id: user.id, email: user.email }, JWT_SECRET, { expiresIn: '7d' });
+    const { password: _, ...safeUser } = user;
     
     res.status(201).json({ token, user: safeUser });
   } catch (err) {
@@ -41,14 +55,21 @@ router.post('/login', async (req, res) => {
     const { identifier, password } = req.body;
     if (!identifier || !password) return res.status(400).json({ error: 'Email or Full Name and password required' });
 
-    const user = await User.findOne({ $or: [{ email: identifier }, { name: identifier }] });
-    if (!user) return res.status(401).json({ error: 'Invalid credentials' });
+    // Check user by email or name
+    const { data: user, error } = await supabase
+      .from('users')
+      .select('*')
+      .or(`email.eq.${identifier},name.eq.${identifier}`)
+      .limit(1)
+      .single();
+
+    if (error || !user) return res.status(401).json({ error: 'Invalid credentials' });
 
     const valid = await bcrypt.compare(password, user.password);
     if (!valid) return res.status(401).json({ error: 'Invalid credentials' });
 
-    const token = jwt.sign({ id: user._id, email: user.email }, JWT_SECRET, { expiresIn: '7d' });
-    const { password: _, ...safeUser } = user._doc;
+    const token = jwt.sign({ id: user.id, email: user.email }, JWT_SECRET, { expiresIn: '7d' });
+    const { password: _, ...safeUser } = user;
     res.json({ token, user: safeUser });
   } catch (err) {
     res.status(500).json({ error: err.message });
@@ -62,8 +83,13 @@ router.get('/me', async (req, res) => {
     if (!token) return res.status(401).json({ error: 'No token' });
     const decoded = jwt.verify(token, JWT_SECRET);
     
-    const user = await User.findById(decoded.id).select('-password');
-    if (!user) return res.status(404).json({ error: 'User not found' });
+    const { data: user, error } = await supabase
+      .from('users')
+      .select('id, name, email, state, games, created_at')
+      .eq('id', decoded.id)
+      .single();
+
+    if (error || !user) return res.status(404).json({ error: 'User not found' });
     
     res.json({ user });
   } catch (err) {

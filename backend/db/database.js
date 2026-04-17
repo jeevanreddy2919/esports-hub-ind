@@ -1,28 +1,106 @@
-const mongoose = require('mongoose');
-const User = require('../models/User');
-const Tournament = require('../models/Tournament');
-const Leaderboard = require('../models/Leaderboard');
+const { createClient } = require('@supabase/supabase-js');
+const { Pool } = require('pg');
+require('dotenv').config();
 
-const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017/esports_hub';
+const SUPABASE_URL = process.env.SUPABASE_URL;
+const SUPABASE_KEY = process.env.SUPABASE_KEY;
+const DATABASE_URL = process.env.DATABASE_URL;
+
+if (!SUPABASE_URL || !SUPABASE_KEY) {
+  console.error("❌ Missing Supabase URL or Key in .env");
+  process.exit(1);
+}
+
+const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
+
+const pool = new Pool({
+  connectionString: DATABASE_URL,
+  ssl: { rejectUnauthorized: false }
+});
 
 async function initDB() {
   try {
-    await mongoose.connect(MONGODB_URI);
-    console.log('🚀 Connected to MongoDB Atlas');
+    console.log('🚀 Connecting to Supabase PostgreSQL...');
 
-    // Seed data if empty
-    const tourCount = await Tournament.countDocuments();
+    // 1. Create Tables via raw SQL
+    await createTables();
+
+    // 2. Default Seeding mapping via Supabase REST
+    const { count: tourCount } = await supabase.from('tournaments').select('*', { count: 'exact', head: true });
     if (tourCount === 0) {
       await seedTournaments();
     }
 
-    const lbCount = await Leaderboard.countDocuments();
+    const { count: lbCount } = await supabase.from('leaderboard').select('*', { count: 'exact', head: true });
     if (lbCount === 0) {
       await seedLeaderboard();
     }
+
+    console.log('✅ Supabase Connection & Initialization Complete!');
   } catch (err) {
-    console.error('❌ MongoDB Connection Error:', err.message);
+    console.error('❌ Supabase Init Error:', err);
     process.exit(1);
+  }
+}
+
+async function createTables() {
+  const query = `
+    CREATE TABLE IF NOT EXISTS users (
+      id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+      name TEXT NOT NULL,
+      email TEXT UNIQUE NOT NULL,
+      password TEXT NOT NULL,
+      state TEXT DEFAULT 'India',
+      games JSONB DEFAULT '[]'::JSONB,
+      created_at TIMESTAMP WITH TIME ZONE DEFAULT timezone('utc'::text, now()) NOT NULL
+    );
+
+    CREATE TABLE IF NOT EXISTS tournaments (
+      id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+      title TEXT NOT NULL,
+      game TEXT NOT NULL,
+      status TEXT DEFAULT 'upcoming',
+      prize_pool TEXT,
+      slots INTEGER DEFAULT 0,
+      slots_filled INTEGER DEFAULT 0,
+      start_date TEXT,
+      end_date TEXT,
+      registration_deadline TEXT,
+      location TEXT,
+      organizer TEXT,
+      banner_color TEXT,
+      description TEXT,
+      rules JSONB DEFAULT '[]'::JSONB,
+      created_at TIMESTAMP WITH TIME ZONE DEFAULT timezone('utc'::text, now()) NOT NULL
+    );
+
+    CREATE TABLE IF NOT EXISTS registrations (
+      id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+      user_id UUID REFERENCES users(id) ON DELETE CASCADE,
+      tournament_id UUID REFERENCES tournaments(id) ON DELETE CASCADE,
+      created_at TIMESTAMP WITH TIME ZONE DEFAULT timezone('utc'::text, now()) NOT NULL,
+      UNIQUE(user_id, tournament_id)
+    );
+
+    CREATE TABLE IF NOT EXISTS leaderboard (
+      id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+      player_name TEXT NOT NULL,
+      game TEXT NOT NULL,
+      state TEXT,
+      rank INTEGER DEFAULT 0,
+      points INTEGER DEFAULT 0,
+      wins INTEGER DEFAULT 0,
+      tournaments_played INTEGER DEFAULT 0,
+      avatar_color TEXT,
+      created_at TIMESTAMP WITH TIME ZONE DEFAULT timezone('utc'::text, now()) NOT NULL
+    );
+  `;
+  const client = await pool.connect();
+  try {
+    await client.query(query);
+    console.log('✅ PostgreSQL Schema initialized');
+  } finally {
+    client.release();
   }
 }
 
@@ -99,10 +177,10 @@ async function seedTournaments() {
       organizer: 'Esports Hub India', banner_color: '#10B981',
       description: 'Special tournament for beginner BGMI players to kickstart their esports journey!',
       rules: ['Solo/Duo/Squad modes', 'New players welcome', 'Bronze-Silver tier only', 'Fair play mandatory']
-    },
+    }
   ];
 
-  await Tournament.insertMany(tournaments);
+  await supabase.from('tournaments').insert(tournaments);
   console.log('✅ Tournaments seeded');
 }
 
@@ -119,11 +197,11 @@ async function seedLeaderboard() {
     { player_name: 'StormSurge', game: 'Free Fire Max', state: 'Uttar Pradesh', rank: 3, points: 9200, wins: 44, tournaments_played: 59, avatar_color: '#8B5CF6' },
     { player_name: 'HeadshotKing', game: 'CS2', state: 'Gujarat', rank: 1, points: 9600, wins: 28, tournaments_played: 35, avatar_color: '#F59E0B' },
     { player_name: 'AWPMaster', game: 'CS2', state: 'Rajasthan', rank: 2, points: 9300, wins: 25, tournaments_played: 32, avatar_color: '#06B6D4' },
-    { player_name: 'BombSquad', game: 'CS2', state: 'Kerala', rank: 3, points: 9000, wins: 22, tournaments_played: 30, avatar_color: '#FF2D78' },
+    { player_name: 'BombSquad', game: 'CS2', state: 'Kerala', rank: 3, points: 9000, wins: 22, tournaments_played: 30, avatar_color: '#FF2D78' }
   ];
 
-  await Leaderboard.insertMany(players);
+  await supabase.from('leaderboard').insert(players);
   console.log('✅ Leaderboard seeded');
 }
 
-module.exports = { initDB };
+module.exports = { initDB, supabase };

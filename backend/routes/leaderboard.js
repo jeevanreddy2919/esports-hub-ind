@@ -1,15 +1,20 @@
 const express = require('express');
-const Leaderboard = require('../models/Leaderboard');
+const { supabase } = require('../db/database');
 const router = express.Router();
 
 // GET /api/leaderboard
 router.get('/', async (req, res) => {
   try {
     const { game } = req.query;
-    let filter = {};
-    if (game && game !== 'all') filter.game = game;
+    let query = supabase.from('leaderboard').select('*').order('points', { ascending: false });
+    
+    if (game && game !== 'all') {
+      query = query.eq('game', game);
+    }
 
-    const players = await Leaderboard.find(filter).sort({ points: -1 });
+    const { data: players, error } = await query;
+    if (error) throw error;
+
     res.json({ players });
   } catch (err) {
     res.status(500).json({ error: err.message });
