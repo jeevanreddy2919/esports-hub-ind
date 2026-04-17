@@ -1,5 +1,7 @@
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
+import { FaArrowLeft } from 'react-icons/fa';
 import { leaderboardAPI } from '../services/api';
 import Skeleton from '../components/common/Skeleton';
 import { GameIcon } from '../utils/gameLogos';
@@ -112,6 +114,7 @@ const PodiumCard = ({ player, rank, gameIcon }) => {
 };
 
 export default function Leaderboard() {
+  const navigate = useNavigate();
   const [players, setPlayers] = useState([]);
   const [loading, setLoading] = useState(true);
   const [game, setGame] = useState('all');
@@ -134,10 +137,37 @@ export default function Leaderboard() {
   if (top3[2]) podiumOrder.push({ p: top3[2], r: 3 });
 
   return (
-    <div className="page" style={{ background: 'var(--bg-primary)', overflowX: 'hidden' }}>
-      {/* Hero Header */}
-      <div style={{
-        padding: '80px 0 60px',
+    <div className="page" style={{ background: 'var(--bg-primary)', overflowX: 'hidden', paddingTop: 100 }}>
+      <div className="container">
+        {/* Back Button */}
+        <motion.button
+          initial={{ opacity: 0, x: -20 }}
+          animate={{ opacity: 1, x: 0 }}
+          onClick={() => navigate(-1)}
+          className="glass-card"
+          style={{
+            padding: '10px 18px',
+            display: 'flex',
+            alignItems: 'center',
+            gap: 10,
+            color: 'var(--cyan)',
+            fontFamily: 'Rajdhani',
+            fontWeight: 800,
+            fontSize: '0.9rem',
+            border: '1px solid rgba(0,243,255,0.2)',
+            cursor: 'pointer',
+            marginBottom: 30,
+            background: 'rgba(0,243,255,0.05)'
+          }}
+          onMouseEnter={e => { e.currentTarget.style.background = 'rgba(0,243,255,0.1)'; e.currentTarget.style.borderColor = 'var(--cyan)'; }}
+          onMouseLeave={e => { e.currentTarget.style.background = 'rgba(0,243,255,0.05)'; e.currentTarget.style.borderColor = 'rgba(0,243,255,0.2)'; }}
+        >
+          <FaArrowLeft /> BACK
+        </motion.button>
+
+        {/* Hero Header */}
+        <div style={{
+          padding: '40px 0 60px',
         position: 'relative',
         background: 'radial-gradient(ellipse at center 0%, rgba(123,47,255,0.15) 0%, transparent 75%)',
       }}>

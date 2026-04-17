@@ -1,6 +1,7 @@
 import { useState, useEffect, useCallback } from 'react';
-import { Link, useSearchParams } from 'react-router-dom';
+import { Link, useSearchParams, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
+import { FaArrowLeft } from 'react-icons/fa';
 import { tournamentAPI } from '../services/api';
 import Skeleton from '../components/common/Skeleton';
 import CountdownTimer from '../components/CountdownTimer';
@@ -92,6 +93,7 @@ function TournamentCard({ t, isSkeleton }) {
 }
 
 export default function Tournaments() {
+  const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const [tournaments, setTournaments] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -130,7 +132,35 @@ export default function Tournaments() {
   const upcomingCt = tournaments.filter(t => t.status === 'upcoming').length;
 
   return (
-    <div className="page" style={{ background: 'var(--bg-primary)' }}>
+    <div className="page" style={{ paddingTop: 100, minHeight: '100vh', background: 'var(--bg-primary)' }}>
+      <div className="container">
+        
+        {/* Back Button */}
+        <motion.button
+          initial={{ opacity: 0, x: -20 }}
+          animate={{ opacity: 1, x: 0 }}
+          onClick={() => navigate(-1)}
+          className="glass-card"
+          style={{
+            padding: '10px 18px',
+            display: 'flex',
+            alignItems: 'center',
+            gap: 10,
+            color: 'var(--cyan)',
+            fontFamily: 'Rajdhani',
+            fontWeight: 800,
+            fontSize: '0.9rem',
+            border: '1px solid rgba(0,243,255,0.2)',
+            cursor: 'pointer',
+            marginBottom: 30,
+            background: 'rgba(0,243,255,0.05)'
+          }}
+          onMouseEnter={e => { e.currentTarget.style.background = 'rgba(0,243,255,0.1)'; e.currentTarget.style.borderColor = 'var(--cyan)'; }}
+          onMouseLeave={e => { e.currentTarget.style.background = 'rgba(0,243,255,0.05)'; e.currentTarget.style.borderColor = 'rgba(0,243,255,0.2)'; }}
+        >
+          <FaArrowLeft /> BACK
+        </motion.button>
+
       {/* Header */}
       <div style={{
         padding: '56px 0 36px',

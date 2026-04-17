@@ -6,6 +6,8 @@ import Skeleton from '../components/common/Skeleton';
 import CountdownTimer from '../components/CountdownTimer';
 import logo from '../assets/logo_final.png';
 import { GameIcon } from '../utils/gameLogos';
+import { FaDiscord, FaInstagram, FaTelegramPlane, FaYoutube } from 'react-icons/fa';
+import { FaXTwitter } from 'react-icons/fa6';
 
 /* ─────────────── DATA ─────────────── */
 const GAMES = [
@@ -319,7 +321,7 @@ export default function Home() {
             </div>
 
             {/* Hero Visual */}
-            <div style={{ textAlign: 'center', position: 'relative', marginTop: -60, transform: 'scale(1.1)' }} className="anim-slide-right delay-300 hero-visual-container">
+            <div style={{ textAlign: 'center', position: 'relative', marginTop: -130, transform: 'scale(1.2)' }} className="anim-slide-right delay-300 hero-visual-container">
               <div style={{
                 width: 'min(360px, 80vw)', height: 'min(360px, 80vw)',
                 borderRadius: '50%',
@@ -656,26 +658,29 @@ export default function Home() {
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: 40, marginBottom: 48 }}>
             {/* Brand */}
             <div style={{ gridColumn: 'span 1' }}>
-              <img src={logo} alt="Esports Hub" style={{ height: 48, marginBottom: 16, filter: 'drop-shadow(0 0 8px rgba(0,243,255,0.3))' }} />
+              <img src={logo} alt="India Esports Hub" style={{ height: 48, marginBottom: 16, filter: 'drop-shadow(0 0 8px rgba(0,243,255,0.3))' }} />
               <p style={{ color: 'var(--text-muted)', fontSize: '0.88rem', lineHeight: 1.8, marginBottom: 20 }}>
                 Premier esports platform connecting players, tournaments, and communities.
               </p>
               {/* Social icons */}
               <div style={{ display: 'flex', gap: 10 }}>
                 {[
-                  { icon: '💬', color: '#5865F2', label: 'Discord' },
-                  { icon: '📸', color: '#E1306C', label: 'Instagram' },
-                  { icon: '✈️', color: '#0088CC', label: 'Telegram' },
-                  { icon: '▶️', color: '#FF0000', label: 'YouTube' },
+                  { icon: <FaDiscord />, color: '#5865F2', label: 'Discord' },
+                  { icon: <FaInstagram />, color: '#E1306C', label: 'Instagram' },
+                  { icon: <FaTelegramPlane />, color: '#0088CC', label: 'Telegram' },
+                  { icon: <FaYoutube />, color: '#FF0000', label: 'YouTube' },
+                  { icon: <FaXTwitter />, color: '#FFFFFF', label: 'X' },
                 ].map(s => (
                   <a key={s.label} href="#" title={s.label} style={{
                     width: 38, height: 38, borderRadius: '50%', display: 'flex',
-                    alignItems: 'center', justifyContent: 'center', fontSize: '1.1rem',
-                    background: `${s.color}15`, border: `1px solid ${s.color}30`,
+                    alignItems: 'center', justifyContent: 'center', fontSize: '1.2rem',
+                    background: 'rgba(255,255,255,0.03)', 
+                    border: '1px solid rgba(255,255,255,0.1)',
+                    color: '#fff',
                     transition: 'all 0.3s ease',
                   }}
-                    onMouseEnter={e => { e.currentTarget.style.background = `${s.color}30`; e.currentTarget.style.transform = 'translateY(-3px)'; }}
-                    onMouseLeave={e => { e.currentTarget.style.background = `${s.color}15`; e.currentTarget.style.transform = 'translateY(0)'; }}
+                    onMouseEnter={e => { e.currentTarget.style.background = `${s.color}25`; e.currentTarget.style.transform = 'translateY(-3px)'; e.currentTarget.style.borderColor = s.color; }}
+                    onMouseLeave={e => { e.currentTarget.style.background = 'rgba(255,255,255,0.03)'; e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.borderColor = 'rgba(255,255,255,0.1)'; }}
                   >
                     {s.icon}
                   </a>
@@ -706,7 +711,7 @@ export default function Home() {
 
             {/* Games */}
             <div>
-              <div style={{ fontFamily: 'Orbitron', fontWeight: 700, fontSize: '0.8rem', color: 'var(--purple)', letterSpacing: '0.12em', textTransform: 'uppercase', marginBottom: 20 }}>Games</div>
+              <div style={{ fontFamily: 'Orbitron', fontWeight: 700, fontSize: '0.8rem', color: 'var(--purple)', letterSpacing: '0.12em', textTransform: 'uppercase', marginBottom: 20 }}>Explore More Games</div>
               {GAMES.slice(0, 6).map(g => (
                 <Link key={g.name} to={`/tournaments?game=${g.name}`} style={{
                   display: 'block', color: 'var(--text-muted)', fontSize: '0.9rem',
@@ -723,20 +728,23 @@ export default function Home() {
             <div>
               <div style={{ fontFamily: 'Orbitron', fontWeight: 700, fontSize: '0.8rem', color: 'var(--pink)', letterSpacing: '0.12em', textTransform: 'uppercase', marginBottom: 20 }}>Community</div>
               {[
-                { label: '💬 Discord Server', href: '#' },
-                { label: '📸 Instagram', href: '#' },
-                { label: '✈️ Telegram Alerts', href: '#' },
-                { label: '▶️ YouTube Channel', href: '#' },
-                { label: '🐦 Twitter / X', href: '#' },
+                { label: 'Discord Server', icon: <FaDiscord />, href: '#' },
+                { label: 'Instagram', icon: <FaInstagram />, href: '#' },
+                { label: 'Telegram Alerts', icon: <FaTelegramPlane />, href: '#' },
+                { label: 'YouTube Channel', icon: <FaYoutube />, href: '#' },
+                { label: 'X (Twitter)', icon: <FaXTwitter />, href: '#' },
               ].map(l => (
                 <a key={l.label} href={l.href} target="_blank" rel="noreferrer" style={{
-                  display: 'block', color: 'var(--text-muted)', fontSize: '0.9rem',
-                  fontFamily: 'Rajdhani', fontWeight: 600, marginBottom: 10,
+                  display: 'flex', alignItems: 'center', gap: 10, color: 'var(--text-muted)', fontSize: '0.9rem',
+                  fontFamily: 'Rajdhani', fontWeight: 600, marginBottom: 12,
                   transition: 'color 0.3s',
                 }}
                   onMouseEnter={e => e.currentTarget.style.color = 'var(--pink)'}
                   onMouseLeave={e => e.currentTarget.style.color = 'var(--text-muted)'}
-                >{l.label}</a>
+                >
+                  <span style={{ fontSize: '1.1rem' }}>{l.icon}</span>
+                  {l.label}
+                </a>
               ))}
             </div>
           </div>
@@ -750,7 +758,7 @@ export default function Home() {
               © {new Date().getFullYear()} India Esports Hub · All Rights Reserved
             </div>
             <div style={{ color: 'var(--text-muted)', fontSize: '0.82rem', display: 'flex', alignItems: 'center', gap: 6 }}>
-              Proudly built in India 🇮🇳 · For Indian gamers, by Indian gamers
+              Proudly built in India · For Indian gamers, by Indian gamers
             </div>
             <div style={{ display: 'flex', gap: 20 }}>
               {['Privacy Policy', 'Terms of Service', 'Contact Us'].map(l => (
