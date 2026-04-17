@@ -12,7 +12,7 @@ A modern esports platform for Indian gamers to explore tournaments, rankings, an
 
 ## ⚙️ Tech Stack
 - Frontend & Backend: AI-assisted (Antigravity)
-- Deployment: Render
+- Deployment: Vercel
 - UI/UX: Custom designed
 
 ## 🤖 About AI Usage
@@ -27,7 +27,7 @@ However, the core work involved:
 This project demonstrates how AI can be used as a **development accelerator**, not a replacement for problem-solving and design thinking.
 
 ## 🌐 Live Demo
-https://esports-hub-ind.onrender.com
+https://esports-hub-ind.vercel.app
 
 ## 📌 Future Improvements
 - User authentication & profiles
