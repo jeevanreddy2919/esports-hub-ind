@@ -105,6 +105,9 @@ function TournamentCard({ t, isSkeleton }) {
 
 export default function Home() {
   const [isLoading, setIsLoading] = useState(true);
+  const [liveT, setLiveT] = useState([]);
+  const [upcomingT, setUpcomingT] = useState([]);
+  const [counter, setCounter] = useState({ players: 0, prize: 0, tournaments: 0 });
 
   useEffect(() => {
     const fetchData = async () => {
