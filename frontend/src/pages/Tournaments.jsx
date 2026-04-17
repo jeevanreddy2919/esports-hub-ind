@@ -4,10 +4,10 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { tournamentAPI } from '../services/api';
 import Skeleton from '../components/common/Skeleton';
 import CountdownTimer from '../components/CountdownTimer';
+import { GameIcon } from '../utils/gameLogos';
 
 const GAMES = ['all', 'BGMI', 'Valorant', 'Free Fire Max', 'CS2', 'MLBB', 'Tekken 8', 'Pokemon Unite', 'Call of Duty Mobile', 'Clash Royale'];
 const STATUSES = ['all', 'live', 'upcoming', 'past'];
-const GAME_ICONS = { BGMI: '🎯', Valorant: '⚡', 'Free Fire Max': '🔥', CS2: '🎮', MLBB: '⚔️', 'Tekken 8': '👊', 'Pokemon Unite': '🔮', 'Call of Duty Mobile': '🪖', 'Clash Royale': '👑' };
 
 function TournamentCard({ t, isSkeleton }) {
   if (isSkeleton) {
@@ -44,8 +44,8 @@ function TournamentCard({ t, isSkeleton }) {
           
           <div style={{ padding: '24px 26px', flex: 1, display: 'flex', flexDirection: 'column' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 16 }}>
-              <div className="shape-soft-hex" style={{ width: 52, height: 52, background: `${accentColor}22`, border: `1px solid ${accentColor}44`, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.6rem' }}>
-                {GAME_ICONS[t.game] || '🎮'}
+              <div className="shape-soft-hex" style={{ width: 52, height: 52, background: `${accentColor}22`, border: `1px solid ${accentColor}44`, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <GameIcon game={t.game} size={28} />
               </div>
               <div style={{ display: 'flex', gap: 8 }}>
                 {t.status === 'live' ? (

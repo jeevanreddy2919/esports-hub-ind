@@ -6,8 +6,7 @@ import { useAuth } from '../context/AuthContext';
 import Skeleton from '../components/common/Skeleton';
 import toast from 'react-hot-toast';
 import CountdownTimer from '../components/CountdownTimer';
-
-const GAME_ICONS = { BGMI: '🎯', Valorant: '⚡', 'Free Fire Max': '🔥', CS2: '🎮', MLBB: '⚔️', 'Tekken 8': '👊', 'Pokemon Unite': '🔮', 'Call of Duty Mobile': '🪖', 'Clash Royale': '👑' };
+import { GameIcon } from '../utils/gameLogos';
 
 export default function TournamentDetail() {
   const { id } = useParams();
@@ -166,10 +165,10 @@ export default function TournamentDetail() {
               <div className="shape-soft-hex" style={{ 
                 width: 110, height: 110,
                 background: `${accentColor}22`, border: `2px solid ${accentColor}44`,
-                display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '3.8rem',
+                display: 'flex', alignItems: 'center', justifyContent: 'center',
                 boxShadow: `0 15px 35px ${accentColor}20`
               }}>
-                {GAME_ICONS[tournament.game] || '🎮'}
+                <GameIcon game={tournament.game} size={56} />
               </div>
               <div>
                 <h1 style={{ fontFamily: 'Orbitron', fontWeight: 900, fontSize: 'clamp(2rem, 5vw, 3.5rem)', color: '#fff', lineHeight: 1.1, marginBottom: 12 }}>

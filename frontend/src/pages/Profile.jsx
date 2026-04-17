@@ -5,8 +5,7 @@ import { useAuth } from '../context/AuthContext';
 import { tournamentAPI } from '../services/api';
 import Skeleton from '../components/common/Skeleton';
 import toast from 'react-hot-toast';
-
-const GAME_ICONS = { BGMI: '🎯', Valorant: '⚡', 'Free Fire Max': '🔥', CS2: '🎮', MLBB: '⚔️', 'Tekken 8': '👊', 'Pokemon Unite': '🔮', 'Call of Duty Mobile': '🪖', 'Clash Royale': '👑' };
+import { GameIcon } from '../utils/gameLogos';
 
 export default function Profile() {
   const { user, logout } = useAuth();
@@ -111,7 +110,7 @@ export default function Profile() {
                       border: '1px solid rgba(255,255,255,0.07)', display: 'flex', alignItems: 'center', gap: 8,
                       fontSize: '0.85rem', color: '#fff', fontFamily: 'Rajdhani', fontWeight: 700
                     }}>
-                      {GAME_ICONS[g] || '🎮'} {g}
+                      <GameIcon game={g} size={16} /> {g}
                     </div>
                   )) : (
                     <div style={{ color: 'var(--text-muted)', fontSize: '0.85rem', fontStyle: 'italic' }}>Identity pending...</div>
@@ -204,10 +203,9 @@ export default function Profile() {
                           width: 52, height: 52,
                           background: `${t.banner_color || 'var(--purple)'}22`,
                           border: `1px solid ${t.banner_color || 'var(--purple)'}44`,
-                          display: 'flex', alignItems: 'center', justifyContent: 'center',
-                          fontSize: '1.6rem'
+                          display: 'flex', alignItems: 'center', justifyContent: 'center'
                         }}>
-                          {GAME_ICONS[t.game] || '🎮'}
+                          <GameIcon game={t.game} size={28} />
                         </div>
 
                         <div style={{ flex: 1 }}>
@@ -271,7 +269,7 @@ export default function Profile() {
                         border: '1px solid rgba(255,255,255,0.06)',
                         transition: '0.3s'
                       }}>
-                         <span style={{ fontSize: '1.2rem' }}>{GAME_ICONS[t.game]}</span>
+                         <GameIcon game={t.game} size={24} />
                          <div style={{ flex: 1 }}>
                             <div style={{ fontFamily: 'Orbitron', fontWeight: 700, fontSize: '0.85rem', color: '#fff' }}>{t.title}</div>
                             <div style={{ color: 'var(--yellow)', fontSize: '0.75rem', fontFamily: 'Rajdhani', fontWeight: 800 }}>{t.prize_pool}</div>

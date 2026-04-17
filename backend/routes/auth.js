@@ -56,10 +56,11 @@ router.post('/login', async (req, res) => {
     if (!identifier || !password) return res.status(400).json({ error: 'Email or Full Name and password required' });
 
     // Check user by email or name
+    const escapedIdentifier = identifier.replace(/"/g, '\\"');
     const { data: user, error } = await supabase
       .from('users')
       .select('*')
-      .or(`email.eq.${identifier},name.eq.${identifier}`)
+      .or(`email.eq."${escapedIdentifier}",name.eq."${escapedIdentifier}"`)
       .limit(1)
       .single();
 

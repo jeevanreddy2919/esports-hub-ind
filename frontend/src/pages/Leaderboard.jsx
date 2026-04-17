@@ -2,9 +2,9 @@ import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { leaderboardAPI } from '../services/api';
 import Skeleton from '../components/common/Skeleton';
+import { GameIcon } from '../utils/gameLogos';
 
 const GAMES = ['all', 'BGMI', 'Valorant', 'Free Fire Max', 'CS2', 'MLBB', 'Tekken 8', 'Pokemon Unite', 'Call of Duty Mobile', 'Clash Royale'];
-const GAME_ICONS = { BGMI: '🎯', Valorant: '⚡', 'Free Fire Max': '🔥', CS2: '🎮', MLBB: '⚔️', 'Tekken 8': '👊', 'Pokemon Unite': '🔮', 'Call of Duty Mobile': '🪖', 'Clash Royale': '👑' };
 
 const RankBadge = ({ rank }) => {
   const colors = {
@@ -201,7 +201,7 @@ export default function Leaderboard() {
                   })
                 }}
               >
-                {g === 'all' ? '🌐 All Games' : `${GAME_ICONS[g] || '🎮'} ${g}`}
+                {g === 'all' ? '🌐 All Games' : <><GameIcon game={g} size={16} /> {g}</>}
               </button>
             ))}
           </div>
@@ -239,7 +239,6 @@ export default function Leaderboard() {
                   key={p.id || p._id} 
                   player={p} 
                   rank={r} 
-                  gameIcon={game === 'all' ? GAME_ICONS[p.game] : null}
                 />
               ))}
             </div>

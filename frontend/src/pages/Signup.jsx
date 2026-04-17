@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import toast from 'react-hot-toast';
 import logo from '../assets/logo_final.png';
+import { GameIcon } from '../utils/gameLogos';
 
 const INDIAN_STATES = [
   '',
@@ -65,15 +66,17 @@ export default function Signup() {
     <div className="auth-page">
       <div className="auth-bg" />
 
-      {['🎯', '⚡', '🔥', '🏆', '🎮', '⚔️', '👊', '♟️'].map((emoji, i) => (
+      {['BGMI', 'Valorant', 'Free Fire Max', 'CS2', 'MLBB', 'Tekken 8', 'Pokemon Unite', 'Clash Royale'].map((game, i) => (
         <div key={i} style={{
-          position: 'fixed', fontSize: `${1.3 + (i % 3) * 0.4}rem`,
+          position: 'fixed',
           top: `${8 + i * 11}%`,
           left: i % 2 === 0 ? `${2 + i}%` : undefined,
           right: i % 2 !== 0 ? `${2 + i}%` : undefined,
-          opacity: 0.1, animation: `float ${3 + i * 0.3}s ease-in-out ${i * 0.2}s infinite`,
-          pointerEvents: 'none',
-        }}>{emoji}</div>
+          opacity: 0.15, animation: `float ${4 + i * 0.3}s ease-in-out ${i * 0.2}s infinite`,
+          pointerEvents: 'none', filter: 'grayscale(100%)',
+        }}>
+          <GameIcon game={game} size={28 + (i % 3) * 12} />
+        </div>
       ))}
 
       <div className="auth-card shape-oval" style={{ 

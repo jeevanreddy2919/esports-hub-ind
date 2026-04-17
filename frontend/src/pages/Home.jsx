@@ -5,18 +5,19 @@ import { tournamentAPI } from '../services/api';
 import Skeleton from '../components/common/Skeleton';
 import CountdownTimer from '../components/CountdownTimer';
 import logo from '../assets/logo_final.png';
+import { GameIcon } from '../utils/gameLogos';
 
 /* ─────────────── DATA ─────────────── */
 const GAMES = [
-  { name: 'BGMI', icon: '🎯', color: '#FF6B35', players: '12K+', tournaments: 38 },
-  { name: 'Valorant', icon: '⚡', color: '#FF4655', players: '8K+', tournaments: 24 },
-  { name: 'Free Fire Max', icon: '🔥', color: '#FF9500', players: '15K+', tournaments: 42 },
-  { name: 'CS2', icon: '🎮', color: '#F59E0B', players: '5K+', tournaments: 16 },
-  { name: 'MLBB', icon: '⚔️', color: '#06B6D4', players: '6K+', tournaments: 20 },
-  { name: 'Tekken 8', icon: '👊', color: '#EC4899', players: '3K+', tournaments: 12 },
-  { name: 'Pokemon Unite', icon: '🔮', color: '#8B5CF6', players: '2K+', tournaments: 9 },
-  { name: 'Call of Duty Mobile', icon: '🪖', color: '#10B981', players: '9K+', tournaments: 28 },
-  { name: 'Clash Royale', icon: '👑', color: '#3B82F6', players: '4K+', tournaments: 14 },
+  { name: 'BGMI', color: '#FF6B35', players: '12K+', tournaments: 38 },
+  { name: 'Valorant', color: '#FF4655', players: '8K+', tournaments: 24 },
+  { name: 'Free Fire Max', color: '#FF9500', players: '15K+', tournaments: 42 },
+  { name: 'CS2', color: '#F59E0B', players: '5K+', tournaments: 16 },
+  { name: 'MLBB', color: '#06B6D4', players: '6K+', tournaments: 20 },
+  { name: 'Tekken 8', color: '#EC4899', players: '3K+', tournaments: 12 },
+  { name: 'Pokemon Unite', color: '#8B5CF6', players: '2K+', tournaments: 9 },
+  { name: 'Call of Duty Mobile', color: '#10B981', players: '9K+', tournaments: 28 },
+  { name: 'Clash Royale', color: '#3B82F6', players: '4K+', tournaments: 14 },
 ];
 
 const STATS = [
@@ -37,11 +38,7 @@ const TICKER_ITEMS = [
   '📊 Leaderboard Update: Scout_GG leads BGMI All-India Rankings!',
 ];
 
-const GAME_ICONS = {
-  BGMI: '🎯', Valorant: '⚡', 'Free Fire Max': '🔥', CS2: '🎮',
-  MLBB: '⚔️', 'Tekken 8': '👊', 'Pokemon Unite': '🔮',
-  'Call of Duty Mobile': '🪖', 'Clash Royale': '👑'
-};
+// Removed GAME_ICONS object
 
 const HOW_IT_WORKS = [
   {
@@ -166,8 +163,8 @@ function TournamentCard({ t, isSkeleton }) {
           <div style={{ height: 6, width: '60%', margin: '0 auto', flexShrink: 0, background: `linear-gradient(90deg, transparent, ${accentColor}, transparent)`, borderRadius: '0 0 100px 100px' }} />
           <div style={{ padding: '24px 26px', flex: 1, display: 'flex', flexDirection: 'column' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 16 }}>
-              <div className="shape-soft-hex" style={{ width: 52, height: 52, background: `${accentColor}22`, border: `1px solid ${accentColor}44`, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.6rem' }}>
-                {GAME_ICONS[t.game] || '🎮'}
+              <div className="shape-soft-hex" style={{ width: 52, height: 52, background: `${accentColor}22`, border: `1px solid ${accentColor}44`, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <GameIcon game={t.game} size={28} />
               </div>
               {t.status === 'live' ? (
                 <div style={{ display: 'flex', alignItems: 'center', gap: 6, padding: '6px 14px', borderRadius: 999, background: 'rgba(255,45,120,0.15)', border: '1px solid rgba(255,45,120,0.5)', fontFamily: 'Rajdhani', fontWeight: 800, fontSize: '0.75rem', color: '#ff2d78', letterSpacing: '0.08em' }}>
@@ -329,16 +326,16 @@ export default function Home() {
                 margin: '0 auto', position: 'relative',
               }} className="anim-float">
                 <img src={logo} alt="Esports Hub India" style={{ width: '75%', filter: 'drop-shadow(0 0 40px rgba(0,243,255,0.5))' }} />
-                {['🎯', '⚡', '🔥', '🏆'].map((emoji, i) => (
+                {['BGMI', 'Valorant', 'CS2', 'Free Fire Max'].map((game, i) => (
                   <div key={i} style={{
                     position: 'absolute', width: 50, height: 50, borderRadius: 14,
                     background: 'rgba(255,255,255,0.08)', border: '1px solid rgba(255,255,255,0.12)',
-                    display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.4rem',
+                    display: 'flex', alignItems: 'center', justifyContent: 'center',
                     backdropFilter: 'blur(10px)',
                     top: `${[10, 10, 75, 75][i]}%`, left: `${[5, 75, 5, 75][i]}%`,
                     animation: `float ${2.5 + i * 0.4}s ease-in-out ${i * 0.3}s infinite`,
                     boxShadow: '0 8px 32px rgba(0,0,0,0.4)',
-                  }}>{emoji}</div>
+                  }}><GameIcon game={game} size={28} /></div>
                 ))}
               </div>
             </div>
@@ -375,9 +372,9 @@ export default function Home() {
                     width: 76, height: 76, background: `${g.color}15`,
                     border: `1px solid ${g.color}44`, margin: '0 auto 14px',
                     display: 'flex', alignItems: 'center', justifyContent: 'center',
-                    fontSize: '2.2rem', boxShadow: `0 0 20px ${g.color}20`,
+                    boxShadow: `0 0 20px ${g.color}20`,
                   }}>
-                    {g.icon}
+                    <GameIcon game={g.name} size={42} />
                   </div>
                   <div className="game-name" style={{ fontFamily: 'Orbitron', fontSize: '0.8rem', fontWeight: 800, marginBottom: 4 }}>{g.name}</div>
                   <div style={{ color: g.color, fontSize: '0.65rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: 2 }}>
