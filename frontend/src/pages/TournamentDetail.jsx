@@ -1,16 +1,18 @@
 import { useState, useEffect } from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { useParams, Link, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { tournamentAPI } from '../services/api';
 import { useAuth } from '../context/AuthContext';
 import Skeleton from '../components/common/Skeleton';
 import toast from 'react-hot-toast';
+import CountdownTimer from '../components/CountdownTimer';
 
 const GAME_ICONS = { BGMI: '🎯', Valorant: '⚡', 'Free Fire Max': '🔥', CS2: '🎮', MLBB: '⚔️', 'Tekken 8': '👊', 'Pokemon Unite': '🔮', 'Call of Duty Mobile': '🪖', 'Clash Royale': '👑' };
 
 export default function TournamentDetail() {
   const { id } = useParams();
   const { user } = useAuth();
+  const navigate = useNavigate();
   const [tournament, setTournament] = useState(null);
   const [loading, setLoading] = useState(true);
   const [registering, setRegistering] = useState(false);
@@ -18,19 +20,19 @@ export default function TournamentDetail() {
 
   useEffect(() => {
     tournamentAPI.getById(id)
-      .then(r => setTournament(r.data.tournament))
+      .then(r => setTournament(r.data?.tournament))
       .catch(() => {})
       .finally(() => setLoading(false));
 
     if (user) {
       tournamentAPI.myRegistrations()
-        .then(r => setRegistered(r.data.tournaments.some(t => (t._id || t.id) === id)))
+        .then(r => setRegistered(r.data?.tournaments?.some(t => (t._id || t.id) === id)))
         .catch(() => {});
     }
   }, [id, user]);
 
   const handleRegister = async () => {
-    if (!user) { toast.error('Please login to register! 🔒'); return; }
+    if (!user) { toast.error('Please login to register! 🔒'); navigate('/login'); return; }
     setRegistering(true);
     try {
       await tournamentAPI.register(id);
@@ -47,252 +49,255 @@ export default function TournamentDetail() {
   };
 
   if (loading) return (
-    <div className="page">
-      <div className="container" style={{ padding: '32px 24px' }}>
-        <Skeleton width="150px" height="24px" className="mb-6" />
-        <Skeleton height="280px" borderRadius="16px" className="mb-8" />
-        <div className="grid-2-1" style={{ gap: 28 }}>
+    <div className="page" style={{ background: 'var(--bg-primary)' }}>
+      <div className="container" style={{ padding: '60px 24px' }}>
+        <Skeleton width="180px" height="24px" className="mb-8" />
+        <Skeleton height="350px" borderRadius="32px" className="mb-8" />
+        <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr', gap: 32 }}>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 24 }}>
-            <Skeleton height="150px" borderRadius="16px" />
-            <Skeleton height="300px" borderRadius="16px" />
+            <Skeleton height="200px" borderRadius="24px" />
+            <Skeleton height="400px" borderRadius="24px" />
           </div>
-          <Skeleton height="400px" borderRadius="16px" />
+          <Skeleton height="500px" borderRadius="24px" />
         </div>
       </div>
     </div>
   );
 
   if (!tournament) return (
-    <motion.div 
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      className="page not-found"
-    >
-      <div className="not-found-code gradient-text">404</div>
-      <p>Tournament not found!</p>
-      <Link to="/tournaments" className="btn btn-primary">← Back to Tournaments</Link>
-    </motion.div>
+    <div className="page" style={{ textAlign: 'center', padding: '100px 0' }}>
+      <div style={{ fontSize: '5rem', marginBottom: 20 }}>🛸</div>
+      <h2 style={{ fontFamily: 'Orbitron', color: '#fff' }}>Tournament Not Found</h2>
+      <Link to="/tournaments" style={{ color: 'var(--cyan)', marginTop: 20, display: 'inline-block' }}>← Back to All Tournaments</Link>
+    </div>
   );
 
   const pct = Math.round((tournament.slots_filled / tournament.slots) * 100);
-  const rules = (() => { try { return JSON.parse(tournament.rules); } catch { return []; } })();
+  const rules = (() => { 
+    if (!tournament.rules) return [];
+    if (Array.isArray(tournament.rules)) return tournament.rules;
+    try { return JSON.parse(tournament.rules); } catch { return []; } 
+  })();
   const isFull = tournament.slots_filled >= tournament.slots;
   const isPast = tournament.status === 'past';
+  const accentColor = tournament.banner_color || '#7b2fff';
 
   return (
-    <div className="page">
-      <div className="container" style={{ padding: '32px 24px' }}>
-        <Link to="/tournaments" style={{ display: 'inline-flex', alignItems: 'center', gap: 6, color: 'var(--text-secondary)', fontFamily: 'Rajdhani', fontWeight: 600, marginBottom: 24, transition: 'color 0.2s' }}
-          onMouseOver={e => e.currentTarget.style.color = 'var(--cyan)'}
-          onMouseOut={e => e.currentTarget.style.color = 'var(--text-secondary)'}>
-          ← Back to Tournaments
+    <div className="page" style={{ background: 'var(--bg-primary)', position: 'relative' }}>
+      {/* Dynamic Background Glow */}
+      <div style={{
+        position: 'absolute', top: 0, left: 0, right: 0, height: '70vh',
+        background: `radial-gradient(circle at 50% 0%, ${accentColor}22 0%, transparent 70%)`,
+        zIndex: 0, pointerEvents: 'none'
+      }} />
+
+      <div className="container" style={{ padding: '40px 24px 100px', position: 'relative', zIndex: 1 }}>
+        <Link to="/tournaments" style={{ 
+          display: 'inline-flex', alignItems: 'center', gap: 8, 
+          color: 'var(--text-muted)', fontFamily: 'Rajdhani', fontWeight: 700, 
+          fontSize: '0.9rem', marginBottom: 32, transition: 'all 0.3s ease'
+        }} onMouseEnter={e => e.currentTarget.style.color = accentColor} onMouseLeave={e => e.currentTarget.style.color = 'var(--text-muted)'}>
+          ← EXPLORE ALL TOURNAMENTS
         </Link>
 
-        {/* Hero Banner */}
+        {/* Hero Section */}
         <div style={{
-          borderRadius: 'var(--radius-lg)',
-          overflow: 'hidden',
-          marginBottom: 32,
           position: 'relative',
-          minHeight: 'clamp(200px, 40vh, 280px)',
-          background: `linear-gradient(135deg, ${tournament.banner_color}33, ${tournament.banner_color}11)`,
-          border: '1px solid var(--border)',
+          borderRadius: 40,
+          background: 'rgba(15,15,35,0.6)',
+          border: '1px solid rgba(255,255,255,0.05)',
+          padding: 'clamp(32px, 8vw, 60px)',
+          marginBottom: 40,
+          overflow: 'hidden',
+          boxShadow: '0 30px 60px rgba(0,0,0,0.5)'
         }}>
+          {/* Hero Decor */}
           <div style={{
-            position: 'absolute', inset: 0,
-            background: `radial-gradient(ellipse 60% 80% at 20% 50%, ${tournament.banner_color}30 0%, transparent 70%)`,
+            position: 'absolute', top: 0, right: 0, width: '40%', height: '100%',
+            background: `linear-gradient(90deg, transparent, ${accentColor}11)`,
+            clipPath: 'polygon(100% 0, 0 0, 100% 100%)'
           }} />
-          {/* Grid overlay */}
-          <div style={{
-            position: 'absolute', inset: 0,
-            backgroundImage: `linear-gradient(${tournament.banner_color}08 1px, transparent 1px), linear-gradient(90deg, ${tournament.banner_color}08 1px, transparent 1px)`,
-            backgroundSize: '40px 40px',
-          }} />
-          <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top, rgba(4,4,15,0.95) 0%, transparent 60%)' }} />
-
-          <div style={{
-            position: 'absolute', bottom: 'clamp(16px, 5vw, 32px)', left: 'clamp(16px, 5vw, 32px)', right: 'clamp(16px, 5vw, 32px)', zIndex: 1,
-            display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', gap: 16, flexWrap: 'wrap'
-          }}>
-            <div>
-              <div style={{ fontSize: '3.5rem', marginBottom: 8, filter: 'drop-shadow(0 0 20px rgba(255,255,255,0.3))' }}>
-                {GAME_ICONS[tournament.game] || '🎮'}
+          
+          <div style={{ position: 'relative', zIndex: 2 }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 16, marginBottom: 20 }}>
+              <div style={{
+                padding: '8px 20px', borderRadius: 100,
+                background: isPast ? 'rgba(255,255,255,0.1)' : tournament.status === 'live' ? 'rgba(255,45,120,0.15)' : 'rgba(0,243,255,0.1)',
+                border: `1px solid ${isPast ? 'rgba(255,255,255,0.2)' : tournament.status === 'live' ? 'rgba(255,45,120,0.4)' : 'rgba(0,243,255,0.3)'}`,
+                color: isPast ? 'var(--text-muted)' : tournament.status === 'live' ? 'var(--pink)' : 'var(--cyan)',
+                fontFamily: 'Rajdhani', fontWeight: 800, fontSize: '0.8rem', letterSpacing: '0.1em'
+              }}>
+                {tournament.status.toUpperCase()} {tournament.status === 'live' && '🔴'}
               </div>
-              <span className={`badge badge-${tournament.status}`} style={{ marginBottom: 10, display: 'inline-flex' }}>
-                {tournament.status.toUpperCase()}
-              </span>
-              <h1 style={{ fontFamily: 'Orbitron', fontSize: 'clamp(1.2rem, 3vw, 2rem)', fontWeight: 800, lineHeight: 1.2 }}>
-                {tournament.title}
-              </h1>
-              <div style={{ color: 'var(--text-secondary)', fontFamily: 'Rajdhani', marginTop: 4 }}>
-                Organized by {tournament.organizer}
+              <div style={{ fontFamily: 'Rajdhani', fontWeight: 700, color: 'rgba(255,255,255,0.4)', fontSize: '0.9rem' }}>
+                MATCH ID: {id.slice(-8).toUpperCase()}
               </div>
             </div>
-            <div className="detail-hero-right" style={{ textAlign: 'right', flexShrink: 0 }}>
-              <div style={{ fontFamily: 'Orbitron', fontSize: '0.7rem', color: 'var(--text-muted)', marginBottom: 4, letterSpacing: '0.1em' }}>PRIZE POOL</div>
-              <div style={{
-                fontFamily: 'Orbitron', fontSize: 'clamp(1.5rem, 3vw, 2.5rem)', fontWeight: 900,
-                background: 'linear-gradient(135deg, #ffd60a, #ff9500)',
-                WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent',
-                filter: 'drop-shadow(0 0 20px rgba(255,214,10,0.5))',
-              }}>{tournament.prize_pool}</div>
+
+            <div style={{ display: 'flex', alignItems: 'flex-end', gap: 24, flexWrap: 'wrap', mb: 32 }}>
+              <div style={{ 
+                width: 100, height: 100, borderRadius: 24, 
+                background: `${accentColor}22`, border: `2px solid ${accentColor}44`,
+                display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '3.5rem'
+              }}>
+                {GAME_ICONS[tournament.game] || '🎮'}
+              </div>
+              <div>
+                <h1 style={{ fontFamily: 'Orbitron', fontWeight: 900, fontSize: 'clamp(2rem, 5vw, 3.5rem)', color: '#fff', lineHeight: 1.1, marginBottom: 12 }}>
+                  {tournament.title}
+                </h1>
+                <div style={{ fontFamily: 'Rajdhani', fontSize: '1.2rem', fontWeight: 600, color: accentColor }}>
+                   HOSTED BY {tournament.organizer.toUpperCase()}
+                </div>
+              </div>
+            </div>
+
+            {/* Quick Stats Banner */}
+            <div style={{ 
+              display: 'flex', gap: 'clamp(20px, 4vw, 60px)', flexWrap: 'wrap', 
+              marginTop: 40, paddingTop: 40, borderTop: '1px solid rgba(255,255,255,0.05)' 
+            }}>
+              <div>
+                <div style={{ fontSize: '0.7rem', color: 'var(--text-muted)', fontFamily: 'Rajdhani', fontWeight: 700, textTransform: 'uppercase', mb: 5 }}>🏆 Prize Pool</div>
+                <div style={{ 
+                  fontFamily: 'Orbitron', fontWeight: 900, fontSize: '2rem',
+                  background: 'linear-gradient(135deg, #ffd60a, #ff9500)', 
+                  WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent'
+                }}>{tournament.prize_pool}</div>
+              </div>
+              <div>
+                <div style={{ fontSize: '0.7rem', color: 'var(--text-muted)', fontFamily: 'Rajdhani', fontWeight: 700, textTransform: 'uppercase', mb: 5 }}>📅 Launch Date</div>
+                <div style={{ fontFamily: 'Orbitron', fontWeight: 700, fontSize: '1.4rem', color: '#fff' }}>{tournament.start_date}</div>
+              </div>
+              <div>
+                <div style={{ fontSize: '0.7rem', color: 'var(--text-muted)', fontFamily: 'Rajdhani', fontWeight: 700, textTransform: 'uppercase', mb: 5 }}>📍 Mode</div>
+                <div style={{ fontFamily: 'Orbitron', fontWeight: 700, fontSize: '1.4rem', color: '#fff' }}>{tournament.location}</div>
+              </div>
             </div>
           </div>
         </div>
 
-        <motion.div 
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="grid-2-1" style={{ gap: 28, alignItems: 'start' }}
-        >
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: 32, alignItems: 'start' }}>
+          
           {/* Main Info */}
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 24 }}>
-            {/* Description */}
-            <div className="glass-card" style={{ padding: 28 }}>
-              <h2 style={{ fontFamily: 'Orbitron', fontSize: '1rem', fontWeight: 700, marginBottom: 14, color: 'var(--cyan)' }}>
-                📋 About This Tournament
-              </h2>
-              <p style={{ color: 'var(--text-secondary)', lineHeight: 1.9, fontSize: '0.95rem' }}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 32 }}>
+            <div style={{ 
+              background: 'rgba(15,15,35,0.6)', borderRadius: 32, padding: 32, 
+              border: '1px solid rgba(255,255,255,0.05)', backdropFilter: 'blur(10px)'
+            }}>
+              <h2 style={{ fontFamily: 'Orbitron', fontSize: '1.2rem', fontWeight: 800, marginBottom: 20, color: '#fff' }}>⚔️ MISSION INTEL</h2>
+              <p style={{ color: 'var(--text-secondary)', lineHeight: 1.8, fontSize: '1.05rem', whiteSpace: 'pre-line' }}>
                 {tournament.description}
               </p>
             </div>
 
-            {/* Tournament Details Grid */}
-            <div className="glass-card" style={{ padding: 28 }}>
-              <h2 style={{ fontFamily: 'Orbitron', fontSize: '1rem', fontWeight: 700, marginBottom: 20, color: 'var(--cyan)' }}>
-                📊 Tournament Details
-              </h2>
-              <div className="grid-2" style={{ gap: 20 }}>
-                {[
-                  { icon: '🎮', label: 'Game', value: tournament.game },
-                  { icon: '📍', label: 'Location', value: tournament.location },
-                  { icon: '📅', label: 'Start Date', value: tournament.start_date },
-                  { icon: '🏁', label: 'End Date', value: tournament.end_date || 'TBD' },
-                  { icon: '⏰', label: 'Registration Deadline', value: tournament.registration_deadline || 'Open' },
-                  { icon: '🏢', label: 'Organizer', value: tournament.organizer },
-                ].map(item => (
-                  <div key={item.label} style={{
-                    padding: '16px', borderRadius: 'var(--radius-sm)',
-                    background: 'rgba(255,255,255,0.03)', border: '1px solid var(--border)',
-                  }}>
-                    <div style={{ fontSize: '1.3rem', marginBottom: 6 }}>{item.icon}</div>
-                    <div style={{ fontFamily: 'Rajdhani', fontSize: '0.72rem', color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: 4 }}>{item.label}</div>
-                    <div style={{ fontFamily: 'Rajdhani', fontWeight: 700, fontSize: '0.95rem' }}>{item.value}</div>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            {/* Rules */}
             {rules.length > 0 && (
-              <div className="glass-card" style={{ padding: 28 }}>
-                <h2 style={{ fontFamily: 'Orbitron', fontSize: '1rem', fontWeight: 700, marginBottom: 16, color: 'var(--cyan)' }}>
-                  📜 Tournament Rules
-                </h2>
-                <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+              <div style={{ 
+                background: 'rgba(15,15,35,0.6)', borderRadius: 32, padding: 32, 
+                border: '1px solid rgba(255,255,255,0.05)', backdropFilter: 'blur(10px)'
+              }}>
+                <h2 style={{ fontFamily: 'Orbitron', fontSize: '1.2rem', fontWeight: 800, marginBottom: 24, color: '#fff' }}>📜 ENGAGEMENT RULES</h2>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
                   {rules.map((rule, i) => (
-                    <motion.div 
-                      key={i} 
-                      whileHover={{ x: 5, background: 'rgba(0,243,255,0.08)' }}
-                      style={{
-                        display: 'flex', gap: 14, alignItems: 'flex-start',
-                        padding: '12px 16px', borderRadius: 'var(--radius-sm)',
-                        background: 'rgba(0,243,255,0.04)', border: '1px solid rgba(0,243,255,0.1)',
-                      }}
-                    >
-                      <div style={{
-                        width: 26, height: 26, borderRadius: 8, flexShrink: 0,
-                        background: 'linear-gradient(135deg, var(--purple), var(--cyan))',
-                        display: 'flex', alignItems: 'center', justifyContent: 'center',
-                        fontFamily: 'Orbitron', fontWeight: 800, fontSize: '0.7rem',
+                    <div key={i} style={{ 
+                      display: 'flex', gap: 16, padding: '16px 20px', borderRadius: 16,
+                      background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.05)',
+                      fontFamily: 'Rajdhani', fontWeight: 600, color: 'var(--text-secondary)'
+                    }}>
+                      <div style={{ 
+                        width: 24, height: 24, borderRadius: 6, background: accentColor, 
+                        display: 'flex', alignItems: 'center', justifyContent: 'center', 
+                        fontFamily: 'Orbitron', fontSize: '0.75rem', color: '#fff', flexShrink: 0
                       }}>{i + 1}</div>
-                      <span style={{ fontFamily: 'Rajdhani', fontWeight: 600, lineHeight: 1.5, paddingTop: 2 }}>{rule}</span>
-                    </motion.div>
+                      {rule}
+                    </div>
                   ))}
                 </div>
               </div>
             )}
           </div>
 
-          {/* Sidebar */}
-          <div className="detail-sidebar" style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
-            {/* Register Card */}
-            <div className="glass-card" style={{ padding: 28, borderColor: registered ? 'rgba(0,255,136,0.3)' : 'rgba(0,243,255,0.2)' }}>
-              <div style={{ textAlign: 'center', marginBottom: 24 }}>
-                <div style={{ fontFamily: 'Rajdhani', fontSize: '0.75rem', color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 8 }}>PRIZE POOL</div>
-                <div style={{
-                  fontFamily: 'Orbitron', fontSize: '2.2rem', fontWeight: 900,
-                  background: 'linear-gradient(135deg, #ffd60a, #ff9500)',
-                  WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent',
-                }}>{tournament.prize_pool}</div>
+          {/* Action Sidebar */}
+          <div style={{ position: 'sticky', top: 100 }}>
+            <div style={{ 
+              background: 'rgba(15,15,35,0.85)', borderRadius: 32, padding: 40, 
+              border: `1px solid ${accentColor}33`, backdropFilter: 'blur(20px)',
+              boxShadow: `0 20px 50px rgba(0,0,0,0.5), 0 0 30px ${accentColor}11`
+            }}>
+              <div style={{ textAlign: 'center', marginBottom: 32 }}>
+                <CountdownTimer targetDate={tournament.start_date} status={tournament.status} />
               </div>
 
-              {/* Slots progress */}
-              <div style={{ marginBottom: 24 }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 8 }}>
-                  <span style={{ fontFamily: 'Rajdhani', fontSize: '0.82rem', color: 'var(--text-muted)' }}>Slots Filled</span>
-                  <span style={{ fontFamily: 'Rajdhani', fontWeight: 700, color: pct >= 90 ? 'var(--pink)' : 'var(--cyan)' }}>
-                    {tournament.slots_filled}/{tournament.slots} ({pct}%)
+              <div style={{ marginBottom: 32 }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 12 }}>
+                  <span style={{ fontFamily: 'Rajdhani', fontWeight: 700, color: 'var(--text-muted)', fontSize: '0.9rem' }}>DEPLOYMENT SLOTS</span>
+                  <span style={{ fontFamily: 'Orbitron', fontWeight: 800, color: isFull ? 'var(--pink)' : accentColor, fontSize: '0.9rem' }}>
+                    {tournament.slots_filled} / {tournament.slots}
                   </span>
                 </div>
-                <div className="slots-bar" style={{ height: 8 }}>
-                  <div className="slots-fill" style={{ width: `${pct}%`, background: pct >= 90 ? 'var(--pink)' : `linear-gradient(90deg, var(--purple), var(--cyan))` }} />
+                <div style={{ height: 10, background: 'rgba(255,255,255,0.05)', borderRadius: 100, overflow: 'hidden' }}>
+                  <motion.div 
+                    initial={{ width: 0 }} 
+                    animate={{ width: `${pct}%` }} 
+                    transition={{ duration: 1 }}
+                    style={{ height: '100%', background: isFull ? 'var(--pink)' : accentColor, borderRadius: 100 }} 
+                  />
                 </div>
-                {isFull && <p style={{ color: 'var(--pink)', fontFamily: 'Rajdhani', fontWeight: 600, fontSize: '0.82rem', marginTop: 8, textAlign: 'center' }}>⚠️ Tournament is FULL</p>}
               </div>
 
               {registered ? (
-                <div style={{
-                  padding: '16px', borderRadius: 'var(--radius-sm)',
-                  background: 'rgba(0,255,136,0.1)', border: '1px solid rgba(0,255,136,0.3)',
-                  textAlign: 'center',
+                <div style={{ 
+                  padding: '24px', borderRadius: 20, textAlign: 'center',
+                  background: 'rgba(16, 185, 129, 0.1)', border: '1px solid rgba(16, 185, 129, 0.3)',
                 }}>
-                  <div style={{ fontSize: '1.8rem', marginBottom: 6 }}>✅</div>
-                  <div style={{ fontFamily: 'Orbitron', fontWeight: 700, color: 'var(--green)', fontSize: '0.9rem' }}>REGISTERED!</div>
-                  <div style={{ fontFamily: 'Rajdhani', color: 'var(--text-secondary)', fontSize: '0.82rem', marginTop: 4 }}>You're in! Good luck! 🏆</div>
+                  <div style={{ fontSize: '2.5rem', marginBottom: 12 }}>⚡</div>
+                  <div style={{ fontFamily: 'Orbitron', fontWeight: 800, color: '#10B981', fontSize: '1.2rem', marginBottom: 4 }}>DEPLOYED!</div>
+                  <p style={{ fontFamily: 'Rajdhani', fontWeight: 600, color: 'var(--text-muted)' }}>You have successfully registered for this operation.</p>
                 </div>
               ) : (
-                <button
-                  className={`btn ${isPast || isFull ? 'btn-secondary' : 'btn-primary'} btn-lg`}
-                  style={{ width: '100%', justifyContent: 'center' }}
+                <button 
                   onClick={handleRegister}
                   disabled={registering || isPast || isFull}
+                  style={{
+                    width: '100%', padding: '20px', borderRadius: 20,
+                    background: isPast || isFull ? 'rgba(255,255,255,0.05)' : `linear-gradient(135deg, ${accentColor}, ${accentColor}dd)`,
+                    color: '#fff', border: 'none', fontFamily: 'Orbitron', fontWeight: 800, fontSize: '1.1rem',
+                    cursor: registering || isPast || isFull ? 'not-allowed' : 'pointer',
+                    transition: 'all 0.3s ease',
+                    boxShadow: !isPast && !isFull ? `0 10px 30px ${accentColor}44` : 'none'
+                  }}
+                  onMouseEnter={e => { if (!isPast && !isFull) e.currentTarget.style.transform = 'translateY(-3px)'; }}
+                  onMouseLeave={e => { if (!isPast && !isFull) e.currentTarget.style.transform = 'translateY(0)'; }}
                 >
-                  {registering ? <><div className="loader" style={{ width: 18, height: 18, borderWidth: 2 }} /> Registering...</>
-                    : isPast ? '🏁 Tournament Ended'
-                    : isFull ? '❌ Slots Full'
-                    : '🚀 Register Now — FREE'}
+                  {registering ? 'PROCESSING...' : isPast ? 'OPERATION ENDED' : isFull ? 'CAPACITY REACHED' : 'REGISTER FOR COMBAT'}
                 </button>
               )}
 
-              {!user && !isPast && (
-                <p style={{ textAlign: 'center', color: 'var(--text-muted)', fontSize: '0.8rem', marginTop: 12, fontFamily: 'Rajdhani' }}>
-                  <Link to="/login" style={{ color: 'var(--cyan)' }}>Login</Link> or <Link to="/signup" style={{ color: 'var(--cyan)' }}>Sign up</Link> to register
+              {!user && !isPast && !isFull && (
+                <p style={{ textAlign: 'center', mt: 20, color: 'var(--text-muted)', fontSize: '0.9rem', fontFamily: 'Rajdhani', marginTop: 20 }}>
+                  Strategic account required. <Link to="/login" style={{ color: accentColor, fontWeight: 700 }}>LOGIN</Link>
                 </p>
               )}
             </div>
 
-            {/* Share */}
-            <div className="glass-card" style={{ padding: 20 }}>
-              <div style={{ fontFamily: 'Rajdhani', fontWeight: 700, fontSize: '0.85rem', color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: 12 }}>Share Tournament</div>
-              <div style={{ display: 'flex', gap: 8 }}>
-                {[
-                  { label: '🐦 Twitter', color: '#1DA1F2' },
-                  { label: '💬 WhatsApp', color: '#25D366' },
-                  { label: '📋 Copy Link', color: 'var(--purple)' },
-                ].map(s => (
-                  <button key={s.label} onClick={() => toast.success('Link copied! Share with friends! 🎮')}
-                    style={{
-                      flex: 1, padding: '8px 4px', borderRadius: 'var(--radius-sm)',
-                      background: `${s.color}18`, border: `1px solid ${s.color}40`,
-                      color: s.color, fontSize: '0.72rem', fontFamily: 'Rajdhani', fontWeight: 700,
-                      cursor: 'pointer', transition: 'all 0.2s',
-                    }}>{s.label}</button>
+            {/* Share & Support */}
+            <div style={{ 
+              marginTop: 20, background: 'rgba(15,15,35,0.6)', borderRadius: 24, padding: '20px 24px',
+              border: '1px solid rgba(255,255,255,0.05)', display: 'flex', justifyContent: 'space-between', alignItems: 'center'
+            }}>
+              <div style={{ fontFamily: 'Rajdhani', fontWeight: 700, color: 'var(--text-muted)', fontSize: '0.8rem' }}>SHARE INTEL</div>
+              <div style={{ display: 'flex', gap: 15 }}>
+                {['🔗','📱','🐦'].map(icon => (
+                  <button key={icon} onClick={() => { navigator.clipboard.writeText(window.location.href); toast.success('Link copied! 📋'); }} 
+                    style={{ background: 'rgba(255,255,255,0.05)', border: 'none', color: '#fff', padding: '8px', borderRadius: 8, cursor: 'pointer' }}>
+                    {icon}
+                  </button>
                 ))}
               </div>
             </div>
           </div>
-        </motion.div>
+
+        </div>
       </div>
     </div>
   );
