@@ -222,7 +222,7 @@ export default function Tournaments() {
       status: status === 'all' ? undefined : status,
       search: search || undefined
     })
-      .then(r => setTournaments(r.data.tournaments))
+      .then(r => setTournaments(r.data?.tournaments || []))
       .catch(() => setTournaments([]))
       .finally(() => setLoading(false));
   }, [game, status, search]);

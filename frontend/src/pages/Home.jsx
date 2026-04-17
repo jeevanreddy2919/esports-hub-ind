@@ -125,10 +125,10 @@ export default function Home() {
           tournamentAPI.getAll({ status: 'live' }),
           tournamentAPI.getAll({ status: 'upcoming' })
         ]);
-        setLiveT(liveRes.data.tournaments);
-        setUpcomingT(upcomingRes.data.tournaments.slice(0, 3));
+        setLiveT(liveRes.data?.tournaments || []);
+        setUpcomingT((upcomingRes.data?.tournaments || []).slice(0, 3));
       } catch (err) {
-        console.error(err);
+        console.error('API error, using empty state:', err);
       } finally {
         setIsLoading(false);
       }

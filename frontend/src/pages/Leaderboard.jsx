@@ -14,7 +14,7 @@ export default function Leaderboard() {
   useEffect(() => {
     setLoading(true);
     leaderboardAPI.get({ game: game === 'all' ? undefined : game })
-      .then(r => setPlayers(r.data.players))
+      .then(r => setPlayers(r.data?.players || []))
       .catch(() => setPlayers([]))
       .finally(() => setLoading(false));
   }, [game]);
