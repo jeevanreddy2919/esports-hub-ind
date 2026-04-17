@@ -18,7 +18,7 @@ export default function ChatBot() {
       role: 'bot',
       text: hasSeen
         ? "Welcome back! 🧠 How can I help you dominate today?"
-        : "Hey Gamer! 🧠 I'm **NeuroGamer**, your AI Esports Mentor for Esports Hub. Ask me about live tournaments, registration, prizes, or gaming tips!"
+        : "Hey Gamer! 🧠 I'm **NeuroGamer**, your AI Esports Mentor for India Esports Hub. Ask me about live tournaments, registration, prizes, or gaming tips!"
     }];
   });
   const [loading, setLoading] = useState(false);

@@ -71,7 +71,7 @@ export default function Navbar() {
       <nav className={`navbar ${scrolled ? 'scrolled' : ''}`}>
         <div className="navbar-inner">
           <Link to="/" className="navbar-logo">
-            <img src={logo} alt="Esports Hub" style={{ height: '72px', width: 'auto', objectFit: 'contain' }} />
+            <img src={logo} alt="India Esports Hub" style={{ height: '72px', width: 'auto', objectFit: 'contain' }} />
           </Link>
 
           <div className="navbar-links">
@@ -184,7 +184,7 @@ export default function Navbar() {
       <div className={`mobile-menu ${mobileOpen ? 'open' : ''}`}>
         <button className="mobile-close" onClick={() => setMobileOpen(false)}>✕</button>
         <Link to="/" className="navbar-logo" style={{ marginBottom: 16 }}>
-          <img src={logo} alt="Esports Hub" style={{ height: 50 }} />
+          <img src={logo} alt="India Esports Hub" style={{ height: 50 }} />
         </Link>
         {navLinks.map(link => (
           <Link key={link.to} to={link.to} className="nav-link" style={{ fontSize: '1.4rem' }}>

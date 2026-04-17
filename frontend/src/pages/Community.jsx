@@ -43,61 +43,53 @@ export default function Community() {
 
         <h2 className="section-title anim-fade-up" style={{ textAlign: 'center', marginBottom: 40 }}>Our <span className="gradient-text" style={{ color: 'var(--cyan)' }}>Networks</span></h2>
         
-        <div className="grid-2" style={{ gap: 30, marginBottom: 60 }}>
-          <a href="#" className="glass-card shape-soft-hex anim-fade-up" style={{ padding: 32, display: 'flex', alignItems: 'center', gap: 24, textDecoration: 'none', transition: '0.3s' }}>
-            <div style={{ width: 70, height: 70, borderRadius: '50%', background: 'rgba(255,45,120,0.15)', color: '#ff2d78', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '2.5rem' }}>
-              <FaInstagram />
-            </div>
-            <div>
-              <h3 style={{ fontFamily: 'Orbitron', color: '#fff', fontSize: '1.4rem', marginBottom: 6 }}>Instagram</h3>
-              <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem', lineHeight: 1.5 }}>Follow us for daily tournament highlights, clutch clips, and important announcements.</p>
-              <div style={{ color: '#ff2d78', fontFamily: 'Rajdhani', fontWeight: 800, marginTop: 12, fontSize: '0.85rem' }}>FOLLOW @ESPORTS_HUB →</div>
-            </div>
-          </a>
-
-          <a href="#" className="glass-card shape-soft-hex anim-fade-up delay-100" style={{ padding: 32, display: 'flex', alignItems: 'center', gap: 24, textDecoration: 'none', transition: '0.3s' }}>
-            <div style={{ width: 70, height: 70, borderRadius: '50%', background: 'rgba(255,0,0,0.15)', color: '#FF0000', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '2.5rem' }}>
-              <FaYoutube />
-            </div>
-            <div>
-              <h3 style={{ fontFamily: 'Orbitron', color: '#fff', fontSize: '1.4rem', marginBottom: 6 }}>YouTube Channel</h3>
-              <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem', lineHeight: 1.5 }}>Watch live streams of grand finals, professional casting, and advanced tip videos.</p>
-              <div style={{ color: '#FF0000', fontFamily: 'Rajdhani', fontWeight: 800, marginTop: 12, fontSize: '0.85rem' }}>SUBSCRIBE →</div>
-            </div>
-          </a>
-
-          <a href="#" className="glass-card shape-soft-hex anim-fade-up delay-200" style={{ padding: 32, display: 'flex', alignItems: 'center', gap: 24, textDecoration: 'none', transition: '0.3s' }}>
-            <div style={{ width: 70, height: 70, borderRadius: '50%', background: 'rgba(255,255,255,0.05)', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '2.5rem' }}>
-              <FaXTwitter />
-            </div>
-            <div>
-              <h3 style={{ fontFamily: 'Orbitron', color: '#fff', fontSize: '1.4rem', marginBottom: 6 }}>X</h3>
-              <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem', lineHeight: 1.5 }}>Get the latest updates, breaking news, and interact with pro players directly on X.</p>
-              <div style={{ color: '#fff', fontFamily: 'Rajdhani', fontWeight: 800, marginTop: 12, fontSize: '0.85rem' }}>FOLLOW ON X →</div>
-            </div>
-          </a>
-
-          <a href="#" className="glass-card shape-soft-hex anim-fade-up delay-300" style={{ padding: 32, display: 'flex', alignItems: 'center', gap: 24, textDecoration: 'none', transition: '0.3s' }}>
-            <div style={{ width: 70, height: 70, borderRadius: '50%', background: 'rgba(0,136,204,0.15)', color: '#0088cc', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '2.5rem' }}>
-              <FaTelegramPlane />
-            </div>
-            <div>
-              <h3 style={{ fontFamily: 'Orbitron', color: '#fff', fontSize: '1.4rem', marginBottom: 6 }}>Telegram</h3>
-              <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem', lineHeight: 1.5 }}>Instant alerts! Never miss a tournament registration deadline or bracket update.</p>
-              <div style={{ color: '#0088cc', fontFamily: 'Rajdhani', fontWeight: 800, marginTop: 12, fontSize: '0.85rem' }}>GET ALERTS →</div>
-            </div>
-          </a>
-
-          <a href="#" className="glass-card shape-soft-hex anim-fade-up delay-300" style={{ padding: 32, display: 'flex', alignItems: 'center', gap: 24, textDecoration: 'none', transition: '0.3s', gridColumn: '1 / -1', maxWidth: '600px', margin: '0 auto' }}>
-            <div style={{ width: 70, height: 70, borderRadius: '50%', background: 'rgba(88,101,242,0.15)', color: '#5865F2', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '2.5rem' }}>
-              <FaDiscord />
-            </div>
-            <div>
-              <h3 style={{ fontFamily: 'Orbitron', color: '#fff', fontSize: '1.4rem', marginBottom: 6 }}>Discord Server</h3>
-              <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem', lineHeight: 1.5 }}>Join our main communication hub. Daily scrims, voice channels, and live support.</p>
-              <div style={{ color: '#5865F2', fontFamily: 'Rajdhani', fontWeight: 800, marginTop: 12, fontSize: '0.85rem' }}>JOIN 48K+ MEMBERS →</div>
-            </div>
-          </a>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: 30, marginBottom: 80 }}>
+          {[
+            { id: 'ig', name: 'Instagram', icon: <FaInstagram />, color: '#E1306C', desc: 'Tournament highlights & clips', action: 'FOLLOW @INDIA_ESPORTS', delay: 0 },
+            { id: 'yt', name: 'YouTube', icon: <FaYoutube />, color: '#FF0000', desc: 'Live streams and pro casting', action: 'SUBSCRIBE NOW', delay: 0.1 },
+            { id: 'x', name: 'X (Twitter)', icon: <FaXTwitter />, color: '#ffffff', desc: 'Breaking news & quick updates', action: 'FOLLOW ON X', delay: 0.2 },
+            { id: 'tg', name: 'Telegram', icon: <FaTelegramPlane />, color: '#0088CC', desc: 'Instant registration alerts', action: 'GET ALERTS', delay: 0.3 },
+            { id: 'dc', name: 'Discord', icon: <FaDiscord />, color: '#5865F2', desc: 'Main hub for scrims & chat', action: 'JOIN 48K+ MEMBERS', delay: 0.4 },
+          ].map((ch) => (
+            <motion.a
+              key={ch.id}
+              href="#"
+              initial={{ opacity: 0, scale: 0.9 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              whileHover={{ y: -8 }}
+              viewport={{ once: true }}
+              transition={{ delay: ch.delay }}
+              className="glass-card"
+              style={{
+                padding: '40px 24px', textAlign: 'center', textDecoration: 'none',
+                border: '1px solid rgba(255,255,255,0.05)', position: 'relative', overflow: 'hidden'
+              }}
+            >
+              <div 
+                style={{
+                  position: 'absolute', top: 0, left: 0, right: 0, height: 4,
+                  background: `linear-gradient(90deg, transparent, ${ch.color}, transparent)`
+                }}
+              />
+              <div 
+                className="shape-hex" 
+                style={{
+                  width: 80, height: 80, background: `${ch.color}15`,
+                  border: `1px solid ${ch.color}44`, margin: '0 auto 20px',
+                  display: 'flex', alignItems: 'center', justifyContent: 'center',
+                  fontSize: '2.5rem', color: ch.color,
+                  boxShadow: `0 0 30px ${ch.color}20`,
+                }}
+              >
+                {ch.icon}
+              </div>
+              <h3 style={{ fontFamily: 'Orbitron', color: '#fff', fontSize: '1.2rem', marginBottom: 8 }}>{ch.name}</h3>
+              <p style={{ color: 'var(--text-muted)', fontSize: '0.85rem', marginBottom: 20, lineHeight: 1.5 }}>{ch.desc}</p>
+              <div style={{ color: ch.color, fontFamily: 'Rajdhani', fontWeight: 800, fontSize: '0.85rem', letterSpacing: '0.05em' }}>
+                {ch.action} →
+              </div>
+            </motion.a>
+          ))}
         </div>
 
       </div>

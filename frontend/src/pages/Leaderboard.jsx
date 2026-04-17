@@ -80,7 +80,7 @@ const PodiumCard = ({ player, rank, gameIcon }) => {
         <div style={{ fontFamily: 'Rajdhani', fontWeight: 700, fontSize: '0.9rem', color: 'var(--text-muted)', marginBottom: 20, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6 }}>
           <span>{player.state}</span>
           <span style={{ color: 'rgba(255,255,255,0.2)' }}>•</span>
-          <span style={{ color: color, fontSize: '0.8rem' }}>{player.main_game || 'Gamer'}</span>
+          <span style={{ color: color, fontSize: '0.8rem' }}>{player.game || 'Gamer'}</span>
         </div>
 
         <div className="shape-pill" style={{ 

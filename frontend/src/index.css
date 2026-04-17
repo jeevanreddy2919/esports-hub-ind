@@ -1464,29 +1464,43 @@ footer a:hover {
   --yellow: #ffd60a;
 }
 
-/* ===== RESPONSIVE HERO ===== */
-@media (max-width: 768px) {
-  .hero-visual-container { display: none; }
-  .hero-btns { flex-direction: column; }
-  .hero-btns .btn { width: 100%; justify-content: center; }
-  .hero-stats { gap: 12px; }
-  .hero-stat { width: 80px; height: 80px; }
-  .hero-stat-value { font-size: 0.9rem !important; }
+/* ≈≈≈≈≈ RESPONSIVE DESIGN ≈≈≈≈≈ */
+
+@media (max-width: 1024px) {
+  .hero-visual-container { transform: scale(0.9) translateY(-20px) !important; }
+  .grid-2 { gap: 30px; }
 }
 
-/* ===== RESPONSIVE GAMES GRID ===== */
-@media (max-width: 540px) {
-  .games-grid {
-    grid-template-columns: repeat(3, 1fr);
-    gap: 12px;
+@media (max-width: 768px) {
+  .hero-visual-container { 
+    display: flex !important; 
+    justify-content: center;
+    margin-top: 20px !important;
+    transform: scale(0.8) !important;
   }
+  .hero-content { text-align: center; }
+  .hero-tag { margin: 0 auto; }
+  .hero-btns { flex-direction: column; width: 100%; }
+  .hero-btns .btn { width: 100%; justify-content: center; }
+  .hero-stats { justify-content: center !important; flex-wrap: wrap; gap: 12px; }
+  .hero-stat { width: 85px; height: 85px; }
+  .hero-title { font-size: 2.5rem; }
+  
+  .section { padding: 60px 0; }
+  .section-title { font-size: 1.8rem; text-align: center; }
+  .section-subtitle { text-align: center; font-size: 0.95rem; margin-bottom: 32px; }
+  
+  .navbar-logo img { height: 42px !important; }
 }
 
-/* ===== RESPONSIVE SECTION PADDING ===== */
-@media (max-width: 768px) {
-  .section { padding: 50px 0; }
-  .section-title { font-size: 1.6rem; }
-  .section-subtitle { font-size: 0.95rem; margin-bottom: 32px; }
+@media (max-width: 480px) {
+  .hero-visual-container { transform: scale(0.6) translateY(-40px) !important; }
+  .hero-title { font-size: 2rem; }
+  .hero-description { font-size: 0.9rem; }
+  .hero-stat { width: 75px; height: 75px; }
+  .hero-stat-value { font-size: 0.9rem !important; }
+  
+  .navbar-inner { padding: 0 16px; }
 }
 
 /* ===== VAR FIXES ===== */

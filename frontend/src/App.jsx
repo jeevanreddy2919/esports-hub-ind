@@ -12,6 +12,7 @@ import TournamentDetail from './pages/TournamentDetail';
 import Leaderboard from './pages/Leaderboard';
 import Profile from './pages/Profile';
 import Community from './pages/Community';
+import ScrollToTop from './components/ScrollToTop';
 import './index.css';
 
 function ProtectedRoute({ children }) {
@@ -23,6 +24,7 @@ function ProtectedRoute({ children }) {
 function App() {
   return (
     <BrowserRouter>
+      <ScrollToTop />
       <AuthProvider>
         <ParticleBackground />
         <Navbar />

@@ -30,14 +30,14 @@ const STATS = [
 ];
 
 const TICKER_ITEMS = [
-  '🏆 BGMI Masters LIVE NOW — ₹5 Lakh Prize Pool',
+  '🏆 India BGMI Masters LIVE NOW — ₹5 Lakh Prize Pool',
   '🔥 Free Fire Max Grand Prix — Registration Open — 1500 Teams Signed Up!',
-  '⚡ Valorant Champions — Only 8 Slots Left!',
-  '🎮 CS2 Open — May 10-12, 2026 — Gaming Arena',
+  '⚡ Valorant India Champions — Only 8 Slots Left!',
+  '🎮 CS2 India Open — May 10-12, 2026 — Gaming Arena',
   '🔮 Pokemon Unite Championship — Season 4 Results Out!',
-  '👊 Tekken 8 Clash — Register Before April 25',
-  '🪖 CODM Masters Q2 — ₹2 Lakh Prize Pool Opening Soon',
-  '📊 Leaderboard Update: Scout_GG leads BGMI Rankings!',
+  '👊 Tekken 8 India Clash — Register Before April 25',
+  '🪖 India CODM Masters Q2 — ₹2 Lakh Prize Pool Opening Soon',
+  '📊 Leaderboard Update: Scout_GG leads Rankings!',
 ];
 
 // Removed GAME_ICONS object
@@ -277,7 +277,7 @@ export default function Home() {
           <div className="grid-2" style={{ gap: 60, alignItems: 'center' }}>
             <div className="hero-content">
               <div className="hero-tag anim-fade-up delay-100" style={{ background: 'rgba(0,243,255,0.1)', borderColor: 'rgba(0,243,255,0.3)', color: 'var(--cyan)' }}>
-                ⚡ #1 Esports Platform — 50,000+ Players Strong
+                ⚡ India's #1 Esports Platform — 50,000+ Players Strong
               </div>
               <h1 className="hero-title anim-fade-up delay-200">
                 <span className="gradient-text" style={{ background: 'linear-gradient(135deg, var(--cyan), var(--purple), var(--pink))', WebkitBackgroundClip: 'text' }}>DOMINATE</span>
@@ -285,7 +285,7 @@ export default function Home() {
                 THE ARENA
               </h1>
               <p className="hero-description anim-fade-up delay-300">
-                Fastest-growing competitive gaming platform. Discover tournaments across <strong>9 titles</strong>, win prizes up to <strong>₹5 Lakhs</strong> — and get AI-powered match prep from <strong>NeuroGamer</strong>. 🧠🔥
+                India's fastest-growing competitive gaming platform. Discover tournaments across <strong>9 titles</strong>, win prizes up to <strong>₹5 Lakhs</strong> — and get AI-powered match prep from <strong>NeuroGamer</strong>. 🧠🔥
               </p>
               <div style={{ display: 'flex', gap: 16, marginBottom: 48, flexWrap: 'wrap' }} className="anim-fade-up delay-400 hero-btns">
                 <Link to="/tournaments" className="btn btn-primary btn-lg" style={{ background: 'linear-gradient(135deg, var(--cyan), var(--purple))' }}>
@@ -319,7 +319,7 @@ export default function Home() {
             </div>
 
             {/* Hero Visual */}
-            <div style={{ textAlign: 'center', position: 'relative', marginTop: 'clamp(40px, 8vw, 0px)' }} className="anim-slide-right delay-300 hero-visual-container">
+            <div style={{ textAlign: 'center', position: 'relative', marginTop: -60, transform: 'scale(1.1)' }} className="anim-slide-right delay-300 hero-visual-container">
               <div style={{
                 width: 'min(360px, 80vw)', height: 'min(360px, 80vw)',
                 borderRadius: '50%',
@@ -327,7 +327,7 @@ export default function Home() {
                 display: 'flex', alignItems: 'center', justifyContent: 'center',
                 margin: '0 auto', position: 'relative',
               }} className="anim-float">
-                <img src={logo} alt="Esports Hub" style={{ width: '75%', filter: 'drop-shadow(0 0 40px rgba(0,243,255,0.5))' }} />
+                <img src={logo} alt="India Esports Hub" style={{ width: '75%', filter: 'drop-shadow(0 0 40px rgba(0,243,255,0.5))' }} />
                 {['BGMI', 'Valorant', 'CS2', 'Free Fire Max'].map((game, i) => (
                   <div key={i} style={{
                     position: 'absolute', width: 50, height: 50, borderRadius: 14,
@@ -350,7 +350,7 @@ export default function Home() {
         <div className="container">
           <h2 className="section-title anim-fade-up"><span className="gradient-text">Featured Games</span></h2>
           <p className="section-subtitle anim-fade-up delay-100">
-            Compete across most popular esports titles — from battle royale to fighting games
+            More games available — from battle royale to fighting games
           </p>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(160px, 1fr))', gap: 24 }}>
             {GAMES.map((g, i) => (
@@ -747,7 +747,7 @@ export default function Home() {
           {/* Bottom row */}
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 16 }}>
             <div style={{ color: 'var(--text-muted)', fontSize: '0.85rem', fontFamily: 'Rajdhani', fontWeight: 600 }}>
-              © {new Date().getFullYear()} Esports Hub · All Rights Reserved
+              © {new Date().getFullYear()} India Esports Hub · All Rights Reserved
             </div>
             <div style={{ color: 'var(--text-muted)', fontSize: '0.82rem', display: 'flex', alignItems: 'center', gap: 6 }}>
               Proudly built in India 🇮🇳 · For Indian gamers, by Indian gamers

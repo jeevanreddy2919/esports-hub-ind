@@ -103,7 +103,7 @@ export default function Signup() {
         </button>
 
         <div className="auth-logo" style={{ marginBottom: 32 }}>
-          <img src={logo} alt="Esports Hub" style={{ height: 60, filter: 'drop-shadow(0 0 15px var(--cyan-glow))' }} />
+          <img src={logo} alt="India Esports Hub" style={{ height: 60, filter: 'drop-shadow(0 0 15px var(--cyan-glow))' }} />
         </div>
 
         {/* Step indicator */}
