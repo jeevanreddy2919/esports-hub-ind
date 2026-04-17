@@ -76,98 +76,109 @@ export default function Signup() {
         }}>{emoji}</div>
       ))}
 
-      <div className="auth-card" style={{ position: 'relative', zIndex: 2 }}>
+      <div className="auth-card shape-oval" style={{ 
+        position: 'relative', 
+        zIndex: 2,
+        padding: '50px 40px',
+        maxWidth: 500,
+        boxShadow: '0 30px 60px rgba(0,0,0,0.6), 0 0 40px rgba(123,47,255,0.1)',
+        border: '1px solid rgba(255,255,255,0.08)'
+      }}>
         <div style={{
           position: 'absolute', top: -1, left: '15%', right: '15%', height: 2,
           background: 'linear-gradient(90deg, transparent, var(--cyan), var(--purple), transparent)',
+          borderRadius: 100,
         }} />
 
-        <div className="auth-logo">
-          <img src={logo} alt="India Esports Hub" />
+        <div className="auth-logo" style={{ marginBottom: 32 }}>
+          <img src={logo} alt="India Esports Hub" style={{ height: 60, filter: 'drop-shadow(0 0 15px var(--cyan-glow))' }} />
         </div>
 
         {/* Step indicator */}
-        <div style={{ display: 'flex', gap: 'clamp(4px, 2vw, 8px)', marginBottom: 28, justifyContent: 'center', flexWrap: 'wrap' }}>
+        <div style={{ display: 'flex', gap: 12, marginBottom: 40, justifyContent: 'center' }}>
           {STEPS.map((s, i) => (
-            <div key={s} style={{ display: 'flex', alignItems: 'center', gap: 'clamp(4px, 2vw, 8px)' }}>
+            <div key={s} style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
               <div style={{
-                width: 'clamp(28px, 6vw, 32px)', height: 'clamp(28px, 6vw, 32px)', borderRadius: 10,
-                background: i <= step ? 'linear-gradient(135deg, var(--purple), var(--cyan))' : 'rgba(255,255,255,0.06)',
-                border: `1px solid ${i <= step ? 'transparent' : 'var(--border)'}`,
+                width: 36, height: 36, borderRadius: '50%',
+                background: i <= step ? 'linear-gradient(135deg, var(--purple), var(--cyan))' : 'rgba(255,255,255,0.04)',
+                border: `1px solid ${i <= step ? 'transparent' : 'rgba(255,255,255,0.1)'}`,
                 display: 'flex', alignItems: 'center', justifyContent: 'center',
-                fontFamily: 'Orbitron', fontWeight: 800, fontSize: '0.75rem',
+                fontFamily: 'Orbitron', fontWeight: 800, fontSize: '0.85rem',
                 color: i <= step ? '#fff' : 'var(--text-muted)',
-                transition: 'all 0.4s ease',
-                boxShadow: i <= step ? '0 0 15px rgba(0,243,255,0.3)' : 'none',
+                transition: 'all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275)',
+                boxShadow: i <= step ? '0 0 20px rgba(0,243,255,0.3)' : 'none',
+                transform: i === step ? 'scale(1.15)' : 'scale(1)',
               }}>{i < step ? '✓' : i + 1}</div>
               {i < STEPS.length - 1 && (
-                <div style={{ width: 'clamp(20px, 8vw, 40px)', height: 2, background: i < step ? 'var(--cyan)' : 'var(--border)', borderRadius: 1, transition: 'all 0.4s ease' }} />
+                <div style={{ width: 24, height: 2, background: i < step ? 'var(--cyan)' : 'rgba(255,255,255,0.1)', borderRadius: 100 }} />
               )}
             </div>
           ))}
         </div>
 
-        <h1 className="auth-title"><span className="gradient-text">{STEPS[step]}</span></h1>
-        <p className="auth-subtitle">
-          {step === 0 && 'Create your player account'}
-          {step === 1 && 'Tell us about your gaming preferences'}
-          {step === 2 && 'You\'re all set to join the arena!'}
+        <h1 className="auth-title" style={{ fontFamily: 'Orbitron', fontWeight: 900, marginBottom: 12 }}>
+          <span className="gradient-text">{STEPS[step]}</span>
+        </h1>
+        <p className="auth-subtitle" style={{ fontSize: '0.95rem', color: 'var(--text-muted)', marginBottom: 40 }}>
+          {step === 0 && 'Create your legendary player account'}
+          {step === 1 && 'Define your gaming path'}
+          {step === 2 && 'Identity verified. Ready for combat!'}
         </p>
 
         <form onSubmit={step === 2 ? handleSubmit : (e) => { e.preventDefault(); nextStep(); }}>
           {step === 0 && (
             <>
-              <div className="form-group">
-                <label className="form-label" htmlFor="sigup-name">👤 Full Name</label>
-                <input id="sigup-name" name="name" className="form-input" type="text" placeholder="Your gaming name" value={form.name}
-                  onChange={e => setForm(p => ({ ...p, name: e.target.value }))} />
+              <div className="form-group" style={{ marginBottom: 20 }}>
+                <label className="form-label" htmlFor="sigup-name" style={{ marginLeft: 20 }}>👤 Player Name</label>
+                <input id="sigup-name" name="name" className="form-input shape-pill" type="text" placeholder="Your combat alias" value={form.name}
+                  onChange={e => setForm(p => ({ ...p, name: e.target.value }))} style={{ paddingLeft: 28 }} />
               </div>
-              <div className="form-group">
-                <label className="form-label" htmlFor="signup-email">📧 Email</label>
-                <input id="signup-email" name="email" className="form-input" type="email" placeholder="your@email.com" value={form.email}
-                  onChange={e => setForm(p => ({ ...p, email: e.target.value }))} />
+              <div className="form-group" style={{ marginBottom: 20 }}>
+                <label className="form-label" htmlFor="signup-email" style={{ marginLeft: 20 }}>📧 Email Address</label>
+                <input id="signup-email" name="email" className="form-input shape-pill" type="email" placeholder="Gladiator@arena.com" value={form.email}
+                  onChange={e => setForm(p => ({ ...p, email: e.target.value }))} style={{ paddingLeft: 28 }} />
               </div>
-              <div className="form-group">
-                <label className="form-label" htmlFor="signup-password">🔒 Password</label>
+              <div className="form-group" style={{ marginBottom: 20 }}>
+                <label className="form-label" htmlFor="signup-password" style={{ marginLeft: 20 }}>🔒 Secret Key</label>
                 <div style={{ position: 'relative' }}>
-                  <input id="signup-password" name="password" className="form-input" type={show ? 'text' : 'password'} placeholder="Min 8 characters"
-                    value={form.password} onChange={e => setForm(p => ({ ...p, password: e.target.value }))} style={{ paddingRight: 48 }} />
+                  <input id="signup-password" name="password" className="form-input shape-pill" type={show ? 'text' : 'password'} placeholder="Min 8 characters"
+                    value={form.password} onChange={e => setForm(p => ({ ...p, password: e.target.value }))} style={{ paddingLeft: 28, paddingRight: 56 }} />
                   <button type="button" onClick={() => setShow(s => !s)} style={{
-                    position: 'absolute', right: 14, top: '50%', transform: 'translateY(-50%)',
-                    background: 'none', color: 'var(--text-muted)', fontSize: '1rem',
+                    position: 'absolute', right: 20, top: '50%', transform: 'translateY(-50%)',
+                    background: 'none', color: 'var(--text-muted)', fontSize: '1.2rem',
                   }}>{show ? '🙈' : '👁️'}</button>
                 </div>
               </div>
-              <div className="form-group">
-                <label className="form-label">🔒 Confirm Password</label>
-                <input className="form-input" type="password" placeholder="Repeat your password"
-                  value={form.confirmPassword} onChange={e => setForm(p => ({ ...p, confirmPassword: e.target.value }))} />
+              <div className="form-group" style={{ marginBottom: 32 }}>
+                <label className="form-label" style={{ marginLeft: 20 }}>🔒 Confirm Secret Key</label>
+                <input className="form-input shape-pill" type="password" placeholder="Verify your password"
+                  value={form.confirmPassword} onChange={e => setForm(p => ({ ...p, confirmPassword: e.target.value }))} style={{ paddingLeft: 28 }} />
               </div>
             </>
           )}
 
           {step === 1 && (
             <>
-              <div className="form-group">
-                <label className="form-label">📍 Select Your State *</label>
-                <select className="form-select" value={form.state} onChange={e => setForm(p => ({ ...p, state: e.target.value }))} required>
+              <div className="form-group" style={{ marginBottom: 28 }}>
+                <label className="form-label" style={{ marginLeft: 20 }}>📍 Combat Region</label>
+                <select className="form-select shape-pill" value={form.state} onChange={e => setForm(p => ({ ...p, state: e.target.value }))} required style={{ paddingLeft: 28 }}>
                   <option value="" disabled>-- Select your state --</option>
                   {INDIAN_STATES.filter(s => s !== '').map(s => <option key={s} value={s}>{s}</option>)}
                 </select>
               </div>
-              <div className="form-group">
-                <label className="form-label">🎮 Favourite Games (Select all)</label>
-                <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8, marginTop: 4 }}>
+              <div className="form-group" style={{ marginBottom: 32 }}>
+                <label className="form-label" style={{ marginLeft: 20 }}>🎮 Specialized Games</label>
+                <div style={{ display: 'flex', flexWrap: 'wrap', gap: 10, marginTop: 8, padding: '0 8px' }}>
                   {GAMES_LIST.map(game => (
-                    <button key={game} type="button" onClick={() => toggleGame(game)} style={{
-                      padding: '8px 16px', borderRadius: 100,
-                      background: form.games.includes(game) ? 'linear-gradient(135deg, var(--purple), var(--cyan))' : 'rgba(255,255,255,0.06)',
-                      border: `1px solid ${form.games.includes(game) ? 'transparent' : 'var(--border)'}`,
+                    <button key={game} type="button" onClick={() => toggleGame(game)} className="shape-pill" style={{
+                      padding: '10px 20px',
+                      background: form.games.includes(game) ? 'linear-gradient(135deg, var(--purple), var(--cyan))' : 'rgba(255,255,255,0.04)',
+                      border: `1px solid ${form.games.includes(game) ? 'transparent' : 'rgba(255,255,255,0.1)'}`,
                       color: form.games.includes(game) ? '#fff' : 'var(--text-secondary)',
-                      fontFamily: 'Rajdhani', fontWeight: 700, fontSize: '0.85rem',
-                      cursor: 'pointer', transition: 'all 0.3s ease',
+                      fontFamily: 'Rajdhani', fontWeight: 800, fontSize: '0.85rem',
+                      cursor: 'pointer', transition: 'all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275)',
                       transform: form.games.includes(game) ? 'scale(1.05)' : 'scale(1)',
-                      boxShadow: form.games.includes(game) ? '0 0 15px rgba(0,243,255,0.3)' : 'none',
+                      boxShadow: form.games.includes(game) ? '0 10px 20px rgba(0,243,255,0.2)' : 'none',
                     }}>{game}</button>
                   ))}
                 </div>
@@ -177,42 +188,42 @@ export default function Signup() {
 
           {step === 2 && (
             <div style={{ textAlign: 'center', padding: '16px 0' }}>
-              <div style={{ fontSize: '4rem', marginBottom: 16 }} className="anim-bounce-in">🎉</div>
-              <div style={{ background: 'rgba(255,255,255,0.04)', borderRadius: 'var(--radius)', padding: 24, border: '1px solid var(--border)', textAlign: 'left' }}>
-                <div style={{ display: 'flex', gap: 12, marginBottom: 10 }}>
-                  <span style={{ color: 'var(--text-muted)', fontFamily: 'Rajdhani', fontSize: '0.85rem', width: 60 }}>NAME</span>
-                  <span style={{ fontFamily: 'Rajdhani', fontWeight: 700 }}>{form.name}</span>
+              <div style={{ fontSize: '5rem', marginBottom: 24 }} className="anim-bounce-in">🥇</div>
+              <div className="shape-oval" style={{ background: 'rgba(255,255,255,0.03)', padding: 32, border: '1px solid rgba(255,255,255,0.08)', textAlign: 'left' }}>
+                <div style={{ display: 'flex', gap: 16, marginBottom: 14 }}>
+                  <span style={{ color: 'var(--text-muted)', fontFamily: 'Rajdhani', fontSize: '0.9rem', width: 80, fontWeight: 700 }}>PLAYER</span>
+                  <span style={{ fontFamily: 'Rajdhani', fontWeight: 800, fontSize: '1.1rem' }}>{form.name}</span>
                 </div>
-                <div style={{ display: 'flex', gap: 12, marginBottom: 10 }}>
-                  <span style={{ color: 'var(--text-muted)', fontFamily: 'Rajdhani', fontSize: '0.85rem', width: 60 }}>STATE</span>
-                  <span style={{ fontFamily: 'Rajdhani', fontWeight: 700 }}>{form.state}</span>
+                <div style={{ display: 'flex', gap: 16, marginBottom: 14 }}>
+                  <span style={{ color: 'var(--text-muted)', fontFamily: 'Rajdhani', fontSize: '0.9rem', width: 80, fontWeight: 700 }}>REGION</span>
+                  <span style={{ fontFamily: 'Rajdhani', fontWeight: 800, fontSize: '1.1rem' }}>{form.state}</span>
                 </div>
-                <div style={{ display: 'flex', gap: 12 }}>
-                  <span style={{ color: 'var(--text-muted)', fontFamily: 'Rajdhani', fontSize: '0.85rem', width: 60 }}>GAMES</span>
-                  <span style={{ fontFamily: 'Rajdhani', fontWeight: 700, color: 'var(--cyan)' }}>
-                    {form.games.length > 0 ? form.games.join(', ') : 'Not selected'}
+                <div style={{ display: 'flex', gap: 16 }}>
+                  <span style={{ color: 'var(--text-muted)', fontFamily: 'Rajdhani', fontSize: '0.9rem', width: 80, fontWeight: 700 }}>MAINS</span>
+                  <span style={{ fontFamily: 'Rajdhani', fontWeight: 800, fontSize: '1.1rem', color: 'var(--cyan)' }}>
+                    {form.games.length > 0 ? form.games.join(', ') : 'Versatile Player'}
                   </span>
                 </div>
               </div>
             </div>
           )}
 
-          <div style={{ display: 'flex', gap: 12, marginTop: 24 }}>
+          <div style={{ display: 'flex', gap: 16, marginTop: 40 }}>
             {step > 0 && (
-              <button type="button" className="btn btn-secondary" style={{ flex: 1 }} onClick={() => setStep(s => s - 1)}>
-                ← Back
+              <button type="button" className="btn btn-secondary shape-pill" style={{ flex: 1, height: 52 }} onClick={() => setStep(s => s - 1)}>
+                ← REVISE
               </button>
             )}
-            <button type="submit" className="btn btn-primary btn-lg" style={{ flex: 2, justifyContent: 'center' }} disabled={loading}>
-              {loading ? <><div className="loader" style={{ width: 20, height: 20, borderWidth: 2 }} /> Creating...</>
-                : step < 2 ? 'Next →'
-                  : '🚀 Create Account!'}
+            <button type="submit" className="btn btn-primary btn-lg shape-pill" style={{ flex: 2, justifyContent: 'center', height: 56 }} disabled={loading}>
+              {loading ? <><div className="loader" style={{ width: 20, height: 20, borderWidth: 2 }} /> DEPLOYING...</>
+                : step < 2 ? 'PROCEED →'
+                  : 'READY FOR COMBAT ⚔️'}
             </button>
           </div>
         </form>
 
-        <p className="auth-switch">
-          Already a player? <Link to="/login">Login →</Link>
+        <p className="auth-switch" style={{ marginTop: 32, fontSize: '0.9rem', color: 'var(--text-muted)' }}>
+          Already signed the contract? <Link to="/login" style={{ color: 'var(--cyan)', fontWeight: 700 }}>Access Arena →</Link>
         </p>
       </div>
     </div>

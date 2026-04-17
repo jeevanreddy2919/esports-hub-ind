@@ -39,11 +39,11 @@ const GAME_ICONS = { BGMI: '🎯', Valorant: '⚡', 'Free Fire Max': '🔥', CS2
 function TournamentCard({ t, isSkeleton }) {
   if (isSkeleton) {
     return (
-      <div style={{ borderRadius: 20, overflow: 'hidden', background: 'rgba(13,13,35,0.7)', border: '1px solid rgba(255,255,255,0.05)', padding: 24 }}>
-        <Skeleton width="50px" height="50px" borderRadius="14px" className="mb-3" />
+      <div className="glass-card shape-oval" style={{ overflow: 'hidden', padding: 24 }}>
+        <div className="skeleton shape-circle" style={{ width: 50, height: 50, marginBottom: 12 }} />
         <Skeleton width="70%" height="22px" className="mb-2" />
         <Skeleton width="40%" height="16px" className="mb-4" />
-        <Skeleton height="44px" borderRadius="12px" />
+        <Skeleton height="44px" borderRadius="999px" />
       </div>
     );
   }
@@ -62,48 +62,49 @@ function TournamentCard({ t, isSkeleton }) {
       style={{ height: '100%' }}
     >
       <Link to={`/tournaments/${t._id || t.id}`} style={{ display: 'block', height: '100%' }}>
-        <div style={{
-          height: '100%', borderRadius: 20, overflow: 'hidden',
-          background: 'rgba(10,10,28,0.9)',
-          border: '1px solid rgba(255,255,255,0.07)',
-          backdropFilter: 'blur(20px)',
+        <div className="glass-card shape-oval" style={{
+          height: '100%', overflow: 'hidden',
           position: 'relative', display: 'flex', flexDirection: 'column',
-          boxShadow: '0 4px 24px rgba(0,0,0,0.4)',
           transition: 'all 0.3s ease',
         }}>
-          <div style={{ height: 5, width: '100%', flexShrink: 0, background: `linear-gradient(90deg, ${accentColor}, ${accentColor}88)` }} />
-          <div style={{ position: 'absolute', left: 0, top: 5, bottom: 0, width: 3, background: `linear-gradient(to bottom, ${accentColor}, transparent)`, opacity: 0.7 }} />
-          <div style={{ padding: '20px 22px', flex: 1, display: 'flex', flexDirection: 'column' }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 12 }}>
-              <div style={{ width: 48, height: 48, borderRadius: 13, background: `${accentColor}22`, border: `1px solid ${accentColor}44`, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.5rem' }}>
+          {/* Top color bar - Curved */}
+          <div style={{ height: 6, width: '60%', margin: '0 auto', flexShrink: 0, background: `linear-gradient(90deg, transparent, ${accentColor}, transparent)`, borderRadius: '0 0 100px 100px' }} />
+          
+          <div style={{ padding: '24px 26px', flex: 1, display: 'flex', flexDirection: 'column' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 16 }}>
+              <div className="shape-soft-hex" style={{ width: 52, height: 52, background: `${accentColor}22`, border: `1px solid ${accentColor}44`, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.6rem' }}>
                 {GAME_ICONS[t.game] || '🎮'}
               </div>
               {t.status === 'live' ? (
-                <div style={{ display: 'flex', alignItems: 'center', gap: 5, padding: '4px 10px', borderRadius: 100, background: 'rgba(255,45,120,0.15)', border: '1px solid rgba(255,45,120,0.5)', fontFamily: 'Rajdhani', fontWeight: 800, fontSize: '0.72rem', color: '#ff2d78', letterSpacing: '0.08em' }}>
-                  <span style={{ width: 6, height: 6, borderRadius: '50%', background: '#ff2d78', animation: 'live-pulse 1s ease-in-out infinite', display: 'inline-block' }} />
-                  🔴 LIVE
+                <div style={{ display: 'flex', alignItems: 'center', gap: 6, padding: '6px 14px', borderRadius: 999, background: 'rgba(255,45,120,0.15)', border: '1px solid rgba(255,45,120,0.5)', fontFamily: 'Rajdhani', fontWeight: 800, fontSize: '0.75rem', color: '#ff2d78', letterSpacing: '0.08em' }}>
+                  <span style={{ width: 7, height: 7, borderRadius: '50%', background: '#ff2d78', animation: 'live-pulse 1s ease-in-out infinite', display: 'inline-block' }} />
+                  LIVE
                 </div>
               ) : (
-                <div style={{ padding: '4px 10px', borderRadius: 100, background: 'rgba(0,243,255,0.08)', border: '1px solid rgba(0,243,255,0.25)', fontFamily: 'Rajdhani', fontWeight: 700, fontSize: '0.72rem', color: 'var(--cyan)' }}>🔵 UPCOMING</div>
+                <div style={{ padding: '6px 14px', borderRadius: 999, background: 'rgba(0,243,255,0.08)', border: '1px solid rgba(0,243,255,0.25)', fontFamily: 'Rajdhani', fontWeight: 700, fontSize: '0.75rem', color: 'var(--cyan)' }}>UPCOMING</div>
               )}
             </div>
-            <div style={{ fontFamily: 'Orbitron', fontWeight: 700, fontSize: '0.9rem', lineHeight: 1.35, marginBottom: 4, color: '#fff' }}>{t.title}</div>
-            <div style={{ fontFamily: 'Rajdhani', fontWeight: 600, fontSize: '0.82rem', color: accentColor, marginBottom: 12 }}>{t.game}</div>
-            <div style={{ padding: '10px 12px', borderRadius: 10, marginBottom: 12, background: 'rgba(255,214,10,0.06)', border: '1px solid rgba(255,214,10,0.15)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+            
+            <div style={{ fontFamily: 'Orbitron', fontWeight: 800, fontSize: '1rem', lineHeight: 1.4, marginBottom: 6, color: '#fff' }}>{t.title}</div>
+            <div style={{ fontFamily: 'Rajdhani', fontWeight: 700, fontSize: '0.85rem', color: accentColor, marginBottom: 18, textTransform: 'uppercase', letterSpacing: '0.05em' }}>{t.game}</div>
+            
+            <div style={{ padding: '14px 18px', borderRadius: 20, marginBottom: 18, background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.08)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
               <div>
-                <div style={{ fontSize: '0.6rem', color: 'var(--text-muted)', fontFamily: 'Rajdhani', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: 2 }}>🏆 Prize</div>
-                <div style={{ fontFamily: 'Orbitron', fontWeight: 800, fontSize: '0.9rem', background: 'linear-gradient(135deg, #ffd60a, #ff9500)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>{t.prize_pool}</div>
+                <div style={{ fontSize: '0.65rem', color: 'var(--text-muted)', fontFamily: 'Rajdhani', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 2 }}>🏆 Prize</div>
+                <div style={{ fontFamily: 'Orbitron', fontWeight: 900, fontSize: '1rem', color: '#ffd60a' }}>{t.prize_pool}</div>
               </div>
               <div style={{ textAlign: 'right' }}>
-                <div style={{ fontSize: '0.6rem', color: 'var(--text-muted)', fontFamily: 'Rajdhani', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: 2 }}>🎯 Slots</div>
-                <div style={{ fontFamily: 'Rajdhani', fontWeight: 700, fontSize: '0.9rem', color: isAlmostFull ? 'var(--pink)' : 'var(--text-secondary)' }}>{t.slots_filled}/{t.slots}</div>
+                <div style={{ fontSize: '0.65rem', color: 'var(--text-muted)', fontFamily: 'Rajdhani', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 2 }}>🎯 Slots</div>
+                <div style={{ fontFamily: 'Rajdhani', fontWeight: 800, fontSize: '1.05rem', color: isAlmostFull ? 'var(--pink)' : '#fff' }}>{t.slots_filled}/{t.slots}</div>
               </div>
             </div>
-            <div style={{ marginBottom: 14 }}>
+            
+            <div style={{ marginBottom: 18, padding: '0 4px' }}>
               <CountdownTimer targetDate={t.start_date} status={t.status} />
             </div>
-            <div style={{ marginTop: 'auto', padding: '11px 16px', borderRadius: 11, textAlign: 'center', fontFamily: 'Rajdhani', fontWeight: 800, fontSize: '0.9rem', background: `linear-gradient(135deg, ${accentColor}dd, ${accentColor}88)`, color: '#fff', boxShadow: `0 4px 16px ${accentColor}40` }}>
-              {t.status === 'live' ? '🔴 Join Now →' : '📝 Register Now →'}
+            
+            <div className="shape-pill" style={{ marginTop: 'auto', padding: '12px 16px', textAlign: 'center', fontFamily: 'Rajdhani', fontWeight: 800, fontSize: '0.95rem', background: `linear-gradient(135deg, ${accentColor}, ${accentColor}aa)`, color: '#fff', boxShadow: `0 8px 20px ${accentColor}40`, letterSpacing: '0.05em' }}>
+              {t.status === 'live' ? 'JOIN NOW ⚔️' : 'REGISTER NOW →'}
             </div>
           </div>
         </div>
@@ -198,16 +199,23 @@ export default function Home() {
                   📊 Leaderboard
                 </Link>
               </div>
-              <div className="hero-stats anim-fade-up delay-500">
+              <div className="hero-stats anim-fade-up delay-500" style={{ display: 'flex', gap: 24, justifyContent: 'flex-start' }}>
                 {STATS.map(s => (
-                  <div key={s.label} className="hero-stat">
-                    <span className="hero-stat-value" style={{ color: s.color }}>
-                      {s.label === 'Players' ? `${(counter.players / 1000).toFixed(0)}K+`
-                        : s.label === 'Prize Pool' ? `₹${counter.prize}L+`
-                          : s.label === 'Tournaments' ? `${counter.tournaments}+`
+                  <div key={s.label} className="hero-stat shape-circle" style={{ 
+                    width: 100, height: 100, 
+                    background: 'rgba(255,255,255,0.04)', 
+                    border: `1px solid ${s.color}33`,
+                    display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
+                    boxShadow: `0 0 20px ${s.color}15`,
+                    backdropFilter: 'blur(10px)',
+                  }}>
+                    <span className="hero-stat-value" style={{ color: s.color, fontSize: '1.4rem', fontWeight: 900 }}>
+                      {s.label === 'Players' ? `${(counter.players / 1000).toFixed(0)}K`
+                        : s.label === 'Prize Pool' ? `₹${counter.prize}L`
+                          : s.label === 'Tournaments' ? `${counter.tournaments}`
                             : s.value}
                     </span>
-                    <span className="hero-stat-label">{s.label}</span>
+                    <span className="hero-stat-label" style={{ fontSize: '0.6rem', fontWeight: 800 }}>{s.label}</span>
                   </div>
                 ))}
               </div>
@@ -253,7 +261,7 @@ export default function Home() {
         <div className="container">
           <h2 className="section-title anim-fade-up"><span className="gradient-text">Featured Games</span></h2>
           <p className="section-subtitle anim-fade-up delay-100">Tournaments across India's most played esports titles</p>
-          <div className="games-grid">
+          <div className="games-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(160px, 1fr))', gap: 30 }}>
             {GAMES.map((g, i) => (
               <motion.div
                 key={g.name}
@@ -263,11 +271,29 @@ export default function Home() {
                 transition={{ delay: i * 0.05 }}
               >
                 <Link to={`/tournaments?game=${g.name}`}
-                  className="glass-card game-card"
-                  style={{ '--game-color': g.color }}>
-                  <span className="game-icon">{g.icon}</span>
-                  <div className="game-name">{g.name}</div>
-                  <div className="game-count" style={{ color: g.color }}>Active Tournaments</div>
+                  className="game-card"
+                  style={{ 
+                    '--game-color': g.color,
+                    padding: '30px 20px',
+                    textAlign: 'center',
+                    background: 'rgba(255,255,255,0.03)',
+                    border: '1px solid rgba(255,255,255,0.06)',
+                    position: 'relative',
+                    transition: 'all 0.4s ease',
+                  }}>
+                  <div className="shape-hex" style={{ 
+                    width: 76, height: 76, 
+                    background: `${g.color}15`, 
+                    border: `1px solid ${g.color}44`,
+                    margin: '0 auto 16px',
+                    display: 'flex', alignItems: 'center', justifyContent: 'center',
+                    fontSize: '2.2rem',
+                    boxShadow: `0 0 20px ${g.color}20`
+                  }}>
+                    {g.icon}
+                  </div>
+                  <div className="game-name" style={{ fontFamily: 'Orbitron', fontSize: '0.85rem', fontWeight: 800 }}>{g.name}</div>
+                  <div className="game-count" style={{ color: g.color, fontSize: '0.65rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.1em', marginTop: 4 }}>JOIN ROOM →</div>
                 </Link>
               </motion.div>
             ))}

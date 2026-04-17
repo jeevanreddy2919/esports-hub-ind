@@ -17,10 +17,19 @@ export const authAPI = {
 };
 
 export const tournamentAPI = {
+  // Supports advanced filters: minPrize, maxPrize, format, region
   getAll: (params) => API.get('/tournaments', { params }),
   getById: (id) => API.get(`/tournaments/${id}`),
   register: (id) => API.post(`/tournaments/${id}/register`),
   myRegistrations: () => API.get('/tournaments/user/registered'),
+  toggleBookmark: (id) => API.post(`/tournaments/${id}/bookmark`),
+  myBookmarks: () => API.get('/tournaments/user/bookmarks'),
+};
+
+export const notificationAPI = {
+  get: () => API.get('/notifications'),
+  markRead: (id) => API.post(`/notifications/${id}/read`),
+  markAllRead: () => API.post('/notifications/read-all'),
 };
 
 export const leaderboardAPI = {

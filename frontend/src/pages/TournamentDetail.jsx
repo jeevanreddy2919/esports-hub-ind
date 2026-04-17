@@ -17,6 +17,8 @@ export default function TournamentDetail() {
   const [loading, setLoading] = useState(true);
   const [registering, setRegistering] = useState(false);
   const [registered, setRegistered] = useState(false);
+  const [bookmarked, setBookmarked] = useState(false);
+  const [bookmarking, setBookmarking] = useState(false);
 
   useEffect(() => {
     tournamentAPI.getById(id)
@@ -28,8 +30,26 @@ export default function TournamentDetail() {
       tournamentAPI.myRegistrations()
         .then(r => setRegistered(r.data?.tournaments?.some(t => (t._id || t.id) === id)))
         .catch(() => {});
+      
+      tournamentAPI.myBookmarks()
+        .then(r => setBookmarked(r.data?.tournaments?.some(t => (t._id || t.id) === id)))
+        .catch(() => {});
     }
   }, [id, user]);
+
+  const handleBookmark = async () => {
+    if (!user) { toast.error('Login to save tournaments! 🔒'); navigate('/login'); return; }
+    setBookmarking(true);
+    try {
+      await tournamentAPI.bookmark(id);
+      setBookmarked(!bookmarked);
+      toast.success(bookmarked ? 'Removed from saved! 🗑️' : 'Added to saved tournaments! ⭐');
+    } catch (err) {
+      toast.error('Action failed!');
+    } finally {
+      setBookmarking(false);
+    }
+  };
 
   const handleRegister = async () => {
     if (!user) { toast.error('Please login to register! 🔒'); navigate('/login'); return; }
@@ -101,15 +121,14 @@ export default function TournamentDetail() {
         </Link>
 
         {/* Hero Section */}
-        <div style={{
+        <div className="glass-card shape-oval" style={{
           position: 'relative',
-          borderRadius: 40,
-          background: 'rgba(15,15,35,0.6)',
-          border: '1px solid rgba(255,255,255,0.05)',
-          padding: 'clamp(32px, 8vw, 60px)',
-          marginBottom: 40,
+          background: `linear-gradient(135deg, rgba(15,15,35,0.8), ${accentColor}08)`,
+          padding: 'clamp(40px, 8vw, 80px)',
+          marginBottom: 48,
           overflow: 'hidden',
-          boxShadow: '0 30px 60px rgba(0,0,0,0.5)'
+          boxShadow: `0 40px 80px rgba(0,0,0,0.6), 0 0 30px ${accentColor}10`,
+          border: `1px solid ${accentColor}22`
         }}>
           {/* Hero Decor */}
           <div style={{
@@ -119,26 +138,36 @@ export default function TournamentDetail() {
           }} />
           
           <div style={{ position: 'relative', zIndex: 2 }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: 16, marginBottom: 20 }}>
-              <div style={{
-                padding: '8px 20px', borderRadius: 100,
+            <div style={{ display: 'flex', alignItems: 'center', gap: 16, marginBottom: 28 }}>
+              <div className="shape-pill" style={{
+                padding: '8px 24px',
                 background: isPast ? 'rgba(255,255,255,0.1)' : tournament.status === 'live' ? 'rgba(255,45,120,0.15)' : 'rgba(0,243,255,0.1)',
                 border: `1px solid ${isPast ? 'rgba(255,255,255,0.2)' : tournament.status === 'live' ? 'rgba(255,45,120,0.4)' : 'rgba(0,243,255,0.3)'}`,
                 color: isPast ? 'var(--text-muted)' : tournament.status === 'live' ? 'var(--pink)' : 'var(--cyan)',
-                fontFamily: 'Rajdhani', fontWeight: 800, fontSize: '0.8rem', letterSpacing: '0.1em'
+                fontFamily: 'Rajdhani', fontWeight: 900, fontSize: '0.8rem', letterSpacing: '0.15em'
               }}>
                 {tournament.status.toUpperCase()} {tournament.status === 'live' && '🔴'}
               </div>
-              <div style={{ fontFamily: 'Rajdhani', fontWeight: 700, color: 'rgba(255,255,255,0.4)', fontSize: '0.9rem' }}>
-                MATCH ID: {id.slice(-8).toUpperCase()}
-              </div>
+              <button 
+                onClick={handleBookmark}
+                disabled={bookmarking}
+                className="shape-circle"
+                style={{ 
+                  width: 44, height: 44, border: '1px solid rgba(255,255,255,0.1)', 
+                  background: bookmarked ? 'var(--yellow)' : 'rgba(255,255,255,0.05)',
+                  color: bookmarked ? '#000' : '#fff', cursor: 'pointer', transition: '0.3s'
+                }}
+              >
+                {bookmarked ? '★' : '☆'}
+              </button>
             </div>
 
             <div style={{ display: 'flex', alignItems: 'flex-end', gap: 24, flexWrap: 'wrap', mb: 32 }}>
-              <div style={{ 
-                width: 100, height: 100, borderRadius: 24, 
+              <div className="shape-soft-hex" style={{ 
+                width: 110, height: 110,
                 background: `${accentColor}22`, border: `2px solid ${accentColor}44`,
-                display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '3.5rem'
+                display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '3.8rem',
+                boxShadow: `0 15px 35px ${accentColor}20`
               }}>
                 {GAME_ICONS[tournament.game] || '🎮'}
               </div>
@@ -181,33 +210,27 @@ export default function TournamentDetail() {
           
           {/* Main Info */}
           <div style={{ display: 'flex', flexDirection: 'column', gap: 32 }}>
-            <div style={{ 
-              background: 'rgba(15,15,35,0.6)', borderRadius: 32, padding: 32, 
-              border: '1px solid rgba(255,255,255,0.05)', backdropFilter: 'blur(10px)'
-            }}>
-              <h2 style={{ fontFamily: 'Orbitron', fontSize: '1.2rem', fontWeight: 800, marginBottom: 20, color: '#fff' }}>⚔️ MISSION INTEL</h2>
-              <p style={{ color: 'var(--text-secondary)', lineHeight: 1.8, fontSize: '1.05rem', whiteSpace: 'pre-line' }}>
+            <div className="glass-card shape-oval" style={{ padding: 40 }}>
+              <h2 style={{ fontFamily: 'Orbitron', fontSize: '1.3rem', fontWeight: 900, marginBottom: 24, color: '#fff', letterSpacing: '0.05em' }}>⚔️ MISSION INTEL</h2>
+              <p style={{ color: 'var(--text-secondary)', lineHeight: 1.9, fontSize: '1.1rem', whiteSpace: 'pre-line' }}>
                 {tournament.description}
               </p>
             </div>
 
             {rules.length > 0 && (
-              <div style={{ 
-                background: 'rgba(15,15,35,0.6)', borderRadius: 32, padding: 32, 
-                border: '1px solid rgba(255,255,255,0.05)', backdropFilter: 'blur(10px)'
-              }}>
-                <h2 style={{ fontFamily: 'Orbitron', fontSize: '1.2rem', fontWeight: 800, marginBottom: 24, color: '#fff' }}>📜 ENGAGEMENT RULES</h2>
-                <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+              <div className="glass-card shape-oval" style={{ padding: 40 }}>
+                <h2 style={{ fontFamily: 'Orbitron', fontSize: '1.3rem', fontWeight: 900, marginBottom: 28, color: '#fff', letterSpacing: '0.05em' }}>📜 ENGAGEMENT RULES</h2>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
                   {rules.map((rule, i) => (
-                    <div key={i} style={{ 
-                      display: 'flex', gap: 16, padding: '16px 20px', borderRadius: 16,
-                      background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.05)',
-                      fontFamily: 'Rajdhani', fontWeight: 600, color: 'var(--text-secondary)'
+                    <div key={i} className="shape-pill" style={{ 
+                      display: 'flex', gap: 18, padding: '18px 24px',
+                      background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.06)',
+                      fontFamily: 'Rajdhani', fontWeight: 700, color: 'var(--text-secondary)', fontSize: '1.05rem'
                     }}>
-                      <div style={{ 
-                        width: 24, height: 24, borderRadius: 6, background: accentColor, 
+                      <div className="shape-circle" style={{ 
+                        width: 26, height: 26, background: accentColor, 
                         display: 'flex', alignItems: 'center', justifyContent: 'center', 
-                        fontFamily: 'Orbitron', fontSize: '0.75rem', color: '#fff', flexShrink: 0
+                        fontFamily: 'Orbitron', fontSize: '0.8rem', color: '#fff', flexShrink: 0
                       }}>{i + 1}</div>
                       {rule}
                     </div>
@@ -219,57 +242,59 @@ export default function TournamentDetail() {
 
           {/* Action Sidebar */}
           <div style={{ position: 'sticky', top: 100 }}>
-            <div style={{ 
-              background: 'rgba(15,15,35,0.85)', borderRadius: 32, padding: 40, 
-              border: `1px solid ${accentColor}33`, backdropFilter: 'blur(20px)',
-              boxShadow: `0 20px 50px rgba(0,0,0,0.5), 0 0 30px ${accentColor}11`
+            <div className="glass-card shape-oval" style={{ 
+              padding: '48px 40px', 
+              border: `1px solid ${accentColor}33`,
+              boxShadow: `0 30px 60px rgba(0,0,0,0.6), 0 0 40px ${accentColor}10`
             }}>
-              <div style={{ textAlign: 'center', marginBottom: 32 }}>
+              <div style={{ textAlign: 'center', marginBottom: 40 }}>
                 <CountdownTimer targetDate={tournament.start_date} status={tournament.status} />
               </div>
 
-              <div style={{ marginBottom: 32 }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 12 }}>
-                  <span style={{ fontFamily: 'Rajdhani', fontWeight: 700, color: 'var(--text-muted)', fontSize: '0.9rem' }}>DEPLOYMENT SLOTS</span>
-                  <span style={{ fontFamily: 'Orbitron', fontWeight: 800, color: isFull ? 'var(--pink)' : accentColor, fontSize: '0.9rem' }}>
+              <div style={{ marginBottom: 40 }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 14 }}>
+                  <span style={{ fontFamily: 'Rajdhani', fontWeight: 800, color: 'var(--text-muted)', fontSize: '0.9rem', letterSpacing: '0.1em' }}>DEPLOYMENT SLOTS</span>
+                  <span style={{ fontFamily: 'Orbitron', fontWeight: 900, color: isFull ? 'var(--pink)' : accentColor, fontSize: '0.95rem' }}>
                     {tournament.slots_filled} / {tournament.slots}
                   </span>
                 </div>
-                <div style={{ height: 10, background: 'rgba(255,255,255,0.05)', borderRadius: 100, overflow: 'hidden' }}>
+                <div className="shape-pill" style={{ height: 12, background: 'rgba(255,255,255,0.06)', overflow: 'hidden' }}>
                   <motion.div 
                     initial={{ width: 0 }} 
                     animate={{ width: `${pct}%` }} 
-                    transition={{ duration: 1 }}
-                    style={{ height: '100%', background: isFull ? 'var(--pink)' : accentColor, borderRadius: 100 }} 
+                    transition={{ duration: 1.2, ease: "easeOut" }}
+                    style={{ height: '100%', background: isFull ? 'var(--pink)' : `linear-gradient(90deg, ${accentColor}, ${accentColor}aa)` }} 
                   />
                 </div>
               </div>
 
               {registered ? (
-                <div style={{ 
-                  padding: '24px', borderRadius: 20, textAlign: 'center',
-                  background: 'rgba(16, 185, 129, 0.1)', border: '1px solid rgba(16, 185, 129, 0.3)',
+                <div className="shape-oval" style={{ 
+                  padding: '32px 24px', textAlign: 'center',
+                  background: 'rgba(16, 185, 129, 0.08)', border: '1px solid rgba(16, 185, 129, 0.4)',
                 }}>
-                  <div style={{ fontSize: '2.5rem', marginBottom: 12 }}>⚡</div>
-                  <div style={{ fontFamily: 'Orbitron', fontWeight: 800, color: '#10B981', fontSize: '1.2rem', marginBottom: 4 }}>DEPLOYED!</div>
-                  <p style={{ fontFamily: 'Rajdhani', fontWeight: 600, color: 'var(--text-muted)' }}>You have successfully registered for this operation.</p>
+                  <div style={{ fontSize: '3rem', marginBottom: 16 }}>🛡️</div>
+                  <div style={{ fontFamily: 'Orbitron', fontWeight: 900, color: '#10B981', fontSize: '1.4rem', marginBottom: 8 }}>IDENTIFIED!</div>
+                  <p style={{ fontFamily: 'Rajdhani', fontWeight: 700, color: 'var(--text-muted)', fontSize: '0.95rem' }}>You are officially in the arena roster.</p>
                 </div>
               ) : (
                 <button 
                   onClick={handleRegister}
                   disabled={registering || isPast || isFull}
+                  className="shape-pill"
                   style={{
-                    width: '100%', padding: '20px', borderRadius: 20,
+                    width: '100%', padding: '22px',
                     background: isPast || isFull ? 'rgba(255,255,255,0.05)' : `linear-gradient(135deg, ${accentColor}, ${accentColor}dd)`,
-                    color: '#fff', border: 'none', fontFamily: 'Orbitron', fontWeight: 800, fontSize: '1.1rem',
+                    color: '#fff', border: 'none', fontFamily: 'Orbitron', fontWeight: 900, fontSize: '1.1rem',
                     cursor: registering || isPast || isFull ? 'not-allowed' : 'pointer',
-                    transition: 'all 0.3s ease',
-                    boxShadow: !isPast && !isFull ? `0 10px 30px ${accentColor}44` : 'none'
+                    transition: 'all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275)',
+                    boxShadow: !isPast && !isFull ? `0 15px 35px ${accentColor}40` : 'none',
+                    letterSpacing: '0.05em'
                   }}
-                  onMouseEnter={e => { if (!isPast && !isFull) e.currentTarget.style.transform = 'translateY(-3px)'; }}
-                  onMouseLeave={e => { if (!isPast && !isFull) e.currentTarget.style.transform = 'translateY(0)'; }}
+                  onMouseEnter={e => { if (!isPast && !isFull) e.currentTarget.style.transform = 'scale(1.02) translateY(-4px)'; }}
+                  onMouseLeave={e => { if (!isPast && !isFull) e.currentTarget.style.transform = 'scale(1) translateY(0)'; }}
                 >
-                  {registering ? 'PROCESSING...' : isPast ? 'OPERATION ENDED' : isFull ? 'CAPACITY REACHED' : 'REGISTER FOR COMBAT'}
+                  {registering ? 'PROCESSING...' : isPast ? 'MISSION EXPIRED' : isFull ? 'CAPACITY AT MAX' : 'INITIATE REGISTRATION ⚔️'}
                 </button>
               )}
 

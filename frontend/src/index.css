@@ -25,8 +25,12 @@
   --shadow-neon: 0 0 15px var(--cyan-glow);
   --shadow-purple: 0 0 15px var(--purple-glow);
   
-  --radius: 16px;
-  --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  --radius-sm: 12px;
+  --radius: 20px;
+  --radius-lg: 32px;
+  --radius-pill: 999px; /* For Capsule buttons/inputs */
+  --radius-oval: 40px; /* For Cards/Sections */
+  --transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 /* ===== RESET ===== */
@@ -155,6 +159,27 @@ ul { list-style: none; }
 .delay-500 { animation-delay: 0.5s; opacity: 0; }
 .delay-600 { animation-delay: 0.6s; opacity: 0; }
 
+/* ===== ORGANIC SHAPES ===== */
+.shape-pill { border-radius: var(--radius-pill) !important; }
+.shape-circle { border-radius: 50% !important; overflow: hidden; }
+.shape-oval { border-radius: var(--radius-oval) !important; }
+.shape-hex {
+  clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%);
+}
+.shape-soft-hex {
+  clip-path: polygon(30% 0%, 70% 0%, 100% 30%, 100% 70%, 70% 100%, 30% 100%, 0% 70%, 0% 30%);
+}
+.shape-blob {
+  border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+  animation: blob-morph 8s ease-in-out infinite;
+}
+
+@keyframes blob-morph {
+  0% { border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; }
+  50% { border-radius: 30% 60% 70% 40% / 50% 60% 30% 60%; }
+  100% { border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; }
+}
+
 .gradient-text {
   background: linear-gradient(135deg, var(--cyan), var(--purple), var(--pink));
   background-size: 200% auto;
@@ -175,12 +200,12 @@ ul { list-style: none; }
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  padding: 12px 28px;
-  border-radius: var(--radius-sm);
+  padding: 12px 32px;
+  border-radius: var(--radius-pill); /* CAPSULE BUTTONS */
   font-family: 'Rajdhani', sans-serif;
   font-weight: 700;
   font-size: 1rem;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.08em;
   transition: var(--transition);
   position: relative;
   overflow: hidden;
@@ -226,9 +251,9 @@ ul { list-style: none; }
 /* ===== GLASS CARD ===== */
 .glass-card {
   background: var(--bg-card);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  backdrop-filter: blur(20px);
+  border: 1px solid var(--border-dim);
+  border-radius: var(--radius-oval); /* OVAL CARDS */
+  backdrop-filter: blur(24px);
   transition: var(--transition);
   animation: card-glow-breathe 4s ease-in-out infinite;
 }
@@ -291,10 +316,10 @@ ul { list-style: none; }
 }
 .form-input {
   width: 100%;
-  padding: 14px 18px;
-  background: rgba(255,255,255,0.05);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-sm);
+  padding: 14px 24px;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid var(--border-dim);
+  border-radius: var(--radius-pill); /* CAPSULE INPUTS */
   color: var(--text-primary);
   font-family: 'Inter', sans-serif;
   font-size: 0.95rem;
@@ -309,10 +334,10 @@ ul { list-style: none; }
 .form-input::placeholder { color: var(--text-muted); }
 .form-select {
   width: 100%;
-  padding: 14px 18px;
-  background: rgba(255,255,255,0.05);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-sm);
+  padding: 14px 24px;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid var(--border-dim);
+  border-radius: var(--radius-pill); /* CAPSULE SELECTS */
   color: var(--text-primary);
   font-family: 'Inter', sans-serif;
   font-size: 0.95rem;
