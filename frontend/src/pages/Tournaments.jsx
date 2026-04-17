@@ -133,9 +133,8 @@ export default function Tournaments() {
 
   return (
     <div className="page" style={{ paddingTop: 100, minHeight: '100vh', background: 'var(--bg-primary)' }}>
+      {/* Back Button */}
       <div className="container">
-        
-        {/* Back Button */}
         <motion.button
           initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}
@@ -160,6 +159,7 @@ export default function Tournaments() {
         >
           <FaArrowLeft /> BACK
         </motion.button>
+      </div>
 
       {/* Header */}
       <div style={{

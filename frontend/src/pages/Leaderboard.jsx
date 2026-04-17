@@ -138,8 +138,8 @@ export default function Leaderboard() {
 
   return (
     <div className="page" style={{ background: 'var(--bg-primary)', overflowX: 'hidden', paddingTop: 100 }}>
+      {/* Back Button */}
       <div className="container">
-        {/* Back Button */}
         <motion.button
           initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}
@@ -164,6 +164,7 @@ export default function Leaderboard() {
         >
           <FaArrowLeft /> BACK
         </motion.button>
+      </div>
 
         {/* Hero Header */}
         <div style={{
