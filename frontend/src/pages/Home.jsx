@@ -6,7 +6,7 @@ import Skeleton from '../components/common/Skeleton';
 import CountdownTimer from '../components/CountdownTimer';
 import logo from '../assets/logo_final.png';
 import { GameIcon } from '../utils/gameLogos';
-import { FaDiscord, FaInstagram, FaTelegramPlane, FaYoutube } from 'react-icons/fa';
+import { FaDiscord, FaInstagram, FaTelegramPlane, FaYoutube, FaTrophy, FaUsers, FaGamepad, FaMapMarkedAlt, FaUserCircle, FaSearch, FaCrosshairs, FaMedal } from 'react-icons/fa';
 import { FaXTwitter } from 'react-icons/fa6';
 
 /* ─────────────── DATA ─────────────── */
@@ -25,21 +25,21 @@ const GAMES = [
 ];
 
 const STATS = [
-  { value: '50K+', label: 'Players', color: 'var(--cyan)', icon: '👥' },
-  { value: '₹2Cr+', label: 'Prize Pool', color: '#ffd60a', icon: '🏆' },
-  { value: '200+', label: 'Tournaments', color: 'var(--purple)', icon: '🎮' },
-  { value: '28', label: 'States', color: 'var(--green)', icon: '🗺️' },
+  { value: '50K+', label: 'Players', color: 'var(--cyan)', icon: <FaUsers /> },
+  { value: '₹2Cr+', label: 'Prize Pool', color: '#ffd60a', icon: <FaTrophy /> },
+  { value: '200+', label: 'Tournaments', color: 'var(--purple)', icon: <FaGamepad /> },
+  { value: '28', label: 'States', color: 'var(--green)', icon: <FaMapMarkedAlt /> },
 ];
 
 const TICKER_ITEMS = [
-  '🏆 India BGMI Masters LIVE NOW — ₹5 Lakh Prize Pool',
-  '🔥 Free Fire Max Grand Prix — Registration Open — 1500 Teams Signed Up!',
-  '⚡ Valorant India Champions — Only 8 Slots Left!',
-  '🎮 CS2 India Open — May 10-12, 2026 — Gaming Arena',
-  '🔮 Pokemon Unite Championship — Season 4 Results Out!',
-  '👊 Tekken 8 India Clash — Register Before April 25',
-  '🪖 India CODM Masters Q2 — ₹2 Lakh Prize Pool Opening Soon',
-  '📊 Leaderboard Update: Scout_GG leads Rankings!',
+  'LIVE — India BGMI Masters — ₹5 Lakh Prize Pool',
+  'Registration Open — Free Fire Max Grand Prix — 1500 Teams',
+  'Valorant India Champions — Only 8 Slots Left',
+  'CS2 India Open — May 10-12, 2026 — Gaming Arena',
+  'Pokemon Unite Championship — Season 4 Results Out',
+  'Tekken 8 India Clash — Register Before April 25',
+  'India CODM Masters Q2 — ₹2 Lakh Prize Pool Opening Soon',
+  'Leaderboard Update — Scout_GG leads Rankings',
 ];
 
 // Removed GAME_ICONS object
@@ -47,28 +47,28 @@ const TICKER_ITEMS = [
 const HOW_IT_WORKS = [
   {
     step: '01',
-    icon: '👤',
+    icon: <FaUserCircle size={28} />,
     title: 'Create Your Profile',
     desc: 'Sign up in 60 seconds. Pick your games, set your state, and build your player card. Your esports identity starts here.',
     color: 'var(--cyan)',
   },
   {
     step: '02',
-    icon: '🔍',
+    icon: <FaSearch size={28} />,
     title: 'Discover Tournaments',
     desc: 'Browse 200+ live and upcoming tournaments filtered by game, prize pool, format, and region — all in one place.',
     color: 'var(--purple)',
   },
   {
     step: '03',
-    icon: '⚔️',
+    icon: <FaCrosshairs size={28} />,
     title: 'Register & Compete',
     desc: 'Secure your slot instantly. Get countdown timers, real-time slot tracking, and AI match tips from NeuroGamer.',
     color: 'var(--pink)',
   },
   {
     step: '04',
-    icon: '🏆',
+    icon: <FaTrophy size={28} />,
     title: 'Win & Rise the Ranks',
     desc: 'Earn points, climb the all-India leaderboard, collect prize money, and earn recognition across 28 states.',
     color: '#ffd60a',
@@ -80,7 +80,7 @@ const TESTIMONIALS = [
     name: 'Arjun "Scout_GG" Singh',
     state: 'Punjab',
     game: 'BGMI',
-    avatar: '🎯',
+    initial: 'A',
     color: '#FF6B35',
     quote: 'Won my first ₹1 Lakh prize through India Esports Hub. The tournament discovery feature is insane — I found 3 back-to-back tournaments in my city!',
     wins: 12,
@@ -90,9 +90,9 @@ const TESTIMONIALS = [
     name: 'Priya "StarViper" Nair',
     state: 'Kerala',
     game: 'Valorant',
-    avatar: '⚡',
+    initial: 'P',
     color: '#FF4655',
-    quote: 'As a female player in India, I finally found a platform that takes competitive gaming seriously. The community here is fire 🔥',
+    quote: 'As a female player in India, I finally found a platform that takes competitive gaming seriously. The community here is top tier.',
     wins: 7,
     rank: '#3 Valorant India',
   },
@@ -100,7 +100,7 @@ const TESTIMONIALS = [
     name: 'Rohan "Phantom" Mehta',
     state: 'Maharashtra',
     game: 'CS2',
-    avatar: '🎮',
+    initial: 'R',
     color: '#F59E0B',
     quote: 'NeuroGamer AI gave me a clutch strat before my semi-final. We won the match. This platform is literally changing how we prep for tournaments.',
     wins: 9,
@@ -109,27 +109,27 @@ const TESTIMONIALS = [
 ];
 
 const STREAMERS = [
-  { name: 'Mortal', game: 'BGMI', followers: '7.2M', platform: 'YouTube', emoji: '🎯', color: '#FF6B35', handle: '@mortal' },
-  { name: 'Jonathan Gaming', game: 'BGMI', followers: '10.5M', platform: 'YouTube', emoji: '🎯', color: '#FF9500', handle: '@jonathan' },
-  { name: 'GodLike Sc0utOP', game: 'BGMI/IND Team', followers: '5.1M', platform: 'YouTube', emoji: '🏆', color: '#ffd60a', handle: '@sc0utop' },
-  { name: 'Alpha Clasher', game: 'Free Fire Max', followers: '9.3M', platform: 'YouTube', emoji: '🔥', color: '#10B981', handle: '@alphaclasher' },
-  { name: 'Snax', game: 'Valorant India', followers: '1.8M', platform: 'Twitch', emoji: '⚡', color: '#FF4655', handle: '@snaxval' },
-  { name: 'Regaltos', game: 'BGMI', followers: '3.4M', platform: 'YouTube', emoji: '🎯', color: '#8B5CF6', handle: '@regaltos' },
+  { name: 'Mortal', game: 'BGMI', followers: '7.2M', platform: 'YouTube', color: '#FF6B35', handle: '@mortal' },
+  { name: 'Jonathan Gaming', game: 'BGMI', followers: '10.5M', platform: 'YouTube', color: '#FF9500', handle: '@jonathan' },
+  { name: 'GodLike Sc0utOP', game: 'BGMI/IND Team', followers: '5.1M', platform: 'YouTube', color: '#ffd60a', handle: '@sc0utop' },
+  { name: 'Alpha Clasher', game: 'Free Fire Max', followers: '9.3M', platform: 'YouTube', color: '#10B981', handle: '@alphaclasher' },
+  { name: 'Snax', game: 'Valorant India', followers: '1.8M', platform: 'Twitch', color: '#FF4655', handle: '@snaxval' },
+  { name: 'Regaltos', game: 'BGMI', followers: '3.4M', platform: 'YouTube', color: '#8B5CF6', handle: '@regaltos' },
 ];
 
 const COMMUNITY_CHANNELS = [
-  { name: 'Discord', desc: '18,000+ members online now', icon: '💬', color: '#5865F2', members: '48K', link: '#' },
-  { name: 'Instagram', desc: 'Follow for match highlights', icon: '📸', color: '#E1306C', members: '120K', link: '#' },
-  { name: 'Telegram', desc: 'Live tournament alerts & results', icon: '✈️', color: '#0088CC', members: '32K', link: '#' },
-  { name: 'YouTube', desc: 'Match VODs and coaching content', icon: '▶️', color: '#FF0000', members: '85K', link: '#' },
+  { name: 'Discord', desc: '18,000+ members online now', icon: <FaDiscord />, color: '#5865F2', members: '48K', link: '#' },
+  { name: 'Instagram', desc: 'Follow for match highlights', icon: <FaInstagram />, color: '#E1306C', members: '120K', link: '#' },
+  { name: 'Telegram', desc: 'Live tournament alerts & results', icon: <FaTelegramPlane />, color: '#0088CC', members: '32K', link: '#' },
+  { name: 'YouTube', desc: 'Match VODs and coaching content', icon: <FaYoutube />, color: '#FF0000', members: '85K', link: '#' },
 ];
 
 const TOP_CLANS = [
-  { name: 'GodLike Esports', tag: 'GLE', game: 'BGMI', wins: 47, emoji: '⚔️', color: '#ffd60a' },
-  { name: 'Team SouLs', tag: 'TMSL', game: 'BGMI/CODM', wins: 38, emoji: '👻', color: '#FF4655' },
-  { name: 'Enigma Gaming', tag: 'ENM', game: 'Valorant', wins: 29, emoji: '🔮', color: '#8B5CF6' },
-  { name: 'S8UL Esports', tag: 'S8UL', game: 'Multi-title', wins: 52, emoji: '🏆', color: '#FF6B35' },
-  { name: 'Team Mayavi', tag: 'MYVI', game: 'Free Fire', wins: 33, emoji: '🔥', color: '#10B981' },
+  { name: 'GodLike Esports', tag: 'GLE', game: 'BGMI', wins: 47, color: '#ffd60a' },
+  { name: 'Team SouLs', tag: 'TMSL', game: 'BGMI/CODM', wins: 38, color: '#FF4655' },
+  { name: 'Enigma Gaming', tag: 'ENM', game: 'Valorant', wins: 29, color: '#8B5CF6' },
+  { name: 'S8UL Esports', tag: 'S8UL', game: 'Multi-title', wins: 52, color: '#FF6B35' },
+  { name: 'Team Mayavi', tag: 'MYVI', game: 'Free Fire', wins: 33, color: '#10B981' },
 ];
 
 /* ─────────────── TOURNAMENT CARD ─────────────── */
@@ -183,11 +183,11 @@ function TournamentCard({ t, isSkeleton }) {
             <div style={{ fontFamily: 'Rajdhani', fontWeight: 700, fontSize: '0.85rem', color: accentColor, marginBottom: 18, textTransform: 'uppercase', letterSpacing: '0.05em' }}>{t.game}</div>
             <div style={{ padding: '14px 18px', borderRadius: 20, marginBottom: 18, background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.08)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
               <div>
-                <div style={{ fontSize: '0.65rem', color: 'var(--text-muted)', fontFamily: 'Rajdhani', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 2 }}>🏆 Prize</div>
+                <div style={{ fontSize: '0.65rem', color: 'var(--text-muted)', fontFamily: 'Rajdhani', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 2 }}>Prize Pool</div>
                 <div style={{ fontFamily: 'Orbitron', fontWeight: 900, fontSize: '1rem', color: '#ffd60a' }}>{t.prize_pool}</div>
               </div>
               <div style={{ textAlign: 'right' }}>
-                <div style={{ fontSize: '0.65rem', color: 'var(--text-muted)', fontFamily: 'Rajdhani', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 2 }}>🎯 Slots</div>
+                <div style={{ fontSize: '0.65rem', color: 'var(--text-muted)', fontFamily: 'Rajdhani', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 2 }}>Slots</div>
                 <div style={{ fontFamily: 'Rajdhani', fontWeight: 800, fontSize: '1.05rem', color: isAlmostFull ? 'var(--pink)' : '#fff' }}>{t.slots_filled}/{t.slots}</div>
               </div>
             </div>
@@ -195,7 +195,7 @@ function TournamentCard({ t, isSkeleton }) {
               <CountdownTimer targetDate={t.start_date} status={t.status} />
             </div>
             <div className="shape-pill" style={{ marginTop: 'auto', padding: '12px 16px', textAlign: 'center', fontFamily: 'Rajdhani', fontWeight: 800, fontSize: '0.95rem', background: `linear-gradient(135deg, ${accentColor}, ${accentColor}aa)`, color: '#fff', boxShadow: `0 8px 20px ${accentColor}40`, letterSpacing: '0.05em' }}>
-              {t.status === 'live' ? 'JOIN NOW ⚔️' : 'REGISTER NOW →'}
+              {t.status === 'live' ? 'JOIN NOW' : 'REGISTER NOW →'}
             </div>
           </div>
         </div>
@@ -279,7 +279,7 @@ export default function Home() {
           <div className="grid-2" style={{ gap: 60, alignItems: 'center' }}>
             <div className="hero-content">
               <div className="hero-tag anim-fade-up delay-100" style={{ background: 'rgba(0,243,255,0.1)', borderColor: 'rgba(0,243,255,0.3)', color: 'var(--cyan)' }}>
-                ⚡ India's #1 Esports Platform — 50,000+ Players Strong
+                India's #1 Esports Platform — 50,000+ Players Strong
               </div>
               <h1 className="hero-title anim-fade-up delay-200">
                 <span className="gradient-text" style={{ background: 'linear-gradient(135deg, var(--cyan), var(--purple), var(--pink))', WebkitBackgroundClip: 'text' }}>DOMINATE</span>
@@ -287,14 +287,14 @@ export default function Home() {
                 THE ARENA
               </h1>
               <p className="hero-description anim-fade-up delay-300">
-                India's fastest-growing competitive gaming platform. Discover tournaments across <strong>9 titles</strong>, win prizes up to <strong>₹5 Lakhs</strong> — and get AI-powered match prep from <strong>NeuroGamer</strong>. 🧠🔥
+                India's fastest-growing competitive gaming platform. Discover tournaments across <strong>9 titles</strong>, win prizes up to <strong>₹5 Lakhs</strong> — and get AI-powered match prep from <strong>NeuroGamer</strong>.
               </p>
               <div style={{ display: 'flex', gap: 16, marginBottom: 48, flexWrap: 'wrap' }} className="anim-fade-up delay-400 hero-btns">
                 <Link to="/tournaments" className="btn btn-primary btn-lg" style={{ background: 'linear-gradient(135deg, var(--cyan), var(--purple))' }}>
-                  🏆 Join Tournament
+                  Join Tournament
                 </Link>
                 <Link to="/leaderboard" className="btn btn-secondary btn-lg" style={{ borderColor: 'var(--cyan)', color: 'var(--cyan)' }}>
-                  📊 View Leaderboard
+                  View Leaderboard
                 </Link>
               </div>
               <div className="hero-stats anim-fade-up delay-500" style={{ display: 'flex', gap: 24, justifyContent: 'flex-start' }}>
@@ -307,7 +307,7 @@ export default function Home() {
                     boxShadow: `0 0 20px ${s.color}15`,
                     backdropFilter: 'blur(10px)',
                   }}>
-                    <span style={{ fontSize: '1.2rem', marginBottom: 2 }}>{s.icon}</span>
+                    <span style={{ fontSize: '1.1rem', marginBottom: 2, color: s.color }}>{s.icon}</span>
                     <span className="hero-stat-value" style={{ color: s.color, fontSize: '1.1rem', fontWeight: 900 }}>
                       {s.label === 'Players' ? `${(counter.players / 1000).toFixed(0)}K`
                         : s.label === 'Prize Pool' ? `₹${counter.prize}L`
@@ -407,7 +407,7 @@ export default function Home() {
                   opacity: 0.7
                 }}
               >
-                <div style={{ fontSize: '2.5rem', marginBottom: 12, opacity: 0.5 }}>🚧</div>
+                <div style={{ fontSize: '2rem', marginBottom: 12, opacity: 0.5, fontFamily: 'Orbitron', fontWeight: 900, color: 'rgba(255,255,255,0.2)' }}>+</div>
                 <div style={{ fontFamily: 'Orbitron', fontSize: '0.9rem', fontWeight: 800, color: '#fff', marginBottom: 8 }}>MORE GAMES</div>
                 <div style={{ color: 'var(--text-muted)', fontSize: '0.7rem', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.1em' }}>
                   Coming Soon
@@ -441,7 +441,7 @@ export default function Home() {
             <h2 className="section-title"><span className="gradient-text">Upcoming Tournaments</span></h2>
             <Link to="/tournaments" className="btn btn-secondary btn-sm">View All →</Link>
           </div>
-          <p className="section-subtitle">Register now before slots fill up — countdowns are ticking! ⏳</p>
+          <p className="section-subtitle">Register now before slots fill up — countdowns are ticking.</p>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))', gap: 24 }}>
             {isLoading
               ? [1, 2, 3].map(i => <TournamentCard key={i} isSkeleton />)
@@ -481,7 +481,7 @@ export default function Home() {
                     width: 72, height: 72, borderRadius: '50%', margin: '0 auto 20px',
                     background: `${step.color}15`, border: `2px solid ${step.color}40`,
                     display: 'flex', alignItems: 'center', justifyContent: 'center',
-                    fontSize: '2rem', boxShadow: `0 0 24px ${step.color}20`,
+                    color: step.color, boxShadow: `0 0 24px ${step.color}20`,
                     position: 'relative',
                   }}>
                     {step.icon}
@@ -504,7 +504,7 @@ export default function Home() {
       {/* ── FEATURED STREAMERS / PROS ── */}
       <section className="section">
         <div className="container">
-          <h2 className="section-title anim-fade-up"><span className="gradient-text">🎥 Indian Esports Icons</span></h2>
+          <h2 className="section-title anim-fade-up"><span className="gradient-text">Indian Esports Icons</span></h2>
           <p className="section-subtitle anim-fade-up delay-100">
             The pros who made Indian gaming go global — follow their journey and compete in their leagues
           </p>
@@ -526,8 +526,9 @@ export default function Home() {
                     width: 60, height: 60, borderRadius: '50%', flexShrink: 0,
                     background: `${s.color}15`, border: `2px solid ${s.color}40`,
                     display: 'flex', alignItems: 'center', justifyContent: 'center',
-                    fontSize: '1.8rem', boxShadow: `0 0 20px ${s.color}20`,
-                  }}>{s.emoji}</div>
+                    fontFamily: 'Orbitron', fontWeight: 900, fontSize: '1.2rem', color: '#fff',
+                    boxShadow: `0 0 20px ${s.color}20`,
+                  }}>{s.name[0]}</div>
                   <div style={{ flex: 1 }}>
                     <div style={{ fontFamily: 'Orbitron', fontWeight: 800, fontSize: '0.95rem', color: s.color, marginBottom: 2 }}>{s.name}</div>
                     <div style={{ fontFamily: 'Rajdhani', fontWeight: 600, fontSize: '0.8rem', color: 'var(--text-secondary)', marginBottom: 4 }}>{s.game}</div>
@@ -549,7 +550,7 @@ export default function Home() {
           </div>
           <div style={{ textAlign: 'center', marginTop: 32 }}>
             <Link to="/leaderboard" className="btn btn-secondary">
-              🏅 See Full Leaderboard →
+              See Full Leaderboard →
             </Link>
           </div>
         </div>
@@ -559,7 +560,7 @@ export default function Home() {
       <section className="section" style={{ background: 'rgba(123,47,255,0.04)' }}>
         <div className="container">
           <h2 className="section-title anim-fade-up" style={{ textAlign: 'center' }}>
-            <span className="gradient-text">🗣️ Players Speak</span>
+            <span className="gradient-text">Players Speak</span>
           </h2>
           <p className="section-subtitle anim-fade-up delay-100" style={{ textAlign: 'center' }}>
             Real stories from India's competitive gaming arena
@@ -590,8 +591,9 @@ export default function Home() {
                         <div style={{
                           width: 52, height: 52, borderRadius: '50%', flexShrink: 0,
                           background: `${t.color}20`, border: `2px solid ${t.color}50`,
-                          display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.6rem',
-                        }}>{t.avatar}</div>
+                          display: 'flex', alignItems: 'center', justifyContent: 'center',
+                          fontFamily: 'Orbitron', fontWeight: 900, fontSize: '1.2rem', color: '#fff',
+                        }}>{t.initial}</div>
                         <div>
                           <div style={{ fontFamily: 'Orbitron', fontWeight: 800, fontSize: '0.95rem', color: t.color }}>{t.name}</div>
                           <div style={{ fontFamily: 'Rajdhani', fontWeight: 600, fontSize: '0.8rem', color: 'var(--text-muted)' }}>{t.state} · {t.rank}</div>
@@ -636,7 +638,7 @@ export default function Home() {
             position: 'relative', overflow: 'hidden',
           }}>
             <div style={{ position: 'absolute', inset: 0, background: 'radial-gradient(ellipse at center, rgba(123,47,255,0.1) 0%, transparent 70%)', pointerEvents: 'none' }} />
-            <div style={{ fontSize: '3.5rem', marginBottom: 16 }} className="anim-float">🏆</div>
+            <div style={{ fontSize: '2.5rem', marginBottom: 16, color: 'var(--cyan)', opacity: 0.7 }} className="anim-float"><FaTrophy /></div>
             <h2 className="section-title anim-fade-up" style={{ marginBottom: 16 }}>
               Ready to <span className="gradient-text">Compete?</span>
             </h2>
@@ -644,7 +646,7 @@ export default function Home() {
               Join <strong>50,000+ gamers</strong> already competing. Register for tournaments, win prizes up to <strong>₹5 Lakhs</strong>, climb the leaderboard, and make your mark in esports history!
             </p>
             <div style={{ display: 'flex', gap: 16, justifyContent: 'center', flexWrap: 'wrap' }}>
-              <Link to="/signup" className="btn btn-primary btn-lg">Create Account 🚀</Link>
+              <Link to="/signup" className="btn btn-primary btn-lg">Create Account</Link>
               <Link to="/tournaments" className="btn btn-secondary btn-lg">Browse Tournaments</Link>
             </div>
           </div>
@@ -692,11 +694,11 @@ export default function Home() {
             <div>
               <div style={{ fontFamily: 'Orbitron', fontWeight: 700, fontSize: '0.8rem', color: 'var(--cyan)', letterSpacing: '0.12em', textTransform: 'uppercase', marginBottom: 20 }}>Platform</div>
               {[
-                { label: '🏆 Tournaments', to: '/tournaments' },
-                { label: '📊 Leaderboard', to: '/leaderboard' },
-                { label: '👤 My Profile', to: '/profile' },
-                { label: '🚀 Sign Up Free', to: '/signup' },
-                { label: '🔑 Login', to: '/login' },
+                { label: 'Tournaments', to: '/tournaments' },
+                { label: 'Leaderboard', to: '/leaderboard' },
+                { label: 'My Profile', to: '/profile' },
+                { label: 'Sign Up Free', to: '/signup' },
+                { label: 'Login', to: '/login' },
               ].map(l => (
                 <Link key={l.label} to={l.to} style={{
                   display: 'block', color: 'var(--text-muted)', fontSize: '0.9rem',
@@ -720,7 +722,7 @@ export default function Home() {
                 }}
                   onMouseEnter={e => e.currentTarget.style.color = g.color}
                   onMouseLeave={e => e.currentTarget.style.color = 'var(--text-muted)'}
-                >{g.icon} {g.name}</Link>
+                >{g.name}</Link>
               ))}
             </div>
 

@@ -6,6 +6,7 @@ import { tournamentAPI } from '../services/api';
 import Skeleton from '../components/common/Skeleton';
 import toast from 'react-hot-toast';
 import { GameIcon } from '../utils/gameLogos';
+import { FaTrophy, FaMapMarkerAlt, FaBolt, FaBroadcastTower, FaClock, FaHistory, FaBookmark, FaGem } from 'react-icons/fa';
 
 export default function Profile() {
   const { user, logout } = useAuth();
@@ -31,7 +32,7 @@ export default function Profile() {
 
   const handleLogout = () => {
     logout();
-    toast.success('Logged out. GG! See you next time! 👋');
+    toast.success('Logged out. See you next time!');
     navigate('/');
   };
 
@@ -80,7 +81,7 @@ export default function Profile() {
                 boxShadow: '0 20px 40px rgba(0,0,0,0.5), 0 0 30px rgba(123,47,255,0.3)'
               }}>
                 {avatarLetter}
-                <div style={{ position: 'absolute', bottom: 5, right: 5, fontSize: '1.2rem' }}>💎</div>
+                <div style={{ position: 'absolute', bottom: 5, right: 5, fontSize: '1rem', color: 'var(--cyan)' }}><FaGem /></div>
               </div>
 
               <h1 style={{ fontFamily: 'Orbitron', fontWeight: 800, fontSize: '1.8rem', color: '#fff', marginBottom: 8 }}>{user.name}</h1>
@@ -92,13 +93,15 @@ export default function Profile() {
                 <span className="shape-pill" style={{ 
                   padding: '8px 18px', background: 'rgba(123,47,255,0.15)', 
                   border: '1px solid rgba(123,47,255,0.4)', color: 'var(--purple)', 
-                  fontFamily: 'Rajdhani', fontWeight: 800, fontSize: '0.85rem'
-                }}>🏆 {user.rank || 'ELITE WARRIOR'}</span>
+                  fontFamily: 'Rajdhani', fontWeight: 800, fontSize: '0.85rem',
+                  display: 'flex', alignItems: 'center', gap: 6
+                }}><FaTrophy style={{ fontSize: '0.8rem' }} /> {user.rank || 'ELITE WARRIOR'}</span>
                 <span className="shape-pill" style={{ 
                   padding: '8px 18px', background: 'rgba(255,255,255,0.06)', 
                   border: '1px solid rgba(255,255,255,0.1)', color: 'var(--text-muted)', 
-                  fontFamily: 'Rajdhani', fontWeight: 700, fontSize: '0.85rem'
-                }}>📍 {user.state || 'India'}</span>
+                  fontFamily: 'Rajdhani', fontWeight: 700, fontSize: '0.85rem',
+                  display: 'flex', alignItems: 'center', gap: 6
+                }}><FaMapMarkerAlt style={{ fontSize: '0.8rem' }} /> {user.state || 'India'}</span>
               </div>
 
               <div style={{ borderTop: '1px solid rgba(255,255,255,0.08)', paddingTop: 28, marginBottom: 28 }}>
@@ -142,11 +145,11 @@ export default function Profile() {
             {/* Quick Stats Grid */}
             <div style={{ display: 'flex', gap: 20, marginBottom: 48, flexWrap: 'wrap' }}>
               {[
-                { label: 'PLAYER XP', value: user.points || 0, icon: '⚡', color: 'var(--cyan)' },
-                { label: 'LIVE COMBAT', value: liveReg, icon: '🔴', color: 'var(--pink)' },
-                { label: 'MISSION READY', value: upcomingReg, icon: '⏳', color: '#ffd60a' },
-                { label: 'LEGACY BATTLES', value: pastReg, icon: '🏆', color: '#10B981' },
-                { label: 'SAVED', value: bookmarks.length, icon: '⭐', color: 'var(--purple)' },
+                { label: 'PLAYER XP', value: user.points || 0, icon: <FaBolt />, color: 'var(--cyan)' },
+                { label: 'LIVE COMBAT', value: liveReg, icon: <FaBroadcastTower />, color: 'var(--pink)' },
+                { label: 'MISSION READY', value: upcomingReg, icon: <FaClock />, color: '#ffd60a' },
+                { label: 'LEGACY BATTLES', value: pastReg, icon: <FaHistory />, color: '#10B981' },
+                { label: 'SAVED', value: bookmarks.length, icon: <FaBookmark />, color: 'var(--purple)' },
               ].map(s => (
                 <div key={s.label} className="shape-circle" style={{
                   width: 120, height: 120,
@@ -178,7 +181,7 @@ export default function Profile() {
                   padding: '50px 40px', textAlign: 'center', background: 'rgba(255,255,255,0.02)',
                   border: '1px dashed rgba(255,255,255,0.1)'
                 }}>
-                  <div style={{ fontSize: '3rem', marginBottom: 16 }}>⚔️</div>
+                  <div style={{ fontSize: '2.5rem', marginBottom: 16, display: 'flex', justifyContent: 'center', color: 'var(--text-muted)' }}><FaTrophy style={{ opacity: 0.4 }} /></div>
                   <p style={{ color: 'var(--text-muted)', fontSize: '1.1rem', marginBottom: 24, fontFamily: 'Rajdhani', fontWeight: 600 }}>No active mission records found.</p>
                   <Link to="/tournaments" className="btn btn-primary shape-pill">START YOUR LEGACY</Link>
                 </div>
@@ -238,7 +241,9 @@ export default function Profile() {
             {/* Bookmarks Section */}
             <div>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 28 }}>
-                <h2 style={{ fontFamily: 'Orbitron', fontSize: '1.5rem', fontWeight: 900, color: 'var(--yellow)' }}>SAVED BATTLES ⭐</h2>
+                <h2 style={{ fontFamily: 'Orbitron', fontSize: '1.5rem', fontWeight: 900, color: 'var(--yellow)', display: 'flex', alignItems: 'center', gap: 10 }}>
+                  SAVED BATTLES <FaBookmark style={{ fontSize: '1rem' }} />
+                </h2>
               </div>
 
               {loading ? (

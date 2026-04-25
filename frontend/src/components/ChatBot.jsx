@@ -1,12 +1,13 @@
 import { useState, useRef, useEffect, useCallback } from 'react';
 import { chatAPI } from '../services/api';
+import { FaBrain, FaTrophy, FaCoins, FaGamepad, FaBolt, FaClipboardList, FaPaperPlane, FaTimes } from 'react-icons/fa';
 
 const QUICK_PROMPTS = [
-  '🏆 Live Tournaments',
-  '💰 Prize & Payouts',
-  '🎮 BGMI Tournaments',
-  '⚡ Valorant Events',
-  '📋 How to Register',
+  { label: 'Live Tournaments', icon: <FaTrophy /> },
+  { label: 'Prize & Payouts', icon: <FaCoins /> },
+  { label: 'BGMI Tournaments', icon: <FaGamepad /> },
+  { label: 'Valorant Events', icon: <FaBolt /> },
+  { label: 'How to Register', icon: <FaClipboardList /> },
 ];
 
 export default function ChatBot() {
@@ -17,8 +18,8 @@ export default function ChatBot() {
     return [{
       role: 'bot',
       text: hasSeen
-        ? "Welcome back! 🧠 How can I help you dominate today?"
-        : "Hey Gamer! 🧠 I'm **NeuroGamer**, your AI Esports Mentor for India Esports Hub. Ask me about live tournaments, registration, prizes, or gaming tips!"
+        ? "Welcome back! How can I help you dominate today?"
+        : "Welcome! I'm **NeuroGamer**, your AI Esports Mentor for India Esports Hub. Ask me about live tournaments, registration, prizes, or gaming tips!"
     }];
   });
   const [loading, setLoading] = useState(false);
@@ -63,7 +64,7 @@ export default function ChatBot() {
     } catch {
       setMessages(prev => [...prev, {
         role: 'bot',
-        text: "I'm having a slight connection glitch! 🧠 Check the **Tournaments** page for live schedules. Try again in a moment! 🚀"
+        text: "I'm having a slight connection glitch. Check the **Tournaments** page for live schedules. Try again in a moment!"
       }]);
     } finally {
       setLoading(false);
@@ -112,7 +113,7 @@ export default function ChatBot() {
               fontSize: '1.3rem', flexShrink: 0,
               boxShadow: '0 0 20px rgba(0,243,255,0.4)',
               border: '1px solid rgba(0,243,255,0.3)',
-            }}>🧠</div>
+            }}><FaBrain style={{ fontSize: '1.3rem' }} /></div>
             <div style={{ flex: 1 }}>
               <div style={{ fontFamily: 'Orbitron', fontSize: '0.85rem', fontWeight: 700, marginBottom: 2 }}>
                 NeuroGamer <span style={{ color: 'var(--cyan)', fontSize: '0.7rem' }}>AI</span>
@@ -135,7 +136,7 @@ export default function ChatBot() {
             }}
             onMouseEnter={e => { e.target.style.background = 'rgba(255,45,120,0.2)'; e.target.style.color = '#ff2d78'; }}
             onMouseLeave={e => { e.target.style.background = 'rgba(255,255,255,0.08)'; e.target.style.color = 'rgba(255,255,255,0.7)'; }}
-            >✕</button>
+            ><FaTimes /></button>
           </div>
 
           {/* Messages */}
@@ -152,7 +153,7 @@ export default function ChatBot() {
                     background: 'linear-gradient(135deg, #7b2fff, #00f3ff)',
                     display: 'flex', alignItems: 'center', justifyContent: 'center',
                     fontSize: '0.85rem', boxShadow: '0 0 10px rgba(0,243,255,0.3)',
-                  }}>🧠</div>
+                  }}><FaBrain /></div>
                 )}
                 <div dangerouslySetInnerHTML={{ __html: formatText(msg.text) }} style={{
                   padding: '10px 14px', borderRadius: msg.role === 'bot' ? '4px 14px 14px 14px' : '14px 4px 14px 14px',
@@ -167,7 +168,7 @@ export default function ChatBot() {
             ))}
             {loading && (
               <div style={{ display: 'flex', gap: 8 }}>
-                <div style={{ width: 28, height: 28, borderRadius: 9, background: 'linear-gradient(135deg, #7b2fff, #00f3ff)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '0.85rem', flexShrink: 0 }}>🧠</div>
+                <div style={{ width: 28, height: 28, borderRadius: 9, background: 'linear-gradient(135deg, #7b2fff, #00f3ff)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '0.85rem', flexShrink: 0 }}><FaBrain /></div>
                 <div style={{ padding: '10px 14px', borderRadius: '4px 14px 14px 14px', background: 'rgba(123,47,255,0.18)', border: '1px solid rgba(123,47,255,0.3)', display: 'flex', gap: 5, alignItems: 'center' }}>
                   {[0,1,2].map(i => (
                     <div key={i} style={{ width: 7, height: 7, borderRadius: '50%', background: 'var(--cyan)', animation: `live-pulse 1.2s ease-in-out ${i*0.2}s infinite` }}/>
@@ -181,16 +182,17 @@ export default function ChatBot() {
           {messages.length <= 2 && (
             <div style={{ padding: '0 14px 10px', display: 'flex', gap: 6, flexWrap: 'wrap' }}>
               {QUICK_PROMPTS.map(q => (
-                <button key={q} onClick={() => sendMessage(q)} style={{
+                <button key={q.label} onClick={() => sendMessage(q.label)} style={{
                   padding: '5px 11px', borderRadius: 100,
                   background: 'rgba(0,243,255,0.07)', border: '1px solid rgba(0,243,255,0.2)',
                   color: 'var(--text-secondary)', fontSize: '0.75rem',
                   cursor: 'pointer', transition: 'all 0.2s',
                   fontFamily: 'Rajdhani', fontWeight: 600,
+                  display: 'flex', alignItems: 'center', gap: 5,
                 }}
                 onMouseEnter={e => { e.currentTarget.style.background = 'rgba(0,243,255,0.15)'; e.currentTarget.style.color = 'var(--cyan)'; }}
                 onMouseLeave={e => { e.currentTarget.style.background = 'rgba(0,243,255,0.07)'; e.currentTarget.style.color = 'var(--text-secondary)'; }}
-                >{q}</button>
+                ><span style={{ opacity: 0.8 }}>{q.icon}</span> {q.label}</button>
               ))}
             </div>
           )}
@@ -228,7 +230,7 @@ export default function ChatBot() {
               fontSize: '1rem', cursor: loading ? 'not-allowed' : 'pointer',
               transition: 'all 0.2s',
               color: '#fff',
-            }}>➤</button>
+            }}><FaPaperPlane /></button>
           </div>
         </div>
       )}
@@ -246,7 +248,7 @@ export default function ChatBot() {
         animation: open ? 'none' : 'pulse-glow 2.5s ease-in-out infinite',
       }}
       title="NeuroGamer AI">
-        {open ? '✕' : '🧠'}
+        {open ? <FaTimes style={{ fontSize: '1.2rem' }} /> : <FaBrain style={{ fontSize: '1.6rem' }} />}
       </button>
     </>
   );

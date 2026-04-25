@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import { Link, useSearchParams, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { FaArrowLeft } from 'react-icons/fa';
+import { FaArrowLeft, FaSearch, FaGamepad } from 'react-icons/fa';
 import { tournamentAPI } from '../services/api';
 import Skeleton from '../components/common/Skeleton';
 import CountdownTimer from '../components/CountdownTimer';
@@ -50,7 +50,7 @@ function TournamentCard({ t, isSkeleton }) {
               </div>
               <div style={{ display: 'flex', gap: 8 }}>
                 {t.status === 'live' ? (
-                  <div style={{ padding: '6px 14px', borderRadius: 999, background: 'rgba(255,45,120,0.15)', border: '1px solid rgba(255,45,120,0.5)', fontFamily: 'Rajdhani', fontWeight: 800, fontSize: '0.75rem', color: '#ff2d78' }}>🔴 LIVE</div>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 6, padding: '6px 14px', borderRadius: 999, background: 'rgba(255,45,120,0.15)', border: '1px solid rgba(255,45,120,0.5)', fontFamily: 'Rajdhani', fontWeight: 800, fontSize: '0.75rem', color: '#ff2d78' }}>LIVE</div>
                 ) : (
                   <div style={{ padding: '6px 14px', borderRadius: 999, background: 'rgba(0,243,255,0.08)', border: '1px solid rgba(0,243,255,0.25)', fontFamily: 'Rajdhani', fontWeight: 700, fontSize: '0.75rem', color: 'var(--cyan)' }}>UPCOMING</div>
                 )}
@@ -62,11 +62,11 @@ function TournamentCard({ t, isSkeleton }) {
 
             <div style={{ padding: '14px 18px', borderRadius: 20, marginBottom: 18, background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.08)', display: 'flex', justifyContent: 'space-between' }}>
               <div>
-                <div style={{ fontSize: '0.62rem', color: 'var(--text-muted)', fontFamily: 'Rajdhani', fontWeight: 700, textTransform: 'uppercase', marginBottom: 2 }}>🏆 Prize</div>
+                <div style={{ fontSize: '0.62rem', color: 'var(--text-muted)', fontFamily: 'Rajdhani', fontWeight: 700, textTransform: 'uppercase', marginBottom: 2 }}>Prize Pool</div>
                 <div style={{ fontFamily: 'Orbitron', fontWeight: 900, fontSize: '0.95rem', color: '#ffd60a' }}>{t.prize_pool}</div>
               </div>
               <div style={{ textAlign: 'right' }}>
-                <div style={{ fontSize: '0.62rem', color: 'var(--text-muted)', fontFamily: 'Rajdhani', fontWeight: 700, textTransform: 'uppercase', marginBottom: 2 }}>📍 Region</div>
+                <div style={{ fontSize: '0.62rem', color: 'var(--text-muted)', fontFamily: 'Rajdhani', fontWeight: 700, textTransform: 'uppercase', marginBottom: 2 }}>Region</div>
                 <div style={{ fontFamily: 'Rajdhani', fontWeight: 800, fontSize: '0.95rem', color: '#fff' }}>{t.location}</div>
               </div>
             </div>
@@ -76,14 +76,14 @@ function TournamentCard({ t, isSkeleton }) {
             </div>
 
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 16 }}>
-              <span style={{ fontSize: '0.75rem', fontFamily: 'Rajdhani', fontWeight: 700, color: 'var(--text-muted)' }}>🎯 {t.slots_filled}/{t.slots} FILLED</span>
+              <span style={{ fontSize: '0.75rem', fontFamily: 'Rajdhani', fontWeight: 700, color: 'var(--text-muted)' }}>{t.slots_filled}/{t.slots} FILLED</span>
               <div style={{ width: '60%', height: 6, background: 'rgba(255,255,255,0.08)', borderRadius: 999, overflow: 'hidden' }}>
                 <div style={{ height: '100%', width: `${(t.slots_filled/t.slots)*100}%`, background: accentColor, borderRadius: 999 }} />
               </div>
             </div>
 
             <div className="shape-pill" style={{ marginTop: 'auto', padding: '12px 16px', textAlign: 'center', fontFamily: 'Rajdhani', fontWeight: 800, background: `linear-gradient(135deg, ${accentColor}, ${accentColor}aa)`, color: '#fff', boxShadow: `0 8px 20px ${accentColor}30` }}>
-              {t.status === 'past' ? 'RESULTS →' : 'JOIN ARENA ⚔️'}
+              {t.status === 'past' ? 'RESULTS →' : 'JOIN ARENA'}
             </div>
           </div>
         </div>
@@ -169,7 +169,7 @@ export default function Tournaments() {
       }}>
         <div className="container">
           <div style={{ display: 'inline-flex', alignItems: 'center', gap: 8, padding: '6px 16px', borderRadius: 100, background: 'rgba(123,47,255,0.15)', border: '1px solid rgba(123,47,255,0.35)', fontFamily: 'Rajdhani', fontWeight: 700, fontSize: '0.8rem', color: 'var(--purple)', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: 16 }}>
-            🏆 Tournament Hub
+            Tournament Hub
           </div>
           <h1 className="section-title"><span className="gradient-text">All Tournaments</span></h1>
           <div style={{ display: 'flex', gap: 16, flexWrap: 'wrap', alignItems: 'center', marginTop: 8 }}>
@@ -202,7 +202,7 @@ export default function Tournaments() {
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: 20, marginBottom: 24 }}>
             {/* Search */}
             <div style={{ position: 'relative' }}>
-              <span style={{ position: 'absolute', left: 16, top: '50%', transform: 'translateY(-50%)' }}>🔍</span>
+              <span style={{ position: 'absolute', left: 16, top: '50%', transform: 'translateY(-50%)', color: 'var(--text-muted)', fontSize: '0.9rem' }}><FaSearch /></span>
               <input
                 type="text" placeholder="Search tournaments..."
                 value={search} onChange={e => setSearch(e.target.value)}
@@ -213,7 +213,7 @@ export default function Tournaments() {
 
             {/* Region Select */}
             <select className="form-select shape-pill" value={region} onChange={e => setRegion(e.target.value)}>
-              <option value="all">🌐 All Regions</option>
+              <option value="all">All Regions</option>
               {['Andhra Pradesh', 'Karnataka', 'Maharashtra', 'Delhi', 'Tamil Nadu', 'Telangana'].map(s => (
                 <option key={s} value={s}>{s}</option>
               ))}
@@ -221,7 +221,7 @@ export default function Tournaments() {
 
             {/* Format Select */}
             <select className="form-select shape-pill" value={format} onChange={e => setFormat(e.target.value)}>
-               <option value="all">🎮 All Formats</option>
+               <option value="all">All Formats</option>
                <option value="SOLO">Solo (1v1)</option>
                <option value="DUO">Duo (2v2)</option>
                <option value="SQUAD">Squad (4v4)</option>
@@ -277,7 +277,7 @@ export default function Tournaments() {
             [1,2,3,4,5,6].map(i => <TournamentCard key={i} isSkeleton />)
           ) : tournaments.length === 0 ? (
             <div style={{ textAlign: 'center', padding: '80px 0', color: 'var(--text-muted)', gridColumn: '1 / -1' }}>
-              <div style={{ fontSize: '4rem', marginBottom: 16 }}>🎮</div>
+              <div style={{ fontSize: '2.5rem', marginBottom: 16, color: 'var(--text-muted)', display: 'flex', justifyContent: 'center' }}><FaGamepad /></div>
               <h3 style={{ fontFamily: 'Orbitron', marginBottom: 8 }}>No tournaments found</h3>
               <p>Try different filters or check back soon!</p>
             </div>

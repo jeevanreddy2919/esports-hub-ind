@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import toast from 'react-hot-toast';
 import logo from '../assets/logo_final.png';
+import { FaEye, FaEyeSlash, FaUser, FaLock } from 'react-icons/fa';
 
 export default function Login() {
   const { login } = useAuth();
@@ -17,7 +18,7 @@ export default function Login() {
     setLoading(true);
     try {
       await login(form.identifier, form.password);
-      toast.success('Welcome back, Gamer! 🎮');
+      toast.success('Welcome back, Gamer!');
       navigate('/');
     } catch (err) {
       toast.error(err.response?.data?.error || 'Login failed. Check credentials!');
@@ -31,18 +32,21 @@ export default function Login() {
       <div className="auth-bg" />
 
       {/* Floating game icons */}
-      {['🎯','⚡','🔥','🏆','🎮','👊'].map((emoji, i) => (
+      {['A', 'B', 'C', 'D', 'E', 'F'].map((char, i) => (
         <div key={i} style={{
           position: 'fixed',
-          fontSize: `${1.5 + (i % 3) * 0.5}rem`,
+          width: `${20 + (i % 3) * 15}px`,
+          height: `${20 + (i % 3) * 15}px`,
+          borderRadius: '4px',
+          border: `1px solid rgba(0,243,255,${0.05 + i * 0.02})`,
           top: `${10 + i * 14}%`,
           left: i % 2 === 0 ? `${3 + i * 2}%` : undefined,
           right: i % 2 !== 0 ? `${3 + i * 2}%` : undefined,
-          opacity: 0.12,
+          opacity: 0.2,
           animation: `float ${3 + i * 0.4}s ease-in-out ${i * 0.3}s infinite`,
           pointerEvents: 'none',
           userSelect: 'none',
-        }}>{emoji}</div>
+        }} />
       ))}
 
       <div className="auth-card shape-oval" style={{ 
@@ -78,7 +82,7 @@ export default function Login() {
 
         <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: 24 }}>
           <div className="form-group" style={{ marginBottom: 0 }}>
-            <label className="form-label" htmlFor="login-identifier" style={{ marginLeft: 20 }}>👤 Email or Player Name</label>
+            <label className="form-label" htmlFor="login-identifier" style={{ marginLeft: 20, display: 'flex', alignItems: 'center', gap: 6 }}><FaUser style={{ fontSize: '0.8rem' }} /> Email or Player Name</label>
             <input
               id="login-identifier"
               name="username"
@@ -93,7 +97,7 @@ export default function Login() {
           </div>
 
           <div className="form-group" style={{ marginBottom: 0 }}>
-            <label className="form-label" htmlFor="login-password" style={{ marginLeft: 20 }}>🔒 Password</label>
+            <label className="form-label" htmlFor="login-password" style={{ marginLeft: 20, display: 'flex', alignItems: 'center', gap: 6 }}><FaLock style={{ fontSize: '0.8rem' }} /> Password</label>
             <div style={{ position: 'relative' }}>
               <input
                 id="login-password"
@@ -107,15 +111,15 @@ export default function Login() {
               />
               <button type="button" onClick={() => setShow(s => !s)} style={{
                 position: 'absolute', right: 20, top: '50%', transform: 'translateY(-50%)',
-                background: 'none', color: 'var(--text-muted)', fontSize: '1.2rem',
-              }}>{show ? '🙈' : '👁️'}</button>
+                background: 'none', color: 'var(--text-muted)', fontSize: '1.1rem', border: 'none', cursor: 'pointer',
+              }}>{show ? <FaEyeSlash /> : <FaEye />}</button>
             </div>
           </div>
 
           <button type="submit" className="btn btn-primary btn-lg shape-pill" style={{ width: '100%', justifyContent: 'center', height: 56 }} disabled={loading}>
             {loading ? (
               <><div className="loader" style={{ width: 20, height: 20, borderWidth: 2 }} /> SECURING ACCESS...</>
-            ) : 'ACCESS ARENA ⚔️'}
+            ) : 'ACCESS ARENA'}
           </button>
         </form>
 

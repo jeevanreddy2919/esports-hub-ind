@@ -7,6 +7,7 @@ import Skeleton from '../components/common/Skeleton';
 import toast from 'react-hot-toast';
 import CountdownTimer from '../components/CountdownTimer';
 import { GameIcon } from '../utils/gameLogos';
+import { FaShareAlt, FaMobileAlt, FaTwitter, FaTrophy, FaShieldAlt, FaScroll, FaBullseye } from 'react-icons/fa';
 
 export default function TournamentDetail() {
   const { id } = useParams();
@@ -37,12 +38,12 @@ export default function TournamentDetail() {
   }, [id, user]);
 
   const handleBookmark = async () => {
-    if (!user) { toast.error('Login to save tournaments! 🔒'); navigate('/login'); return; }
+    if (!user) { toast.error('Login to save tournaments.'); navigate('/login'); return; }
     setBookmarking(true);
     try {
       await tournamentAPI.bookmark(id);
       setBookmarked(!bookmarked);
-      toast.success(bookmarked ? 'Removed from saved! 🗑️' : 'Added to saved tournaments! ⭐');
+      toast.success(bookmarked ? 'Removed from saved.' : 'Added to saved tournaments.');
     } catch (err) {
       toast.error('Action failed!');
     } finally {
@@ -51,16 +52,16 @@ export default function TournamentDetail() {
   };
 
   const handleRegister = async () => {
-    if (!user) { toast.error('Please login to register! 🔒'); navigate('/login'); return; }
+    if (!user) { toast.error('Please login to register.'); navigate('/login'); return; }
     setRegistering(true);
     try {
       await tournamentAPI.register(id);
-      toast.success('Successfully registered! Get ready to compete! 🏆🔥');
+      toast.success('Successfully registered! Get ready to compete.');
       setRegistered(true);
       setTournament(prev => ({ ...prev, slots_filled: prev.slots_filled + 1 }));
     } catch (err) {
       const msg = err.response?.data?.error || 'Registration failed!';
-      if (msg.includes('Already')) { toast.success('Already registered for this tournament! 🎮'); setRegistered(true); }
+      if (msg.includes('Already')) { toast.success('Already registered for this tournament.'); setRegistered(true); }
       else toast.error(msg);
     } finally {
       setRegistering(false);
@@ -85,7 +86,7 @@ export default function TournamentDetail() {
 
   if (!tournament) return (
     <div className="page" style={{ textAlign: 'center', padding: '100px 0' }}>
-      <div style={{ fontSize: '5rem', marginBottom: 20 }}>🛸</div>
+      <div style={{ fontSize: '4rem', marginBottom: 20, display: 'flex', justifyContent: 'center', color: 'var(--text-muted)' }}><FaTrophy style={{ opacity: 0.3 }} /></div>
       <h2 style={{ fontFamily: 'Orbitron', color: '#fff' }}>Tournament Not Found</h2>
       <Link to="/tournaments" style={{ color: 'var(--cyan)', marginTop: 20, display: 'inline-block' }}>← Back to All Tournaments</Link>
     </div>
@@ -145,7 +146,7 @@ export default function TournamentDetail() {
                 color: isPast ? 'var(--text-muted)' : tournament.status === 'live' ? 'var(--pink)' : 'var(--cyan)',
                 fontFamily: 'Rajdhani', fontWeight: 900, fontSize: '0.8rem', letterSpacing: '0.15em'
               }}>
-                {tournament.status.toUpperCase()} {tournament.status === 'live' && '🔴'}
+                {tournament.status.toUpperCase()} {tournament.status === 'live' && <span style={{ display: 'inline-block', width: 7, height: 7, borderRadius: '50%', background: '#ff2d78', animation: 'live-pulse 1s ease-in-out infinite', marginLeft: 6, verticalAlign: 'middle' }} />}
               </div>
               <button 
                 onClick={handleBookmark}
@@ -186,7 +187,7 @@ export default function TournamentDetail() {
               marginTop: 40, paddingTop: 40, borderTop: '1px solid rgba(255,255,255,0.05)' 
             }}>
               <div>
-                <div style={{ fontSize: '0.7rem', color: 'var(--text-muted)', fontFamily: 'Rajdhani', fontWeight: 700, textTransform: 'uppercase', mb: 5 }}>🏆 Prize Pool</div>
+                <div style={{ fontSize: '0.7rem', color: 'var(--text-muted)', fontFamily: 'Rajdhani', fontWeight: 700, textTransform: 'uppercase', mb: 5 }}>Prize Pool</div>
                 <div style={{ 
                   fontFamily: 'Orbitron', fontWeight: 900, fontSize: '2rem',
                   background: 'linear-gradient(135deg, #ffd60a, #ff9500)', 
@@ -194,13 +195,13 @@ export default function TournamentDetail() {
                 }}>{tournament.prize_pool}</div>
               </div>
               <div>
-                <div style={{ fontSize: '0.7rem', color: 'var(--text-muted)', fontFamily: 'Rajdhani', fontWeight: 700, textTransform: 'uppercase', mb: 5 }}>📅 Launch Date</div>
+                <div style={{ fontSize: '0.7rem', color: 'var(--text-muted)', fontFamily: 'Rajdhani', fontWeight: 700, textTransform: 'uppercase', mb: 5 }}>Launch Date</div>
                 <div style={{ fontFamily: 'Orbitron', fontWeight: 700, fontSize: '1.4rem', color: '#fff' }}>
                   {tournament.start_date ? new Date(tournament.start_date).toLocaleDateString('en-IN', { day: 'numeric', month: 'long', year: 'numeric' }) : 'TBD'}
                 </div>
               </div>
               <div>
-                <div style={{ fontSize: '0.7rem', color: 'var(--text-muted)', fontFamily: 'Rajdhani', fontWeight: 700, textTransform: 'uppercase', mb: 5 }}>📍 Mode</div>
+                <div style={{ fontSize: '0.7rem', color: 'var(--text-muted)', fontFamily: 'Rajdhani', fontWeight: 700, textTransform: 'uppercase', mb: 5 }}>Mode</div>
                 <div style={{ fontFamily: 'Orbitron', fontWeight: 700, fontSize: '1.4rem', color: '#fff' }}>{tournament.location}</div>
               </div>
             </div>
@@ -212,7 +213,7 @@ export default function TournamentDetail() {
           {/* Main Info */}
           <div style={{ display: 'flex', flexDirection: 'column', gap: 32 }}>
             <div className="glass-card shape-oval" style={{ padding: 40 }}>
-              <h2 style={{ fontFamily: 'Orbitron', fontSize: '1.3rem', fontWeight: 900, marginBottom: 24, color: '#fff', letterSpacing: '0.05em' }}>⚔️ MISSION INTEL</h2>
+              <h2 style={{ fontFamily: 'Orbitron', fontSize: '1.3rem', fontWeight: 900, marginBottom: 24, color: '#fff', letterSpacing: '0.05em', display: 'flex', alignItems: 'center', gap: 10 }}><FaBullseye style={{ color: 'var(--cyan)' }} /> MISSION INTEL</h2>
               <p style={{ color: 'var(--text-secondary)', lineHeight: 1.9, fontSize: '1.1rem', whiteSpace: 'pre-line' }}>
                 {tournament.description}
               </p>
@@ -220,7 +221,7 @@ export default function TournamentDetail() {
 
             {rules.length > 0 && (
               <div className="glass-card shape-oval" style={{ padding: 40 }}>
-                <h2 style={{ fontFamily: 'Orbitron', fontSize: '1.3rem', fontWeight: 900, marginBottom: 28, color: '#fff', letterSpacing: '0.05em' }}>📜 ENGAGEMENT RULES</h2>
+                <h2 style={{ fontFamily: 'Orbitron', fontSize: '1.3rem', fontWeight: 900, marginBottom: 28, color: '#fff', letterSpacing: '0.05em', display: 'flex', alignItems: 'center', gap: 10 }}><FaScroll style={{ color: 'var(--purple)' }} /> ENGAGEMENT RULES</h2>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
                   {rules.map((rule, i) => (
                     <div key={i} className="shape-pill" style={{ 
@@ -274,7 +275,7 @@ export default function TournamentDetail() {
                   padding: '32px 24px', textAlign: 'center',
                   background: 'rgba(16, 185, 129, 0.08)', border: '1px solid rgba(16, 185, 129, 0.4)',
                 }}>
-                  <div style={{ fontSize: '3rem', marginBottom: 16 }}>🛡️</div>
+                  <div style={{ fontSize: '2.5rem', marginBottom: 16, display: 'flex', justifyContent: 'center', color: '#10B981' }}><FaShieldAlt /></div>
                   <div style={{ fontFamily: 'Orbitron', fontWeight: 900, color: '#10B981', fontSize: '1.4rem', marginBottom: 8 }}>IDENTIFIED!</div>
                   <p style={{ fontFamily: 'Rajdhani', fontWeight: 700, color: 'var(--text-muted)', fontSize: '0.95rem' }}>You are officially in the arena roster.</p>
                 </div>
@@ -295,7 +296,7 @@ export default function TournamentDetail() {
                   onMouseEnter={e => { if (!isPast && !isFull) e.currentTarget.style.transform = 'scale(1.02) translateY(-4px)'; }}
                   onMouseLeave={e => { if (!isPast && !isFull) e.currentTarget.style.transform = 'scale(1) translateY(0)'; }}
                 >
-                  {registering ? 'PROCESSING...' : isPast ? 'MISSION EXPIRED' : isFull ? 'CAPACITY AT MAX' : 'INITIATE REGISTRATION ⚔️'}
+                  {registering ? 'PROCESSING...' : isPast ? 'MISSION EXPIRED' : isFull ? 'CAPACITY AT MAX' : 'INITIATE REGISTRATION'}
                 </button>
               )}
 
@@ -311,11 +312,11 @@ export default function TournamentDetail() {
               marginTop: 20, background: 'rgba(15,15,35,0.6)', borderRadius: 24, padding: '20px 24px',
               border: '1px solid rgba(255,255,255,0.05)', display: 'flex', justifyContent: 'space-between', alignItems: 'center'
             }}>
-              <div style={{ fontFamily: 'Rajdhani', fontWeight: 700, color: 'var(--text-muted)', fontSize: '0.8rem' }}>SHARE INTEL</div>
+              <div style={{ fontFamily: 'Rajdhani', fontWeight: 700, color: 'var(--text-muted)', fontSize: '0.8rem' }}>SHARE</div>
               <div style={{ display: 'flex', gap: 15 }}>
-                {['🔗','📱','🐦'].map(icon => (
-                  <button key={icon} onClick={() => { navigator.clipboard.writeText(window.location.href); toast.success('Link copied! 📋'); }} 
-                    style={{ background: 'rgba(255,255,255,0.05)', border: 'none', color: '#fff', padding: '8px', borderRadius: 8, cursor: 'pointer' }}>
+                {[<FaShareAlt />, <FaMobileAlt />, <FaTwitter />].map((icon, i) => (
+                  <button key={i} onClick={() => { navigator.clipboard.writeText(window.location.href); toast.success('Link copied!'); }} 
+                    style={{ background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)', color: '#fff', padding: '8px 10px', borderRadius: 8, cursor: 'pointer', display: 'flex', alignItems: 'center', fontSize: '0.9rem' }}>
                     {icon}
                   </button>
                 ))}

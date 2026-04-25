@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { FaArrowLeft } from 'react-icons/fa';
+import { FaArrowLeft, FaTrophy } from 'react-icons/fa';
 import { leaderboardAPI } from '../services/api';
 import Skeleton from '../components/common/Skeleton';
 import { GameIcon } from '../utils/gameLogos';
@@ -10,12 +10,12 @@ const GAMES = ['all', 'Valorant', 'BGMI', 'MLBB', 'Free Fire Max', 'Pokemon Unit
 
 const RankBadge = ({ rank }) => {
   const colors = {
-    1: { bg: 'linear-gradient(135deg, #FFD700, #FFA500)', shadow: 'rgba(255, 215, 0, 0.4)', icon: '🥇' },
-    2: { bg: 'linear-gradient(135deg, #C0C0C0, #808080)', shadow: 'rgba(192, 192, 192, 0.3)', icon: '🥈' },
-    3: { bg: 'linear-gradient(135deg, #CD7F32, #8B4513)', shadow: 'rgba(205, 127, 50, 0.3)', icon: '🥉' }
+    1: { bg: 'linear-gradient(135deg, #FFD700, #FFA500)', shadow: 'rgba(255, 215, 0, 0.4)', label: '1' },
+    2: { bg: 'linear-gradient(135deg, #C0C0C0, #808080)', shadow: 'rgba(192, 192, 192, 0.3)', label: '2' },
+    3: { bg: 'linear-gradient(135deg, #CD7F32, #8B4513)', shadow: 'rgba(205, 127, 50, 0.3)', label: '3' }
   };
   
-  const config = colors[rank] || { bg: 'rgba(255,255,255,0.06)', shadow: 'transparent', icon: rank };
+  const config = colors[rank] || { bg: 'rgba(255,255,255,0.06)', shadow: 'transparent', label: rank };
 
   return (
     <div className="shape-circle" style={{
@@ -29,7 +29,7 @@ const RankBadge = ({ rank }) => {
       flexShrink: 0,
       border: rank <= 3 ? 'none' : '1px solid rgba(255,255,255,0.1)'
     }}>
-      {config.icon}
+      {config.label}
     </div>
   );
 };
@@ -72,7 +72,7 @@ const PodiumCard = ({ player, rank, gameIcon }) => {
         }}>
           {player.player_name[0]}
           <div style={{ position: 'absolute', top: -12, right: -8, fontSize: isFirst ? '2.2rem' : '1.6rem' }}>
-            {rank === 1 ? '👑' : rank === 2 ? '🥈' : '🥉'}
+            {rank === 1 ? <FaTrophy style={{ color: '#FFD700', fontSize: '1.5rem' }} /> : rank === 2 ? '2' : '3'}
           </div>
         </div>
 
@@ -184,7 +184,7 @@ export default function Leaderboard() {
               fontSize: '0.9rem', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: 20
             }}
           >
-            🔥 Pro League Season 2026
+            Pro League Season 2026
           </motion.div>
           
           <h1 style={{ 
@@ -234,7 +234,7 @@ export default function Leaderboard() {
                   })
                 }}
               >
-                {g === 'all' ? '🌐 All Games' : <><GameIcon game={g} size={16} /> {g}</>}
+                {g === 'all' ? 'All Games' : <><GameIcon game={g} size={16} /> {g}</>}
               </button>
             ))}
           </div>

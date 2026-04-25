@@ -5,12 +5,13 @@ import toast from 'react-hot-toast';
 import { useAuth } from '../context/AuthContext';
 import { notificationAPI } from '../services/api';
 import logo from '../assets/logo_final.png';
+import { FaHome, FaTrophy, FaChartBar, FaUsers, FaUser, FaBell, FaBellSlash } from 'react-icons/fa';
 
 const navLinks = [
-  { to: '/', label: '🏠 Home' },
-  { to: '/tournaments', label: '🏆 Tournaments' },
-  { to: '/leaderboard', label: '📊 Leaderboard' },
-  { to: '/community', label: '🤝 Community' },
+  { to: '/', label: 'Home', icon: <FaHome /> },
+  { to: '/tournaments', label: 'Tournaments', icon: <FaTrophy /> },
+  { to: '/leaderboard', label: 'Leaderboard', icon: <FaChartBar /> },
+  { to: '/community', label: 'Community', icon: <FaUsers /> },
 ];
 
 export default function Navbar() {
@@ -81,6 +82,7 @@ export default function Navbar() {
                 to={link.to}
                 className={`nav-link ${location.pathname === link.to ? 'active' : ''}`}
               >
+                <span style={{ marginRight: 6, fontSize: '0.85em', opacity: 0.8 }}>{link.icon}</span>
                 {link.label}
               </Link>
             ))}
@@ -95,7 +97,7 @@ export default function Navbar() {
                     onClick={() => { setShowNotif(!showNotif); if (!showNotif) fetchNotifications(); }}
                     style={{ position: 'relative', cursor: 'pointer', display: 'flex', alignItems: 'center', width: 44, height: 44, borderRadius: '50%', background: 'rgba(255,255,255,0.05)', justifyContent: 'center', border: showNotif ? '1px solid var(--cyan)' : '1px solid rgba(255,255,255,0.1)', transition: '0.3s' }}
                   >
-                    <span style={{ fontSize: '1.2rem' }}>{unreadCount > 0 ? '🔔' : '🔕'}</span>
+                    <span style={{ fontSize: '1.1rem', display: 'flex', alignItems: 'center' }}>{unreadCount > 0 ? <FaBell /> : <FaBellSlash />}</span>
                     {unreadCount > 0 && (
                       <span className="live-pulse" style={{
                         position: 'absolute', top: 5, right: 5,
@@ -157,8 +159,8 @@ export default function Navbar() {
                   </AnimatePresence>
                 </div>
 
-                <Link to="/profile" className="btn btn-secondary btn-sm shape-pill">
-                  👤 {user.name.split(' ')[0]}
+                <Link to="/profile" className="btn btn-secondary btn-sm shape-pill" style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+                  <FaUser style={{ fontSize: '0.8rem' }} /> {user.name.split(' ')[0]}
                 </Link>
                 <button onClick={handleLogout} className="btn btn-sm shape-pill" style={{
                   background: 'rgba(255,45,120,0.15)',
@@ -172,28 +174,29 @@ export default function Navbar() {
             ) : (
               <>
                 <Link to="/login" className="btn btn-secondary btn-sm shape-pill">Login</Link>
-                <Link to="/signup" className="btn btn-primary btn-sm shape-pill">Join Now 🚀</Link>
+                <Link to="/signup" className="btn btn-primary btn-sm shape-pill">Join Now</Link>
               </>
             )}
-            <button className="hamburger" onClick={() => setMobileOpen(true)}>☰</button>
+            <button className="hamburger" onClick={() => setMobileOpen(true)} aria-label="Open menu">&#9776;</button>
           </div>
         </div>
       </nav>
 
       {/* Mobile Menu */}
       <div className={`mobile-menu ${mobileOpen ? 'open' : ''}`}>
-        <button className="mobile-close" onClick={() => setMobileOpen(false)}>✕</button>
+        <button className="mobile-close" onClick={() => setMobileOpen(false)} aria-label="Close menu">&times;</button>
         <Link to="/" className="navbar-logo" style={{ marginBottom: 16 }}>
           <img src={logo} alt="India Esports Hub" style={{ height: 50 }} />
         </Link>
         {navLinks.map(link => (
-          <Link key={link.to} to={link.to} className="nav-link" style={{ fontSize: '1.4rem' }}>
+          <Link key={link.to} to={link.to} className="nav-link" style={{ fontSize: '1.1rem', display: 'flex', alignItems: 'center', gap: 8 }}>
+            <span style={{ fontSize: '0.9em', opacity: 0.8 }}>{link.icon}</span>
             {link.label}
           </Link>
         ))}
         {user ? (
           <>
-            <Link to="/profile" className="btn btn-secondary">👤 Profile</Link>
+            <Link to="/profile" className="btn btn-secondary" style={{ display: 'flex', alignItems: 'center', gap: 8 }}><FaUser /> Profile</Link>
             <button onClick={handleLogout} className="btn" style={{
               background: 'rgba(255,45,120,0.15)', color: 'var(--pink)', border: '1px solid rgba(255,45,120,0.3)'
             }}>Logout</button>
@@ -201,7 +204,7 @@ export default function Navbar() {
         ) : (
           <>
             <Link to="/login" className="btn btn-secondary">Login</Link>
-            <Link to="/signup" className="btn btn-primary">Join Now 🚀</Link>
+            <Link to="/signup" className="btn btn-primary">Join Now</Link>
           </>
         )}
       </div>

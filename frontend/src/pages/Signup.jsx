@@ -4,6 +4,7 @@ import { useAuth } from '../context/AuthContext';
 import toast from 'react-hot-toast';
 import logo from '../assets/logo_final.png';
 import { GameIcon } from '../utils/gameLogos';
+import { FaUser, FaEnvelope, FaLock, FaMapMarkerAlt, FaGamepad, FaEye, FaEyeSlash, FaMedal } from 'react-icons/fa';
 
 const INDIAN_STATES = [
   '',
@@ -52,7 +53,7 @@ export default function Signup() {
     setLoading(true);
     try {
       await signup({ name: form.name, email: form.email, password: form.password, state: form.state, games: form.games });
-      toast.success('Account created! Welcome to the arena! 🎮🔥');
+      toast.success('Account created! Welcome to the arena.');
       navigate('/');
     } catch (err) {
       toast.error(err.response?.data?.error || 'Signup failed!');
@@ -141,28 +142,28 @@ export default function Signup() {
           {step === 0 && (
             <>
               <div className="form-group" style={{ marginBottom: 20 }}>
-                <label className="form-label" htmlFor="sigup-name" style={{ marginLeft: 20 }}>👤 Player Name</label>
+            <label className="form-label" htmlFor="sigup-name" style={{ marginLeft: 20, display: 'flex', alignItems: 'center', gap: 6 }}><FaUser style={{ fontSize: '0.8rem' }} /> Player Name</label>
                 <input id="sigup-name" name="name" className="form-input shape-pill" type="text" placeholder="Your combat alias" value={form.name}
                   onChange={e => setForm(p => ({ ...p, name: e.target.value }))} style={{ paddingLeft: 28 }} />
               </div>
               <div className="form-group" style={{ marginBottom: 20 }}>
-                <label className="form-label" htmlFor="signup-email" style={{ marginLeft: 20 }}>📧 Email Address</label>
+                <label className="form-label" htmlFor="signup-email" style={{ marginLeft: 20, display: 'flex', alignItems: 'center', gap: 6 }}><FaEnvelope style={{ fontSize: '0.8rem' }} /> Email Address</label>
                 <input id="signup-email" name="email" className="form-input shape-pill" type="email" placeholder="Gladiator@arena.com" value={form.email}
                   onChange={e => setForm(p => ({ ...p, email: e.target.value }))} style={{ paddingLeft: 28 }} />
               </div>
               <div className="form-group" style={{ marginBottom: 20 }}>
-                <label className="form-label" htmlFor="signup-password" style={{ marginLeft: 20 }}>🔒 Secret Key</label>
+                <label className="form-label" htmlFor="signup-password" style={{ marginLeft: 20, display: 'flex', alignItems: 'center', gap: 6 }}><FaLock style={{ fontSize: '0.8rem' }} /> Secret Key</label>
                 <div style={{ position: 'relative' }}>
                   <input id="signup-password" name="password" className="form-input shape-pill" type={show ? 'text' : 'password'} placeholder="Min 8 characters"
                     value={form.password} onChange={e => setForm(p => ({ ...p, password: e.target.value }))} style={{ paddingLeft: 28, paddingRight: 56 }} />
                   <button type="button" onClick={() => setShow(s => !s)} style={{
                     position: 'absolute', right: 20, top: '50%', transform: 'translateY(-50%)',
-                    background: 'none', color: 'var(--text-muted)', fontSize: '1.2rem',
-                  }}>{show ? '🙈' : '👁️'}</button>
+                    background: 'none', color: 'var(--text-muted)', fontSize: '1.1rem', border: 'none', cursor: 'pointer',
+                  }}>{show ? <FaEyeSlash /> : <FaEye />}</button>
                 </div>
               </div>
               <div className="form-group" style={{ marginBottom: 32 }}>
-                <label className="form-label" style={{ marginLeft: 20 }}>🔒 Confirm Secret Key</label>
+                <label className="form-label" style={{ marginLeft: 20, display: 'flex', alignItems: 'center', gap: 6 }}><FaLock style={{ fontSize: '0.8rem' }} /> Confirm Secret Key</label>
                 <input className="form-input shape-pill" type="password" placeholder="Verify your password"
                   value={form.confirmPassword} onChange={e => setForm(p => ({ ...p, confirmPassword: e.target.value }))} style={{ paddingLeft: 28 }} />
               </div>
@@ -172,14 +173,14 @@ export default function Signup() {
           {step === 1 && (
             <>
               <div className="form-group" style={{ marginBottom: 28 }}>
-                <label className="form-label" style={{ marginLeft: 20 }}>📍 Combat Region</label>
+                <label className="form-label" style={{ marginLeft: 20, display: 'flex', alignItems: 'center', gap: 6 }}><FaMapMarkerAlt style={{ fontSize: '0.8rem' }} /> Combat Region</label>
                 <select className="form-select shape-pill" value={form.state} onChange={e => setForm(p => ({ ...p, state: e.target.value }))} required style={{ paddingLeft: 28 }}>
                   <option value="" disabled>-- Select your state --</option>
                   {INDIAN_STATES.filter(s => s !== '').map(s => <option key={s} value={s}>{s}</option>)}
                 </select>
               </div>
               <div className="form-group" style={{ marginBottom: 32 }}>
-                <label className="form-label" style={{ marginLeft: 20 }}>🎮 Specialized Games</label>
+                <label className="form-label" style={{ marginLeft: 20, display: 'flex', alignItems: 'center', gap: 6 }}><FaGamepad style={{ fontSize: '0.8rem' }} /> Specialized Games</label>
                 <div style={{ display: 'flex', flexWrap: 'wrap', gap: 10, marginTop: 8, padding: '0 8px' }}>
                   {GAMES_LIST.map(game => (
                     <button key={game} type="button" onClick={() => toggleGame(game)} className="shape-pill" style={{
@@ -200,7 +201,7 @@ export default function Signup() {
 
           {step === 2 && (
             <div style={{ textAlign: 'center', padding: '16px 0' }}>
-              <div style={{ fontSize: '5rem', marginBottom: 24 }} className="anim-bounce-in">🥇</div>
+              <div style={{ fontSize: '4rem', marginBottom: 24, display: 'flex', justifyContent: 'center', color: '#ffd60a' }} className="anim-bounce-in"><FaMedal /></div>
               <div className="shape-oval" style={{ background: 'rgba(255,255,255,0.03)', padding: 32, border: '1px solid rgba(255,255,255,0.08)', textAlign: 'left' }}>
                 <div style={{ display: 'flex', gap: 16, marginBottom: 14 }}>
                   <span style={{ color: 'var(--text-muted)', fontFamily: 'Rajdhani', fontSize: '0.9rem', width: 80, fontWeight: 700 }}>PLAYER</span>
@@ -229,7 +230,7 @@ export default function Signup() {
             <button type="submit" className="btn btn-primary btn-lg shape-pill" style={{ flex: 2, justifyContent: 'center', height: 56 }} disabled={loading}>
               {loading ? <><div className="loader" style={{ width: 20, height: 20, borderWidth: 2 }} /> DEPLOYING...</>
                 : step < 2 ? 'PROCEED →'
-                  : 'READY FOR COMBAT ⚔️'}
+                  : 'READY FOR COMBAT'}
             </button>
           </div>
         </form>
