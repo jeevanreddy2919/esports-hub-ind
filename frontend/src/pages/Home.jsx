@@ -32,14 +32,14 @@ const STATS = [
 ];
 
 const TICKER_ITEMS = [
-  'LIVE — India BGMI Masters — ₹5 Lakh Prize Pool',
-  'Registration Open — Free Fire Max Grand Prix — 1500 Teams',
-  'Valorant India Champions — Only 8 Slots Left',
-  'CS2 India Open — May 10-12, 2026 — Gaming Arena',
-  'Pokemon Unite Championship — Season 4 Results Out',
-  'Tekken 8 India Clash — Register Before April 25',
-  'India CODM Masters Q2 — ₹2 Lakh Prize Pool Opening Soon',
-  'Leaderboard Update — Scout_GG leads Rankings',
+  'LIVE — NODWIN BGMI Masters Series — ₹1.5 Cr Prize Pool',
+  'REGISTRATION OPEN — VCT India Challengers — 32 Elite Slots',
+  'LIVE — Skyesports FF Max Grand Prix — Final Day Today!',
+  'UPCOMING — ESL India CS2 Pro League — Starting May 20',
+  'NEW — MPL India MLBB Qualifiers — Join the Land of Dawn',
+  'LEADERBOARD — GodL_Jonathan dominates BGMI rankings with 15k+ points',
+  'ALERT — Aeos Cup India Pokemon Unite — Registration ends in 48 hours',
+  'LIVE — Iron Fist India Tekken 8 — Top 16 Bracket in progress',
 ];
 
 const NEWS = [

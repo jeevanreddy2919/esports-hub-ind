@@ -33,10 +33,18 @@ export const GameIcon = ({ game, size = 24, className = '', style = {} }) => {
   // Fallback
   const getShorthand = (name) => {
     if (!name) return 'G';
-    if (name === 'Free Fire Max') return 'FFM';
-    if (name === 'Call of Duty Mobile') return 'CODM';
-    if (name === 'Pokemon Unite') return 'PKU';
-    return name.substring(0, 2).toUpperCase();
+    const n = name.trim();
+    if (n === 'Free Fire Max') return 'FFM';
+    if (n === 'Call of Duty Mobile') return 'CODM';
+    if (n === 'Pokemon Unite') return 'PU';
+    if (n === 'MLBB') return 'MLBB';
+    if (n === 'BGMI') return 'BGMI';
+    if (n === 'Minecraft') return 'MC';
+    if (n === 'Tekken 8') return 'T8';
+    if (n === 'FC Mobile') return 'FC';
+    if (n === 'Clash Royale') return 'CR';
+    if (n === 'Valorant') return 'VR';
+    return n.substring(0, 2).toUpperCase();
   };
 
   return (
