@@ -31,9 +31,17 @@ export const GameIcon = ({ game, size = 24, className = '', style = {} }) => {
   }
 
   // Fallback
+  const getShorthand = (name) => {
+    if (!name) return 'G';
+    if (name === 'Free Fire Max') return 'FFM';
+    if (name === 'Call of Duty Mobile') return 'CODM';
+    if (name === 'Pokemon Unite') return 'PKU';
+    return name.substring(0, 2).toUpperCase();
+  };
+
   return (
     <div className={className} style={{ width: size, height: size, display: 'inline-flex', alignItems: 'center', justifyContent: 'center', background: 'rgba(255,255,255,0.1)', borderRadius: '50%', fontSize: size * 0.4, fontWeight: 900, fontFamily: 'Orbitron', color: '#fff', border: '1px solid rgba(255,255,255,0.2)', ...style }}>
-      {game ? game.substring(0, 2).toUpperCase() : 'G'}
+      {getShorthand(game)}
     </div>
   );
 };

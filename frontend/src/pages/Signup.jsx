@@ -147,12 +147,12 @@ export default function Signup() {
                   onChange={e => setForm(p => ({ ...p, name: e.target.value }))} style={{ paddingLeft: 28 }} />
               </div>
               <div className="form-group" style={{ marginBottom: 20 }}>
-                <label className="form-label" htmlFor="signup-email" style={{ marginLeft: 20, display: 'flex', alignItems: 'center', gap: 6 }}><FaEnvelope style={{ fontSize: '0.8rem' }} /> Email Address</label>
+                <label className="form-label" htmlFor="signup-email" style={{ marginLeft: 20, display: 'flex', alignItems: 'center', gap: 6 }}><FaEnvelope style={{ fontSize: '0.8rem' }} /> Email</label>
                 <input id="signup-email" name="email" className="form-input shape-pill" type="email" placeholder="Enter Email" value={form.email}
                   onChange={e => setForm(p => ({ ...p, email: e.target.value }))} style={{ paddingLeft: 28 }} />
               </div>
               <div className="form-group" style={{ marginBottom: 20 }}>
-                <label className="form-label" htmlFor="signup-password" style={{ marginLeft: 20, display: 'flex', alignItems: 'center', gap: 6 }}><FaLock style={{ fontSize: '0.8rem' }} /> Secret Key</label>
+                <label className="form-label" style={{ marginLeft: 20, display: 'flex', alignItems: 'center', gap: 6 }}><FaLock style={{ fontSize: '0.8rem' }} /> Password</label>
                 <div style={{ position: 'relative' }}>
                   <input id="signup-password" name="password" className="form-input shape-pill" type={show ? 'text' : 'password'} placeholder="Enter Password"
                     value={form.password} onChange={e => setForm(p => ({ ...p, password: e.target.value }))} style={{ paddingLeft: 28, paddingRight: 56 }} />
@@ -163,7 +163,7 @@ export default function Signup() {
                 </div>
               </div>
               <div className="form-group" style={{ marginBottom: 32 }}>
-                <label className="form-label" style={{ marginLeft: 20, display: 'flex', alignItems: 'center', gap: 6 }}><FaLock style={{ fontSize: '0.8rem' }} /> Confirm Secret Key</label>
+                <label className="form-label" style={{ marginLeft: 20, display: 'flex', alignItems: 'center', gap: 6 }}><FaLock style={{ fontSize: '0.8rem' }} /> Confirm Password</label>
                 <input className="form-input shape-pill" type="password" placeholder="Verify your password"
                   value={form.confirmPassword} onChange={e => setForm(p => ({ ...p, confirmPassword: e.target.value }))} style={{ paddingLeft: 28 }} />
               </div>

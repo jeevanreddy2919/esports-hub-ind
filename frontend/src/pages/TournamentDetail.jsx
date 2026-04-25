@@ -41,7 +41,7 @@ export default function TournamentDetail() {
     if (!user) { toast.error('Login to save tournaments.'); navigate('/login'); return; }
     setBookmarking(true);
     try {
-      await tournamentAPI.bookmark(id);
+      await tournamentAPI.toggleBookmark(id);
       setBookmarked(!bookmarked);
       toast.success(bookmarked ? 'Removed from saved.' : 'Added to saved tournaments.');
     } catch (err) {
