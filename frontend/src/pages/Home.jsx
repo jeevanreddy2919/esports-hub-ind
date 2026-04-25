@@ -6,7 +6,7 @@ import Skeleton from '../components/common/Skeleton';
 import CountdownTimer from '../components/CountdownTimer';
 import logo from '../assets/logo_final.png';
 import { GameIcon } from '../utils/gameLogos';
-import { FaDiscord, FaInstagram, FaTelegramPlane, FaYoutube, FaTrophy, FaUsers, FaGamepad, FaMapMarkedAlt, FaUserCircle, FaSearch, FaCrosshairs, FaMedal } from 'react-icons/fa';
+import { FaDiscord, FaInstagram, FaTelegramPlane, FaYoutube, FaTrophy, FaUsers, FaGamepad, FaMapMarkedAlt, FaUserCircle, FaSearch, FaCrosshairs, FaMedal, FaArrowRight } from 'react-icons/fa';
 import { FaXTwitter } from 'react-icons/fa6';
 
 /* ─────────────── DATA ─────────────── */
