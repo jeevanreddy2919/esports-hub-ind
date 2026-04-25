@@ -378,7 +378,7 @@ export default function Home() {
                 margin: '0 auto', position: 'relative',
               }} className="anim-float">
                 <img src={logo} alt="India Esports Hub" style={{ width: '75%', filter: 'drop-shadow(0 0 40px rgba(0,243,255,0.5))' }} />
-                {['BGMI', 'Valorant', 'CS2', 'Free Fire Max'].map((game, i) => (
+                {['BGMI', 'Valorant', 'MLBB', 'Free Fire Max'].map((game, i) => (
                   <div key={i} style={{
                     position: 'absolute', width: 50, height: 50, borderRadius: 14,
                     background: 'rgba(255,255,255,0.08)', border: '1px solid rgba(255,255,255,0.12)',

@@ -44,6 +44,7 @@ export const GameIcon = ({ game, size = 24, className = '', style = {} }) => {
     if (n === 'FC Mobile') return 'FC';
     if (n === 'Clash Royale') return 'CR';
     if (n === 'Valorant') return 'VR';
+    if (n === 'CS2') return 'CS2';
     return n.substring(0, 2).toUpperCase();
   };
 
