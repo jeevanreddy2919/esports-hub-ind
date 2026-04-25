@@ -70,7 +70,7 @@ const PodiumCard = ({ player, rank, gameIcon }) => {
           boxShadow: `0 15px 35px ${player.avatar_color}40`,
           position: 'relative'
         }}>
-          {player.player_name[0]}
+          { (player.player_name || '?')[0] }
           <div style={{ position: 'absolute', top: -12, right: -8, fontSize: isFirst ? '2.2rem' : '1.6rem' }}>
             {rank === 1 ? <FaTrophy style={{ color: '#FFD700', fontSize: '1.5rem' }} /> : rank === 2 ? '2' : '3'}
           </div>
@@ -93,7 +93,7 @@ const PodiumCard = ({ player, rank, gameIcon }) => {
         }}>
           <div style={{ fontSize: '0.65rem', color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.15em', marginBottom: 4 }}>Skill Rating</div>
           <div style={{ fontFamily: 'Orbitron', fontWeight: 900, fontSize: isFirst ? '1.8rem' : '1.4rem', color: color }}>
-            {player.points.toLocaleString()}
+            { (player.points || 0).toLocaleString() }
           </div>
         </div>
 
@@ -303,7 +303,7 @@ export default function Leaderboard() {
                 TOP RANKINGS
               </h2>
               <div style={{ fontFamily: 'Rajdhani', fontSize: '0.85rem', color: 'var(--text-muted)' }}>
-                Showing {players.length} Elite Players
+                Showing {leaderboard.length} Elite Players
               </div>
             </div>
 
@@ -340,7 +340,7 @@ export default function Leaderboard() {
                     fontFamily: 'Orbitron', fontWeight: 900, fontSize: '1.3rem',
                     color: '#fff', boxShadow: `0 8px 15px ${player.avatar_color}30`
                   }}>
-                    {player.player_name[0]}
+                    { (player.player_name || '?')[0] }
                   </div>
 
                   <div style={{ flex: 1 }}>
@@ -365,7 +365,7 @@ export default function Leaderboard() {
                       border: '1px solid rgba(255,255,255,0.06)'
                     }}>
                       <div style={{ fontFamily: 'Orbitron', fontWeight: 900, color: '#ffd60a', fontSize: '1.2rem' }}>
-                        {player.points.toLocaleString()}
+                        { (player.points || 0).toLocaleString() }
                       </div>
                       <div style={{ fontSize: '0.6rem', color: 'var(--text-muted)', fontWeight: 800, letterSpacing: '0.1em' }}>RATING</div>
                     </div>
