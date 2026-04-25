@@ -57,33 +57,45 @@ function TournamentCard({ t, isSkeleton }) {
               </div>
             </div>
 
-            <div style={{ fontFamily: 'Orbitron', fontWeight: 800, fontSize: '1.05rem', lineHeight: 1.4, marginBottom: 4, color: '#fff' }}>{t.title}</div>
-            <div style={{ fontFamily: 'Rajdhani', fontWeight: 700, fontSize: '0.82rem', color: accentColor, marginBottom: 16, textTransform: 'uppercase' }}>{t.game} • {t.format || 'SQUAD'}</div>
-
-            <div style={{ padding: '14px 18px', borderRadius: 20, marginBottom: 18, background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.08)', display: 'flex', justifyContent: 'space-between' }}>
+            <div style={{ fontFamily: 'Orbitron', fontWeight: 900, fontSize: '1.25rem', lineHeight: 1.2, marginBottom: 8, color: '#fff', letterSpacing: '-0.02em' }}>{t.title}</div>
+            <div style={{ fontFamily: 'Rajdhani', fontWeight: 700, fontSize: '0.8rem', color: accentColor, marginBottom: 20, textTransform: 'uppercase', letterSpacing: '0.1em', opacity: 0.9 }}>{t.game} • {t.format || 'SQUAD'}</div>
+            
+            <div style={{ padding: '16px 20px', borderRadius: 16, marginBottom: 20, background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.06)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
               <div>
-                <div style={{ fontSize: '0.62rem', color: 'var(--text-muted)', fontFamily: 'Rajdhani', fontWeight: 700, textTransform: 'uppercase', marginBottom: 2 }}>Prize Pool</div>
-                <div style={{ fontFamily: 'Orbitron', fontWeight: 900, fontSize: '0.95rem', color: '#ffd60a' }}>{t.prize_pool}</div>
+                <div style={{ fontSize: '0.6rem', color: 'var(--text-muted)', fontFamily: 'Rajdhani', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.12em', marginBottom: 4 }}>Prize Pool</div>
+                <div style={{ fontFamily: 'Orbitron', fontWeight: 900, fontSize: '1.1rem', color: '#ffd60a', textShadow: '0 0 10px rgba(255,214,10,0.3)' }}>{t.prize_pool}</div>
               </div>
               <div style={{ textAlign: 'right' }}>
-                <div style={{ fontSize: '0.62rem', color: 'var(--text-muted)', fontFamily: 'Rajdhani', fontWeight: 700, textTransform: 'uppercase', marginBottom: 2 }}>Region</div>
-                <div style={{ fontFamily: 'Rajdhani', fontWeight: 800, fontSize: '0.95rem', color: '#fff' }}>{t.location}</div>
+                <div style={{ fontSize: '0.6rem', color: 'var(--text-muted)', fontFamily: 'Rajdhani', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.12em', marginBottom: 4 }}>Region</div>
+                <div style={{ fontFamily: 'Rajdhani', fontWeight: 900, fontSize: '1.1rem', color: '#fff' }}>{t.location}</div>
               </div>
             </div>
 
-            <div style={{ marginBottom: 18 }}>
+            <div style={{ marginBottom: 20 }}>
               <CountdownTimer targetDate={t.start_date} status={t.status} />
             </div>
 
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 16 }}>
-              <span style={{ fontSize: '0.75rem', fontFamily: 'Rajdhani', fontWeight: 700, color: 'var(--text-muted)' }}>{t.slots_filled}/{t.slots} FILLED</span>
-              <div style={{ width: '60%', height: 6, background: 'rgba(255,255,255,0.08)', borderRadius: 999, overflow: 'hidden' }}>
-                <div style={{ height: '100%', width: `${(t.slots_filled/t.slots)*100}%`, background: accentColor, borderRadius: 999 }} />
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 20 }}>
+              <span style={{ fontSize: '0.7rem', fontFamily: 'Rajdhani', fontWeight: 800, color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>{t.slots_filled} / {t.slots} FILLED</span>
+              <div style={{ width: '60%', height: 6, background: 'rgba(255,255,255,0.05)', borderRadius: 999, overflow: 'hidden' }}>
+                <div style={{ height: '100%', width: `${(t.slots_filled/t.slots)*100}%`, background: accentColor, borderRadius: 999, boxShadow: `0 0 10px ${accentColor}` }} />
               </div>
             </div>
 
-            <div className="shape-pill" style={{ marginTop: 'auto', padding: '12px 16px', textAlign: 'center', fontFamily: 'Rajdhani', fontWeight: 800, background: `linear-gradient(135deg, ${accentColor}, ${accentColor}aa)`, color: '#fff', boxShadow: `0 8px 20px ${accentColor}30` }}>
-              {t.status === 'past' ? 'RESULTS →' : 'JOIN ARENA'}
+            <div className="shape-pill" style={{ 
+              marginTop: 'auto', 
+              padding: '14px 20px', 
+              textAlign: 'center', 
+              fontFamily: 'Orbitron', 
+              fontWeight: 900, 
+              fontSize: '0.85rem', 
+              background: `linear-gradient(135deg, ${accentColor}, ${accentColor}aa)`, 
+              color: '#fff', 
+              boxShadow: `0 8px 24px ${accentColor}30`,
+              letterSpacing: '0.1em',
+              textTransform: 'uppercase'
+            }}>
+              {t.status === 'past' ? 'View Results' : 'Secure Entry'}
             </div>
           </div>
         </div>

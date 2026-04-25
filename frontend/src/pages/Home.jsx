@@ -42,6 +42,36 @@ const TICKER_ITEMS = [
   'Leaderboard Update — Scout_GG leads Rankings',
 ];
 
+const NEWS = [
+  {
+    id: 1,
+    title: 'NODWIN Gaming Announces Masters Series Season 3',
+    date: 'April 20, 2026',
+    source: 'Esports Insider',
+    category: 'Tournament',
+    color: '#FF6B35',
+    image: 'https://images.unsplash.com/photo-1542751371-adc38448a05e?q=80\u0026w=500',
+  },
+  {
+    id: 2,
+    title: 'India Wins Big at International Valorant Invitationals',
+    date: 'April 18, 2026',
+    source: 'AFK Gaming',
+    category: 'News',
+    color: '#FF4655',
+    image: 'https://images.unsplash.com/photo-1511512578047-dfb367046420?q=80\u0026w=500',
+  },
+  {
+    id: 3,
+    title: 'Top 5 BGMI Strategies for the Upcoming Pro League',
+    date: 'April 15, 2026',
+    source: 'TalkEsport',
+    category: 'Guide',
+    color: '#00F3FF',
+    image: 'https://images.unsplash.com/photo-1550745165-9bc0b252726f?q=80\u0026w=500',
+  },
+];
+
 // Removed GAME_ICONS object
 
 const HOW_IT_WORKS = [
@@ -179,23 +209,38 @@ function TournamentCard({ t, isSkeleton }) {
                 <div style={{ padding: '6px 14px', borderRadius: 999, background: 'rgba(0,243,255,0.08)', border: '1px solid rgba(0,243,255,0.25)', fontFamily: 'Rajdhani', fontWeight: 700, fontSize: '0.75rem', color: 'var(--cyan)' }}>UPCOMING</div>
               )}
             </div>
-            <div style={{ fontFamily: 'Orbitron', fontWeight: 800, fontSize: '1rem', lineHeight: 1.4, marginBottom: 6, color: '#fff' }}>{t.title}</div>
-            <div style={{ fontFamily: 'Rajdhani', fontWeight: 700, fontSize: '0.85rem', color: accentColor, marginBottom: 18, textTransform: 'uppercase', letterSpacing: '0.05em' }}>{t.game}</div>
-            <div style={{ padding: '14px 18px', borderRadius: 20, marginBottom: 18, background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.08)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+            <div style={{ fontFamily: 'Orbitron', fontWeight: 900, fontSize: '1.25rem', lineHeight: 1.2, marginBottom: 8, color: '#fff', letterSpacing: '-0.02em' }}>{t.title}</div>
+            <div style={{ fontFamily: 'Rajdhani', fontWeight: 700, fontSize: '0.8rem', color: accentColor, marginBottom: 20, textTransform: 'uppercase', letterSpacing: '0.1em', opacity: 0.9 }}>{t.game}</div>
+            
+            <div style={{ padding: '16px 20px', borderRadius: 16, marginBottom: 20, background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.06)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
               <div>
-                <div style={{ fontSize: '0.65rem', color: 'var(--text-muted)', fontFamily: 'Rajdhani', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 2 }}>Prize Pool</div>
-                <div style={{ fontFamily: 'Orbitron', fontWeight: 900, fontSize: '1rem', color: '#ffd60a' }}>{t.prize_pool}</div>
+                <div style={{ fontSize: '0.6rem', color: 'var(--text-muted)', fontFamily: 'Rajdhani', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.12em', marginBottom: 4 }}>Prize Pool</div>
+                <div style={{ fontFamily: 'Orbitron', fontWeight: 900, fontSize: '1.1rem', color: '#ffd60a', textShadow: '0 0 10px rgba(255,214,10,0.3)' }}>{t.prize_pool}</div>
               </div>
               <div style={{ textAlign: 'right' }}>
-                <div style={{ fontSize: '0.65rem', color: 'var(--text-muted)', fontFamily: 'Rajdhani', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 2 }}>Slots</div>
-                <div style={{ fontFamily: 'Rajdhani', fontWeight: 800, fontSize: '1.05rem', color: isAlmostFull ? 'var(--pink)' : '#fff' }}>{t.slots_filled}/{t.slots}</div>
+                <div style={{ fontSize: '0.6rem', color: 'var(--text-muted)', fontFamily: 'Rajdhani', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.12em', marginBottom: 4 }}>Participants</div>
+                <div style={{ fontFamily: 'Rajdhani', fontWeight: 900, fontSize: '1.1rem', color: isAlmostFull ? 'var(--pink)' : '#fff' }}>{t.slots_filled} / {t.slots}</div>
               </div>
             </div>
-            <div style={{ marginBottom: 18, padding: '0 4px' }}>
+
+            <div style={{ marginBottom: 20, padding: '0 4px' }}>
               <CountdownTimer targetDate={t.start_date} status={t.status} />
             </div>
-            <div className="shape-pill" style={{ marginTop: 'auto', padding: '12px 16px', textAlign: 'center', fontFamily: 'Rajdhani', fontWeight: 800, fontSize: '0.95rem', background: `linear-gradient(135deg, ${accentColor}, ${accentColor}aa)`, color: '#fff', boxShadow: `0 8px 20px ${accentColor}40`, letterSpacing: '0.05em' }}>
-              {t.status === 'live' ? 'JOIN NOW' : 'REGISTER NOW →'}
+
+            <div className="shape-pill" style={{ 
+              marginTop: 'auto', 
+              padding: '14px 20px', 
+              textAlign: 'center', 
+              fontFamily: 'Orbitron', 
+              fontWeight: 900, 
+              fontSize: '0.85rem', 
+              background: `linear-gradient(135deg, ${accentColor}, ${accentColor}aa)`, 
+              color: '#fff', 
+              boxShadow: `0 8px 24px ${accentColor}40`, 
+              letterSpacing: '0.1em',
+              textTransform: 'uppercase'
+            }}>
+              {t.status === 'live' ? 'Enter Arena' : 'Secure Your Slot →'}
             </div>
           </div>
         </div>
@@ -283,10 +328,8 @@ export default function Home() {
                 India's #1 Competitive Gaming Platform
               </div>
               <h1 className="hero-title anim-fade-up delay-200" style={{ fontSize: 'clamp(2.2rem, 5vw, 4.2rem)' }}>
-                Track & Compete in <br />
-                <span className="gradient-text" style={{ background: 'linear-gradient(135deg, var(--cyan), var(--purple), var(--pink))', WebkitBackgroundClip: 'text' }}>Indian Esports Tournaments</span>
-                <br />
-                — Real Time
+                Track Every Game. <br />
+                <span className="gradient-text" style={{ background: 'linear-gradient(135deg, var(--cyan), var(--purple), var(--pink))', WebkitBackgroundClip: 'text' }}>Follow Every Tournament.</span>
               </h1>
               <p className="hero-description anim-fade-up delay-300">
                 Discover <strong>200+</strong> live tournaments across <strong>9 titles</strong>. Win up to <strong>₹5 Lakhs</strong>. Powered by AI match prep from <strong>NeuroGamer</strong>.
@@ -326,7 +369,7 @@ export default function Home() {
             </div>
 
             {/* Hero Visual */}
-            <div style={{ textAlign: 'center', position: 'relative', marginTop: -130, transform: 'scale(1.2)' }} className="anim-slide-right delay-300 hero-visual-container">
+            <div style={{ textAlign: 'center', position: 'relative', marginTop: -180, transform: 'scale(1.2)' }} className="anim-slide-right delay-300 hero-visual-container">
               <div style={{
                 width: 'min(360px, 80vw)', height: 'min(360px, 80vw)',
                 borderRadius: '50%',
@@ -631,6 +674,52 @@ export default function Home() {
         </div>
       </section>
 
+
+      {/* ── NEWS SECTION ── */}
+      <section className="section" style={{ background: 'rgba(5,5,16,0.6)' }}>
+        <div className="container">
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 40 }}>
+            <div>
+              <h2 className="section-title"><span className="gradient-text">Latest in Arena</span></h2>
+              <p className="section-subtitle" style={{ marginBottom: 0 }}>Fresh news, guides, and tournament updates</p>
+            </div>
+            <Link to="/community" className="btn btn-secondary btn-sm">Read More News</Link>
+          </div>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: 32 }}>
+            {NEWS.map((item, i) => (
+              <motion.div
+                key={item.id}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.1 }}
+                whileHover={{ y: -10 }}
+              >
+                <div className="glass-card" style={{ height: '100%', overflow: 'hidden', padding: 0 }}>
+                  <div style={{ height: 200, position: 'relative', overflow: 'hidden' }}>
+                    <img src={item.image} alt={item.title} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                    <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top, rgba(5,5,16,0.9), transparent)' }} />
+                    <div style={{ position: 'absolute', bottom: 16, left: 16, padding: '4px 12px', borderRadius: 4, background: item.color, color: '#000', fontSize: '0.65rem', fontFamily: 'Orbitron', fontWeight: 900, textTransform: 'uppercase' }}>
+                      {item.category}
+                    </div>
+                  </div>
+                  <div style={{ padding: 24 }}>
+                    <div style={{ display: 'flex', gap: 12, marginBottom: 12, fontSize: '0.75rem', color: 'var(--text-muted)', fontFamily: 'Rajdhani', fontWeight: 700 }}>
+                      <span>{item.date}</span>
+                      <span>•</span>
+                      <span>{item.source}</span>
+                    </div>
+                    <h3 style={{ fontFamily: 'Orbitron', fontWeight: 800, fontSize: '1.1rem', color: '#fff', lineHeight: 1.5, marginBottom: 20 }}>{item.title}</h3>
+                    <Link to="#" style={{ display: 'inline-flex', alignItems: 'center', gap: 8, color: 'var(--cyan)', textDecoration: 'none', fontFamily: 'Rajdhani', fontWeight: 800, fontSize: '0.85rem', letterSpacing: '0.05em' }}>
+                      READ FULL ARTICLE <FaArrowRight style={{ fontSize: '0.7rem' }} />
+                    </Link>
+                  </div>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
 
       {/* ── CTA BANNER ── */}
       <section className="section" style={{ background: 'rgba(123,47,255,0.03)' }}>

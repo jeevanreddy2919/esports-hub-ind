@@ -6,7 +6,7 @@ import { tournamentAPI } from '../services/api';
 import Skeleton from '../components/common/Skeleton';
 import toast from 'react-hot-toast';
 import { GameIcon } from '../utils/gameLogos';
-import { FaTrophy, FaMapMarkerAlt, FaBolt, FaBroadcastTower, FaClock, FaHistory, FaBookmark, FaGem } from 'react-icons/fa';
+import { FaTrophy, FaMapMarkerAlt, FaBolt, FaBroadcastTower, FaClock, FaHistory, FaBookmark, FaGem, FaArrowLeft } from 'react-icons/fa';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 
 const mockPerformanceData = [
@@ -65,14 +65,22 @@ export default function Profile() {
         zIndex: 0, pointerEvents: 'none'
       }} />
 
-      <div className="container" style={{ padding: '60px 24px', position: 'relative', zIndex: 1 }}>
+      <div className="container" style={{ padding: '40px 24px 80px', position: 'relative', zIndex: 1 }}>
+        <button onClick={() => navigate(-1)} className="btn btn-secondary shape-pill" style={{ marginBottom: 32, display: 'flex', alignItems: 'center', gap: 8, padding: '8px 16px' }}>
+          <FaArrowLeft /> Back
+        </button>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: 32, alignItems: 'start' }}>
           
           {/* Left Column: Profile Card */}
           <motion.div 
             initial={{ opacity: 0, x: -30 }}
             animate={{ opacity: 1, x: 0 }}
-            style={{ position: 'sticky', top: 100 }}
+            className="profile-sidebar"
+            style={{ 
+              position: window.innerWidth > 1024 ? 'sticky' : 'relative', 
+              top: window.innerWidth > 1024 ? 100 : 0,
+              marginTop: 40 
+            }}
           >
             <div className="glass-card shape-oval" style={{
               padding: '50px 32px',
