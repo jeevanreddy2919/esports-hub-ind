@@ -76,9 +76,9 @@ function TournamentCard({ t, isSkeleton }) {
             </div>
 
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 20 }}>
-              <span style={{ fontSize: '0.7rem', fontFamily: 'Rajdhani', fontWeight: 800, color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>{t.slots_filled} / {t.slots} FILLED</span>
-              <div style={{ width: '60%', height: 6, background: 'rgba(255,255,255,0.05)', borderRadius: 999, overflow: 'hidden' }}>
-                <div style={{ height: '100%', width: `${(t.slots_filled/t.slots)*100}%`, background: accentColor, borderRadius: 999, boxShadow: `0 0 10px ${accentColor}` }} />
+              <span style={{ fontSize: '0.7rem', fontFamily: 'Rajdhani', fontWeight: 800, color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>REGISTRATION STATUS</span>
+              <div style={{ padding: '4px 12px', borderRadius: 100, background: 'rgba(16,185,129,0.1)', border: '1px solid rgba(16,185,129,0.3)', color: 'var(--green)', fontSize: '0.65rem', fontFamily: 'Rajdhani', fontWeight: 800 }}>
+                {t.status === 'past' ? 'CLOSED' : 'OPEN'}
               </div>
             </div>
 

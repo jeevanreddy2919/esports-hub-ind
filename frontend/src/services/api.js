@@ -16,6 +16,7 @@ export const authAPI = {
   signup: (data) => API.post('/auth/signup', data),
   login: (data) => API.post('/auth/login', data),
   me: () => API.get('/auth/me'),
+  update: (data) => API.post('/auth/update', data),
 };
 
 export const tournamentAPI = {

@@ -213,7 +213,7 @@ export default function TournamentDetail() {
           {/* Main Info */}
           <div style={{ display: 'flex', flexDirection: 'column', gap: 32 }}>
             <div className="glass-card shape-oval" style={{ padding: 40 }}>
-              <h2 style={{ fontFamily: 'Orbitron', fontSize: '1.3rem', fontWeight: 900, marginBottom: 24, color: '#fff', letterSpacing: '0.05em', display: 'flex', alignItems: 'center', gap: 10 }}><FaBullseye style={{ color: 'var(--cyan)' }} /> MISSION INTEL</h2>
+              <h2 style={{ fontFamily: 'Orbitron', fontSize: '1.3rem', fontWeight: 900, marginBottom: 24, color: '#fff', letterSpacing: '0.05em', display: 'flex', alignItems: 'center', gap: 10 }}><FaBullseye style={{ color: 'var(--cyan)' }} /> TOURNAMENT OVERVIEW</h2>
               <p style={{ color: 'var(--text-secondary)', lineHeight: 1.9, fontSize: '1.1rem', whiteSpace: 'pre-line' }}>
                 {tournament.description}
               </p>
@@ -221,7 +221,7 @@ export default function TournamentDetail() {
 
             {rules.length > 0 && (
               <div className="glass-card shape-oval" style={{ padding: 40 }}>
-                <h2 style={{ fontFamily: 'Orbitron', fontSize: '1.3rem', fontWeight: 900, marginBottom: 28, color: '#fff', letterSpacing: '0.05em', display: 'flex', alignItems: 'center', gap: 10 }}><FaScroll style={{ color: 'var(--purple)' }} /> ENGAGEMENT RULES</h2>
+                <h2 style={{ fontFamily: 'Orbitron', fontSize: '1.3rem', fontWeight: 900, marginBottom: 28, color: '#fff', letterSpacing: '0.05em', display: 'flex', alignItems: 'center', gap: 10 }}><FaScroll style={{ color: 'var(--purple)' }} /> OFFICIAL RULES</h2>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
                   {rules.map((rule, i) => (
                     <div key={i} className="shape-pill" style={{ 
@@ -255,17 +255,14 @@ export default function TournamentDetail() {
 
               <div style={{ marginBottom: 40 }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 14 }}>
-                  <span style={{ fontFamily: 'Rajdhani', fontWeight: 800, color: 'var(--text-muted)', fontSize: '0.9rem', letterSpacing: '0.1em' }}>DEPLOYMENT SLOTS</span>
+                  <span style={{ fontFamily: 'Rajdhani', fontWeight: 800, color: 'var(--text-muted)', fontSize: '0.9rem', letterSpacing: '0.1em' }}>TOTAL CAPACITY</span>
                   <span style={{ fontFamily: 'Orbitron', fontWeight: 900, color: isFull ? 'var(--pink)' : accentColor, fontSize: '0.95rem' }}>
-                    {tournament.slots_filled} / {tournament.slots}
+                    {tournament.slots} SLOTS
                   </span>
                 </div>
                 <div className="shape-pill" style={{ height: 12, background: 'rgba(255,255,255,0.06)', overflow: 'hidden' }}>
-                  <motion.div 
-                    initial={{ width: 0 }} 
-                    animate={{ width: `${pct}%` }} 
-                    transition={{ duration: 1.2, ease: "easeOut" }}
-                    style={{ height: '100%', background: isFull ? 'var(--pink)' : `linear-gradient(90deg, ${accentColor}, ${accentColor}aa)` }} 
+                  <div 
+                    style={{ height: '100%', width: isFull ? '100%' : '60%', background: isFull ? 'var(--pink)' : `linear-gradient(90deg, ${accentColor}, ${accentColor}aa)`, opacity: 0.6 }} 
                   />
                 </div>
               </div>
@@ -352,7 +349,7 @@ export default function TournamentDetail() {
 
               {!user && !isPast && !isFull && (
                 <p style={{ textAlign: 'center', mt: 20, color: 'var(--text-muted)', fontSize: '0.9rem', fontFamily: 'Rajdhani', marginTop: 20 }}>
-                  Strategic account required. <Link to="/login" style={{ color: accentColor, fontWeight: 700 }}>LOGIN</Link>
+                  Account required to follow. <Link to="/login" style={{ color: accentColor, fontWeight: 700 }}>LOGIN</Link>
                 </p>
               )}
             </div>

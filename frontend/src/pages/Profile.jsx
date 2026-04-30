@@ -6,24 +6,29 @@ import { tournamentAPI } from '../services/api';
 import Skeleton from '../components/common/Skeleton';
 import toast from 'react-hot-toast';
 import { GameIcon } from '../utils/gameLogos';
-import { FaTrophy, FaMapMarkerAlt, FaBolt, FaBroadcastTower, FaClock, FaHistory, FaBookmark, FaGem, FaArrowLeft } from 'react-icons/fa';
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
+import { FaTrophy, FaMapMarkerAlt, FaBookmark, FaGem, FaArrowLeft, FaCheckCircle, FaCalendarAlt, FaCamera, FaTimes } from 'react-icons/fa';
+import { authAPI } from '../services/api';
 
-const mockPerformanceData = [
-  { month: 'Jan', xp: 400 },
-  { month: 'Feb', xp: 600 },
-  { month: 'Mar', xp: 850 },
-  { month: 'Apr', xp: 1200 },
-  { month: 'May', xp: 1600 },
-  { month: 'Jun', xp: 2100 },
+// Import New Avatars
+import avatar1 from '../assets/avatars/avatar1.png';
+import avatar2 from '../assets/avatars/avatar2.png';
+import avatar3 from '../assets/avatars/avatar3.png';
+
+const AVAILABLE_AVATARS = [
+  { id: 'av1', url: avatar1, name: 'Cyber Visor' },
+  { id: 'av2', url: avatar2, name: 'Tactical Helmet' },
+  { id: 'av3', url: avatar3, name: 'Digital Phoenix' },
 ];
 
+
 export default function Profile() {
-  const { user, logout } = useAuth();
+  const { user, logout, updateUser } = useAuth();
   const navigate = useNavigate();
   const [myTournaments, setMyTournaments] = useState([]);
   const [bookmarks, setBookmarks] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [showAvatarModal, setShowAvatarModal] = useState(false);
+  const [updating, setUpdating] = useState(false);
 
   useEffect(() => {
     Promise.all([
@@ -44,6 +49,20 @@ export default function Profile() {
     logout();
     toast.success('Logged out. See you next time!');
     navigate('/');
+  };
+
+  const handleSelectAvatar = async (avatarUrl) => {
+    setUpdating(true);
+    try {
+      const res = await authAPI.update({ avatar_url: avatarUrl });
+      updateUser(res.data.user);
+      toast.success('Avatar updated successfully!');
+      setShowAvatarModal(false);
+    } catch (err) {
+      toast.error('Failed to update avatar.');
+    } finally {
+      setUpdating(false);
+    }
   };
 
   if (!user) return null;
@@ -96,10 +115,26 @@ export default function Profile() {
                 display: 'flex', alignItems: 'center', justifyContent: 'center',
                 fontFamily: 'Orbitron', fontWeight: 900, fontSize: '3.5rem',
                 color: '#fff', position: 'relative',
-                boxShadow: '0 20px 40px rgba(0,0,0,0.5), 0 0 30px rgba(123,47,255,0.3)'
+                boxShadow: '0 20px 40px rgba(0,0,0,0.5), 0 0 30px rgba(123,47,255,0.3)',
+                overflow: 'hidden'
               }}>
-                {avatarLetter}
-                <div style={{ position: 'absolute', bottom: 5, right: 5, fontSize: '1rem', color: 'var(--cyan)' }}><FaGem /></div>
+                {user.avatar_url ? (
+                  <img src={user.avatar_url} alt="Profile" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                ) : avatarLetter}
+                
+                <button 
+                  onClick={() => setShowAvatarModal(true)}
+                  style={{
+                    position: 'absolute', bottom: 0, left: 0, right: 0,
+                    background: 'rgba(0,0,0,0.6)', border: 'none', color: '#fff',
+                    padding: '6px 0', cursor: 'pointer', fontSize: '0.8rem',
+                    transition: '0.3s', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 5
+                  }}
+                  onMouseEnter={e => e.currentTarget.style.background = 'rgba(0,243,255,0.4)'}
+                  onMouseLeave={e => e.currentTarget.style.background = 'rgba(0,0,0,0.6)'}
+                >
+                  <FaCamera size={12} /> EDIT
+                </button>
               </div>
 
               <h1 style={{ fontFamily: 'Orbitron', fontWeight: 800, fontSize: '1.8rem', color: '#fff', marginBottom: 8 }}>{user.name}</h1>
@@ -160,55 +195,33 @@ export default function Profile() {
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 0.1 }}
           >
-            {/* Quick Stats Grid */}
+            {/* Stats Grid */}
             <div style={{ display: 'flex', gap: 20, marginBottom: 48, flexWrap: 'wrap' }}>
               {[
-                { label: 'PLAYER XP', value: user.points || 0, icon: <FaBolt />, color: 'var(--cyan)' },
-                { label: 'LIVE COMBAT', value: liveReg, icon: <FaBroadcastTower />, color: 'var(--pink)' },
-                { label: 'MISSION READY', value: upcomingReg, icon: <FaClock />, color: '#ffd60a' },
-                { label: 'LEGACY BATTLES', value: pastReg, icon: <FaHistory />, color: '#10B981' },
-                { label: 'SAVED', value: bookmarks.length, icon: <FaBookmark />, color: 'var(--purple)' },
+                { label: 'REGISTERED', value: myTournaments.length, icon: <FaCheckCircle />, color: 'var(--cyan)' },
+                { label: 'SAVED', value: bookmarks.length, icon: <FaBookmark />, color: 'var(--yellow)' },
+                { label: 'LIVE EVENTS', value: liveReg, icon: <FaBroadcastTower />, color: 'var(--pink)' },
+                { label: 'UPCOMING', value: upcomingReg, icon: <FaCalendarAlt />, color: '#ffd60a' },
               ].map(s => (
                 <div key={s.label} className="shape-circle" style={{
-                  width: 120, height: 120,
+                  width: 140, height: 140,
                   background: 'rgba(255,255,255,0.03)', border: `1px solid ${s.color}22`,
                   display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
                   boxShadow: `0 10px 20px rgba(0,0,0,0.3), 0 0 15px ${s.color}10`,
                   textAlign: 'center'
                 }}>
-                  <div style={{ fontFamily: 'Orbitron', fontSize: '1.4rem', fontWeight: 900, color: s.color }}>{s.value}</div>
-                  <div style={{ fontSize: '0.55rem', color: 'var(--text-muted)', fontFamily: 'Rajdhani', fontWeight: 800, letterSpacing: '0.05em' }}>{s.label}</div>
-                  <div style={{ fontSize: '1rem', marginTop: 4 }}>{s.icon}</div>
+                  <div style={{ fontFamily: 'Orbitron', fontSize: '1.8rem', fontWeight: 900, color: s.color }}>{s.value}</div>
+                  <div style={{ fontSize: '0.6rem', color: 'var(--text-muted)', fontFamily: 'Rajdhani', fontWeight: 800, letterSpacing: '0.08em', marginTop: 4 }}>{s.label}</div>
+                  <div style={{ fontSize: '1.2rem', marginTop: 8, color: s.color, opacity: 0.8 }}>{s.icon}</div>
                 </div>
               ))}
             </div>
 
-            {/* Performance Analytics */}
-            <div className="card" style={{ padding: '32px', marginBottom: 48, background: 'rgba(13, 13, 35, 0.5)' }}>
-              <h2 style={{ fontFamily: 'Orbitron', fontSize: '1.2rem', fontWeight: 800, color: '#fff', marginBottom: 24, display: 'flex', alignItems: 'center', gap: 10 }}>
-                <FaBolt style={{ color: 'var(--cyan)' }} /> PERFORMANCE TREND
-              </h2>
-              <div style={{ height: 260, width: '100%' }}>
-                <ResponsiveContainer width="100%" height="100%">
-                  <LineChart data={mockPerformanceData} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
-                    <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.05)" vertical={false} />
-                    <XAxis dataKey="month" stroke="rgba(255,255,255,0.2)" tick={{ fill: 'rgba(255,255,255,0.4)', fontSize: 12, fontFamily: 'Rajdhani' }} />
-                    <YAxis stroke="rgba(255,255,255,0.2)" tick={{ fill: 'rgba(255,255,255,0.4)', fontSize: 12, fontFamily: 'Rajdhani' }} />
-                    <Tooltip 
-                      contentStyle={{ background: 'rgba(13,13,35,0.9)', border: '1px solid rgba(0,243,255,0.2)', borderRadius: 12, fontFamily: 'Orbitron' }}
-                      itemStyle={{ color: '#00f3ff' }}
-                    />
-                    <Line type="monotone" dataKey="xp" stroke="#00f3ff" strokeWidth={3} dot={{ r: 4, fill: '#00f3ff', strokeWidth: 0 }} activeDot={{ r: 6, fill: '#fff', stroke: '#00f3ff', strokeWidth: 2 }} />
-                  </LineChart>
-                </ResponsiveContainer>
-              </div>
-            </div>
 
-            {/* Tournaments List */}
             <div style={{ marginBottom: 48 }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 28 }}>
-                <h2 style={{ fontFamily: 'Orbitron', fontSize: '1.5rem', fontWeight: 900, color: '#fff' }}>ACTIVE MISSIONS</h2>
-                <Link to="/tournaments" className="shape-pill" style={{ padding: '8px 20px', background: 'rgba(0,243,255,0.1)', border: '1px solid rgba(0,243,255,0.3)', color: 'var(--cyan)', fontSize: '0.8rem', fontFamily: 'Rajdhani', fontWeight: 800 }}>FIND MORE +</Link>
+                <h2 style={{ fontFamily: 'Orbitron', fontSize: '1.5rem', fontWeight: 900, color: '#fff' }}>FOLLOWED TOURNAMENTS</h2>
+                <Link to="/tournaments" className="shape-pill" style={{ padding: '8px 20px', background: 'rgba(0,243,255,0.1)', border: '1px solid rgba(0,243,255,0.3)', color: 'var(--cyan)', fontSize: '0.8rem', fontFamily: 'Rajdhani', fontWeight: 800 }}>EXPLORE MORE +</Link>
               </div>
 
               {loading ? (
@@ -221,8 +234,8 @@ export default function Profile() {
                   border: '1px dashed rgba(255,255,255,0.1)'
                 }}>
                   <div style={{ fontSize: '2.5rem', marginBottom: 16, display: 'flex', justifyContent: 'center', color: 'var(--text-muted)' }}><FaTrophy style={{ opacity: 0.4 }} /></div>
-                  <p style={{ color: 'var(--text-muted)', fontSize: '1.1rem', marginBottom: 24, fontFamily: 'Rajdhani', fontWeight: 600 }}>No active mission records found.</p>
-                  <Link to="/tournaments" className="btn btn-primary shape-pill">START YOUR LEGACY</Link>
+                  <p style={{ color: 'var(--text-muted)', fontSize: '1.1rem', marginBottom: 24, fontFamily: 'Rajdhani', fontWeight: 600 }}>No registered tournaments found.</p>
+                  <Link to="/tournaments" className="btn btn-primary shape-pill">DISCOVER TOURNAMENTS</Link>
                 </div>
               ) : (
                 <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
@@ -277,11 +290,10 @@ export default function Profile() {
               )}
             </div>
 
-            {/* Bookmarks Section */}
             <div>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 28 }}>
                 <h2 style={{ fontFamily: 'Orbitron', fontSize: '1.5rem', fontWeight: 900, color: 'var(--yellow)', display: 'flex', alignItems: 'center', gap: 10 }}>
-                  SAVED BATTLES <FaBookmark style={{ fontSize: '1rem' }} />
+                  SAVED FOR LATER <FaBookmark style={{ fontSize: '1rem' }} />
                 </h2>
               </div>
 
@@ -327,6 +339,74 @@ export default function Profile() {
           </motion.div>
         </div>
       </div>
+
+      {/* Avatar Selection Modal */}
+      <AnimatePresence>
+        {showAvatarModal && (
+          <div style={{
+            position: 'fixed', inset: 0, zIndex: 9999,
+            display: 'flex', alignItems: 'center', justifyContent: 'center',
+            background: 'rgba(0,0,0,0.85)', backdropFilter: 'blur(10px)'
+          }}>
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.9, y: 20 }}
+              className="glass-card shape-oval"
+              style={{ padding: 40, maxWidth: 500, width: '90%', position: 'relative' }}
+            >
+              <button 
+                onClick={() => setShowAvatarModal(false)}
+                style={{ position: 'absolute', top: 20, right: 20, background: 'none', border: 'none', color: 'var(--text-muted)', cursor: 'pointer' }}
+              >
+                <FaTimes size={20} />
+              </button>
+
+              <h2 style={{ fontFamily: 'Orbitron', fontWeight: 900, color: '#fff', fontSize: '1.5rem', marginBottom: 32, textAlign: 'center' }}>
+                SELECT YOUR <span className="gradient-text">IDENTITY</span>
+              </h2>
+
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 20, marginBottom: 40 }}>
+                {AVAILABLE_AVATARS.map(av => (
+                  <button 
+                    key={av.id}
+                    onClick={() => handleSelectAvatar(av.url)}
+                    disabled={updating}
+                    style={{
+                      background: 'none', border: 'none', padding: 0, cursor: 'pointer',
+                      position: 'relative', overflow: 'hidden', borderRadius: 20,
+                      aspectRatio: '1/1', transition: '0.3s'
+                    }}
+                    onMouseEnter={e => e.currentTarget.style.transform = 'scale(1.05)'}
+                    onMouseLeave={e => e.currentTarget.style.transform = 'scale(1)'}
+                  >
+                    <img src={av.url} alt={av.name} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                    <div style={{
+                      position: 'absolute', inset: 0,
+                      background: 'linear-gradient(to top, rgba(0,0,0,0.8), transparent)',
+                      display: 'flex', alignItems: 'flex-end', justifyContent: 'center', padding: 10,
+                      opacity: 0, transition: '0.3s'
+                    }}
+                      onMouseEnter={e => e.currentTarget.style.opacity = 1}
+                      onMouseLeave={e => e.currentTarget.style.opacity = 0}
+                    >
+                      <span style={{ fontFamily: 'Rajdhani', fontWeight: 800, fontSize: '0.7rem', color: 'var(--cyan)' }}>
+                        {av.name}
+                      </span>
+                    </div>
+                  </button>
+                ))}
+              </div>
+
+              {updating && (
+                <div style={{ textAlign: 'center', color: 'var(--cyan)', fontFamily: 'Rajdhani', fontWeight: 800 }}>
+                  UPDATING PROTOCOL...
+                </div>
+              )}
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }

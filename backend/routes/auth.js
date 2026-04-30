@@ -98,4 +98,27 @@ router.get('/me', async (req, res) => {
   }
 });
 
+// POST /api/auth/update
+router.post('/update', async (req, res) => {
+  try {
+    const token = req.headers.authorization?.split(' ')[1];
+    if (!token) return res.status(401).json({ error: 'No token' });
+    const decoded = jwt.verify(token, JWT_SECRET);
+
+    const { name, state, games, avatar_url } = req.body;
+    
+    const { data: user, error } = await supabase
+      .from('users')
+      .update({ name, state, games, avatar_url })
+      .eq('id', decoded.id)
+      .select('id, name, email, state, games, avatar_url, created_at')
+      .single();
+
+    if (error) throw error;
+    res.json({ user });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
 module.exports = router;
