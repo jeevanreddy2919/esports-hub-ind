@@ -7,7 +7,7 @@ import Skeleton from '../components/common/Skeleton';
 import toast from 'react-hot-toast';
 import CountdownTimer from '../components/CountdownTimer';
 import { GameIcon } from '../utils/gameLogos';
-import { FaShareAlt, FaMobileAlt, FaTwitter, FaTrophy, FaShieldAlt, FaScroll, FaBullseye } from 'react-icons/fa';
+import { FaShareAlt, FaMobileAlt, FaTwitter, FaTrophy, FaShieldAlt, FaScroll, FaBullseye, FaExternalLinkAlt } from 'react-icons/fa';
 
 export default function TournamentDetail() {
   const { id } = useParams();
@@ -270,34 +270,84 @@ export default function TournamentDetail() {
                 </div>
               </div>
 
+              {/* Official Registration Button */}
+              <div style={{ marginBottom: 24 }}>
+                <div style={{ fontSize: '0.65rem', color: 'var(--yellow)', fontFamily: 'Rajdhani', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.12em', marginBottom: 12, display: 'flex', alignItems: 'center', gap: 6 }}>
+                  <FaExternalLinkAlt size={10} /> Official Tournament Portal
+                </div>
+                {tournament.registration_link && tournament.registration_link !== 'Completed' && tournament.registration_link !== 'Invite Only' && tournament.registration_link !== 'Coming Soon' ? (
+                  <a 
+                    href={tournament.registration_link} 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="shape-pill"
+                    style={{
+                      display: 'block', textAlign: 'center', padding: '18px',
+                      background: 'rgba(255, 214, 10, 0.1)', border: '1px solid rgba(255, 214, 10, 0.4)',
+                      color: 'var(--yellow)', fontFamily: 'Orbitron', fontWeight: 900, fontSize: '0.9rem',
+                      textDecoration: 'none', transition: '0.3s', marginBottom: 8
+                    }}
+                    onMouseEnter={e => { e.currentTarget.style.background = 'rgba(255, 214, 10, 0.2)'; }}
+                    onMouseLeave={e => { e.currentTarget.style.background = 'rgba(255, 214, 10, 0.1)'; }}
+                  >
+                    OFFICIAL REGISTRATION
+                  </a>
+                ) : (
+                  <div className="shape-pill" style={{
+                    textAlign: 'center', padding: '18px',
+                    background: 'rgba(255, 255, 255, 0.05)', border: '1px solid rgba(255, 255, 255, 0.1)',
+                    color: 'var(--text-muted)', fontFamily: 'Orbitron', fontWeight: 900, fontSize: '0.9rem',
+                    marginBottom: 8
+                  }}>
+                    {tournament.registration_link || 'TBD'}
+                  </div>
+                )}
+                <p style={{ fontSize: '0.75rem', color: 'var(--text-muted)', fontFamily: 'Rajdhani', fontWeight: 600, textAlign: 'center', marginTop: 8 }}>
+                  *Use the link above to officially enter the tournament.
+                </p>
+              </div>
+
+              <div style={{ height: '1px', background: 'rgba(255,255,255,0.05)', margin: '32px 0' }} />
+
+              <div style={{ marginBottom: 16 }}>
+                 <div style={{ fontSize: '0.65rem', color: accentColor, fontFamily: 'Rajdhani', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.12em', marginBottom: 12 }}>
+                   Esports Hub Roster Tracking
+                 </div>
+              </div>
+
               {registered ? (
                 <div className="shape-oval" style={{ 
                   padding: '32px 24px', textAlign: 'center',
                   background: 'rgba(16, 185, 129, 0.08)', border: '1px solid rgba(16, 185, 129, 0.4)',
                 }}>
                   <div style={{ fontSize: '2.5rem', marginBottom: 16, display: 'flex', justifyContent: 'center', color: '#10B981' }}><FaShieldAlt /></div>
-                  <div style={{ fontFamily: 'Orbitron', fontWeight: 900, color: '#10B981', fontSize: '1.4rem', marginBottom: 8 }}>IDENTIFIED!</div>
-                  <p style={{ fontFamily: 'Rajdhani', fontWeight: 700, color: 'var(--text-muted)', fontSize: '0.95rem' }}>You are officially in the arena roster.</p>
+                  <div style={{ fontFamily: 'Orbitron', fontWeight: 900, color: '#10B981', fontSize: '1.4rem', marginBottom: 8 }}>HUB SECURED</div>
+                  <p style={{ fontFamily: 'Rajdhani', fontWeight: 700, color: 'var(--text-muted)', fontSize: '0.95rem' }}>Your stats for this tournament are being tracked.</p>
                 </div>
               ) : (
-                <button 
-                  onClick={handleRegister}
-                  disabled={registering || isPast || isFull}
-                  className="shape-pill"
-                  style={{
-                    width: '100%', padding: '22px',
-                    background: isPast || isFull ? 'rgba(255,255,255,0.05)' : `linear-gradient(135deg, ${accentColor}, ${accentColor}dd)`,
-                    color: '#fff', border: 'none', fontFamily: 'Orbitron', fontWeight: 900, fontSize: '1.1rem',
-                    cursor: registering || isPast || isFull ? 'not-allowed' : 'pointer',
-                    transition: 'all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275)',
-                    boxShadow: !isPast && !isFull ? `0 15px 35px ${accentColor}40` : 'none',
-                    letterSpacing: '0.05em'
-                  }}
-                  onMouseEnter={e => { if (!isPast && !isFull) e.currentTarget.style.transform = 'scale(1.02) translateY(-4px)'; }}
-                  onMouseLeave={e => { if (!isPast && !isFull) e.currentTarget.style.transform = 'scale(1) translateY(0)'; }}
-                >
-                  {registering ? 'PROCESSING...' : isPast ? 'MISSION EXPIRED' : isFull ? 'CAPACITY AT MAX' : 'INITIATE REGISTRATION'}
-                </button>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+                  <button 
+                    onClick={handleRegister}
+                    disabled={registering || isPast || isFull}
+                    className="shape-pill"
+                    style={{
+                      width: '100%', padding: '22px',
+                      background: isPast || isFull ? 'rgba(255,255,255,0.05)' : `linear-gradient(135deg, ${accentColor}, ${accentColor}dd)`,
+                      color: '#fff', border: 'none', fontFamily: 'Orbitron', fontWeight: 900, fontSize: '1.1rem',
+                      cursor: registering || isPast || isFull ? 'not-allowed' : 'pointer',
+                      transition: 'all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275)',
+                      boxShadow: !isPast && !isFull ? `0 15px 35px ${accentColor}40` : 'none',
+                      letterSpacing: '0.05em'
+                    }}
+                    onMouseEnter={e => { if (!isPast && !isFull) e.currentTarget.style.transform = 'scale(1.02) translateY(-4px)'; }}
+                    onMouseLeave={e => { if (!isPast && !isFull) e.currentTarget.style.transform = 'scale(1) translateY(0)'; }}
+                  >
+                    {registering ? 'PROCESSING...' : isPast ? 'EXPIRED' : isFull ? 'FULL' : 'JOIN HUB ROSTER'}
+                  </button>
+                  <p style={{ fontSize: '0.75rem', color: 'var(--text-muted)', fontFamily: 'Rajdhani', fontWeight: 600, textAlign: 'center' }}>
+                    Join our Hub roster to track your rank and win Hub points.
+                  </p>
+                </div>
               )}
 
               {!user && !isPast && !isFull && (
