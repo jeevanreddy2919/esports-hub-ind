@@ -155,3 +155,7 @@ async function seedLeaderboard() {
 }
 
 module.exports = { initDB, supabase };
+
+if (require.main === module) {
+  initDB();
+}
