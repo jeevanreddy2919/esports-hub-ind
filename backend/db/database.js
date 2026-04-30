@@ -31,30 +31,18 @@ async function initDB() {
 
 async function seedTournaments() {
   const tournaments = [
-    // ===== LIVE TOURNAMENTS (Vibrant & Realistic) =====
+    // ===== LIVE TOURNAMENTS =====
     {
       title: 'NODWIN BGMI Masters Series: Season 3',
       game: 'BGMI', status: 'live',
-      prize_pool: '₹1,50,00,000', slots: 128, slots_filled: 128,
+      prize_pool: '₹1,50,00,000', slots: 24, slots_filled: 24,
       start_date: '2026-04-15', end_date: '2026-05-10',
       registration_deadline: '2026-04-10',
       location: 'Offline — New Delhi (LAN)',
       organizer: 'NODWIN Gaming',
       banner_color: '#FF6B35',
-      description: 'The pinnacle of Indian BGMI. 128 elite squads battle for the massive 1.5 Crore prize pool.',
-      rules: ['Squad of 4', 'Minimum Rank: Ace', 'Device: Mobile Only']
-    },
-    {
-      title: 'Riot Games: VCT India Challengers',
-      game: 'Valorant', status: 'live',
-      prize_pool: '₹25,00,000', slots: 32, slots_filled: 30,
-      start_date: '2026-04-20', end_date: '2026-05-05',
-      registration_deadline: '2026-04-18',
-      location: 'Online — Mumbai Servers',
-      organizer: 'Riot Games India',
-      banner_color: '#FF4655',
-      description: 'The official road to Champions. India\'s best agents clash in a high-stakes tactical battle.',
-      rules: ['5 Players + 2 Subs', 'Immortal+ Rank', 'Indian Citizenship Required']
+      description: 'The pinnacle of Indian BGMI. 24 elite invited squads battle for the massive 1.5 Crore prize pool in a high-octane LAN environment.',
+      rules: ['Squad of 4', 'Invited Teams', 'Device: Mobile Only']
     },
     {
       title: 'Skyesports Free Fire Max Grand Prix',
@@ -65,22 +53,34 @@ async function seedTournaments() {
       location: 'Online — South Asia',
       organizer: 'Skyesports India',
       banner_color: '#FF9500',
-      description: 'Survival of the fittest! The most aggressive squads in the country compete for glory.',
+      description: 'Survival of the fittest! The most aggressive squads in the country compete for glory in this open-for-all grand prix.',
       rules: ['Squad BR Mode', 'No Emulators', 'Official Garena Rules']
     },
 
-    // ===== UPCOMING TOURNAMENTS (Strategic Dates) =====
+    // ===== UPCOMING TOURNAMENTS =====
     {
-      title: 'Krafton: BGMI India Rising Q2',
+      title: 'Battlegrounds Mobile India Pro Series (BMPS) 2026',
       game: 'BGMI', status: 'upcoming',
-      prize_pool: '₹40,00,000', slots: 256, slots_filled: 184,
-      start_date: '2026-05-12', end_date: '2026-05-25',
-      registration_deadline: '2026-05-08',
-      location: 'Online — All India',
-      organizer: 'Krafton India',
+      prize_pool: '₹2,00,00,000', slots: 512, slots_filled: 412,
+      start_date: '2026-05-06', end_date: '2026-06-21',
+      registration_deadline: '2026-05-02',
+      location: 'Online/Offline (Finals)',
+      organizer: 'KRAFTON India',
       banner_color: '#10B981',
-      description: 'A dedicated platform for rising stars to showcase their skills and go pro.',
-      rules: ['Underdog Teams Only', 'Account Level 40+', 'Fair Play Protocol']
+      description: 'The flagship pro series returns with a massive 2 Crore prize pool. Open qualifiers start May 6th. Road to the ultimate glory!',
+      rules: ['Level 40+ Account', 'Squad Mode', 'Anti-Cheat Mandatory']
+    },
+    {
+      title: 'Free Fire MAX India Cup (FFMIC) 2026 Fall',
+      game: 'Free Fire Max', status: 'upcoming',
+      prize_pool: '₹1,00,00,000', slots: 256, slots_filled: 0,
+      start_date: '2026-05-25', end_date: '2026-06-30',
+      registration_deadline: '2026-05-20',
+      location: 'Online — All India',
+      organizer: 'Garena India',
+      banner_color: '#F59E0B',
+      description: 'The second major official cup of the year. Top teams will qualify for international tournaments.',
+      rules: ['Squad Mode', 'Mobile Only', 'Official Tournament Rules']
     },
     {
       title: 'ESL India: CS2 Pro League S1',
@@ -106,46 +106,36 @@ async function seedTournaments() {
       description: 'Join the Land of Dawn. Official MPL qualifiers for the M6 World Championship.',
       rules: ['Mythical Glory Rank', '5v5 Classic Draft', 'No 3rd party apps']
     },
+
+    // ===== PAST TOURNAMENTS =====
     {
-      title: 'Pokemon Unite: Aeos Cup India',
-      game: 'Pokemon Unite', status: 'upcoming',
-      prize_pool: '₹5,00,000', slots: 64, slots_filled: 38,
-      start_date: '2026-06-10', end_date: '2026-06-12',
-      registration_deadline: '2026-06-05',
-      location: 'Online — Switch/Mobile',
-      organizer: 'The Pokemon Company',
+      title: 'Free Fire MAX India Cup (FFMIC) 2026 Spring',
+      game: 'Free Fire Max', status: 'past',
+      prize_pool: '₹1,00,00,000', slots: 128, slots_filled: 128,
+      start_date: '2026-03-20', end_date: '2026-04-26',
+      registration_deadline: '2026-03-15',
+      location: 'Offline — Mumbai (Grand Finals)',
+      organizer: 'Garena India',
       banner_color: '#8B5CF6',
-      description: 'Strategic team battles like never before. Prove your team is the best in India.',
-      rules: ['Level 15+ Trainer', 'Fixed Held Items', 'Draft Pick Mode']
+      description: 'Completed! Team Hind emerged as the champions of the Spring Cup, taking home the lion\'s share of the 1 Crore prize.',
+      rules: ['Squad Mode', 'Mobile Only', 'Pro League Qualification']
     },
     {
-      title: 'Tekken 8: Iron Fist India Clash',
-      game: 'Tekken 8', status: 'upcoming',
-      prize_pool: '₹2,50,000', slots: 128, slots_filled: 94,
-      start_date: '2026-06-18', end_date: '2026-06-20',
-      registration_deadline: '2026-06-15',
-      location: 'Offline — Mumbai Gaming Cafe',
-      organizer: 'Bandai Namco',
-      banner_color: '#EC4899',
-      description: '1v1 Combat at its peak. The ultimate test of reflexes and frame data knowledge.',
-      rules: ['1v1 Best of 3', 'Double Elimination', 'PS5/PC Crossplay']
-    },
-    {
-      title: 'EA Sports: FC Mobile Summer Invitational',
-      game: 'FC Mobile', status: 'upcoming',
-      prize_pool: '₹3,00,000', slots: 256, slots_filled: 210,
-      start_date: '2026-07-05', end_date: '2026-07-10',
-      registration_deadline: '2026-07-01',
-      location: 'Online — Head to Head',
-      organizer: 'Electronic Arts India',
-      banner_color: '#2563EB',
-      description: 'The largest mobile football tournament in the country. Build your dream team.',
-      rules: ['OVR Cap: 110', 'H2H Mode Only', 'Stable Connection Required']
+      title: 'VALORANT Challengers 2026 South Asia: Split 1',
+      game: 'Valorant', status: 'past',
+      prize_pool: '₹20,00,000', slots: 32, slots_filled: 32,
+      start_date: '2026-03-16', end_date: '2026-04-09',
+      registration_deadline: '2026-03-10',
+      location: 'Online — South Asia',
+      organizer: 'Riot Games & NODWIN',
+      banner_color: '#FF4655',
+      description: 'The first split of the season has concluded. Intense tactical battles saw the region\'s best agents clash.',
+      rules: ['Immortal+ Rank', 'Indian Citizenship', '5v5 Tactical Shooter']
     }
   ];
 
   await supabase.from('tournaments').insert(tournaments);
-  console.log('✅ 9 High-quality tournaments seeded');
+  console.log(`✅ ${tournaments.length} High-quality tournaments seeded`);
 }
 
 async function seedLeaderboard() {
