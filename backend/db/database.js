@@ -18,8 +18,8 @@ async function initDB() {
 
     // FORCE RE-SEED: Wipe existing data to ensure high-quality data is visible
     console.log('🧹 Clearing existing data for fresh seed...');
-    await supabase.from('tournaments').delete().neq('id', '00000000-0000-0000-0000-000000000000');
-    await supabase.from('leaderboard').delete().neq('id', '00000000-0000-0000-0000-000000000000');
+    await supabase.from('tournaments').delete().not('id', 'is', null);
+    await supabase.from('leaderboard').delete().not('id', 'is', null);
 
     await seedTournaments();
     await seedLeaderboard();

@@ -213,12 +213,12 @@ export default function Profile() {
               ].map(s => (
                 <div key={s.label} className="shape-circle" style={{
                   width: 140, height: 140,
-                  background: 'rgba(255,255,255,0.03)', border: `2px solid ${s.color}66`,
+                  background: 'rgba(255,255,255,0.03)', border: `1px solid ${s.color}`,
                   display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
-                  boxShadow: `0 10px 30px rgba(0,0,0,0.5), inset 0 0 10px ${s.color}22`,
+                  boxShadow: `0 10px 30px rgba(0,0,0,0.5)`,
                   textAlign: 'center'
                 }}>
-                  <div style={{ fontFamily: 'Orbitron', fontSize: '2rem', fontWeight: 900, color: s.color }}>{s.value}</div>
+                  <div style={{ fontFamily: 'Orbitron', fontSize: '1.8rem', fontWeight: 900, color: s.color }}>{s.value}</div>
                   <div style={{ fontSize: '0.6rem', color: 'var(--text-muted)', fontFamily: 'Rajdhani', fontWeight: 800, letterSpacing: '0.08em', marginTop: 4 }}>{s.label}</div>
                   <div style={{ fontSize: '1.2rem', marginTop: 8, color: s.color, opacity: 0.8 }}>{s.icon}</div>
                 </div>
